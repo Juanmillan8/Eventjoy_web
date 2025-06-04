@@ -16,7 +16,7 @@ export const authGuard: CanActivateFn = (route, state):Observable<boolean> => {
         if(member){
           if(member.role && (member.role == role || role =="*")){
             
-            if(member.role == ROLE.USER && (member.name.trim() == "" || member.surname.trim() == ""  || member.birthdate.trim() == ""|| member.dni.trim() == "" || member.phone.trim() == "")){
+            if(member.role == ROLE.MEMBER && (member.name.trim() == "" || member.surname.trim() == ""  || member.birthdate.trim() == ""|| member.dni.trim() == "" || member.phone.trim() == "")){
               
               routerService.navigate(["/profile"])
             }

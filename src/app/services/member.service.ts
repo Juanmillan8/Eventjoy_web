@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { child, Database, DataSnapshot, get, objectVal, push, ref, set } from '@angular/fire/database';
+import { child, Database, DataSnapshot, equalTo, get, listVal, objectVal, orderByChild, push, query, ref, set } from '@angular/fire/database';
 import { Person } from '../models/person.model';
 import { firstValueFrom, Observable } from 'rxjs';
 import { Member } from '../models/member.model';
@@ -19,7 +19,7 @@ export class MemberService {
     */
   saveMember(member:Member){
     //Creamos la referencia de la persona que deseamos guardar en firebase database
-    let memberRef = ref(this.database,`/${this.COLLECTION_NAME}/${member.uid}`);
+    let memberRef = ref(this.database,`/${this.COLLECTION_NAME}/${member.userAccountId}`);
 
     //Crear nueva reserva
     return set(memberRef,member) as Promise<void>
@@ -32,6 +32,15 @@ export class MemberService {
   
       return objectVal(memberRef) as Observable<Member>
   }
+
+  getMemberByEmail(email:string):Observable<Member[]>{
+
+    const membersRef = ref(this.database,this.COLLECTION_NAME);
+    const memberQuery = query(membersRef, orderByChild('email'), equalTo(email));
+
+    return listVal(memberQuery) as Observable<Member[]>
+  }
+
 
 
   getMemberByUidPromise(uid:string):Promise<Member>{

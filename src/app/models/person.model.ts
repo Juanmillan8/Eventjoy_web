@@ -1,17 +1,17 @@
 export enum ROLE{
-    USER="USER",
+    MEMBER="MEMBER",
     ADMIN="ADMIN"
 }
 export class Person {
-    uid:string;
+    userAccountId:string;
     name:string;
     surname: string;
     email:string;
     role:ROLE;
     photo:string;
     
-    constructor (uid:string,name:string,surname:string,email:string,role:ROLE,photo:string){
-        this.uid = uid;
+    constructor (userAccountId:string,name:string,surname:string,email:string,role:ROLE,photo:string){
+        this.userAccountId = userAccountId;
         this.name = name;
         this.surname = surname;
         this.email = email;
