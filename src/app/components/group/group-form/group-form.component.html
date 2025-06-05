@@ -1,0 +1,47 @@
+
+<div class="alert alert-success" role="alert" *ngIf="mensajes!=null">
+{{mensajes}}
+</div>
+<div class="alert alert-alert" role="alert" *ngIf="errores!=null">
+{{errores}}
+</div>
+<ng-container *ngIf="group!=undefined && group!=null">
+<form id="editGroupForm" [formGroup]="groupForm" class="p-4 border rounded mx-auto" style="max-width: 600px;">
+    <h3 class="mb-4 text-center">Editar Grupo</h3>
+
+    <div class="mb-3">
+      <label for="groupTitle" class="form-label">Título</label>
+      <input type="text" formControlName="title" class="form-control" id="groupTitle" placeholder="Nombre del grupo" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="groupDescription" class="form-label">Descripción</label>
+      <textarea class="form-control" formControlName="description" id="groupDescription" rows="3" placeholder="Descripción del grupo" required></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="groupVisibility" class="form-label">Visibilidad</label>
+      <select class="form-select" formControlName="visibility" id="groupVisibility" required>
+        <option value="public">Público</option>
+        <option value="private">Privado</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="groupIcon" class="form-label">URL del ícono</label>
+      <input type="url" formControlName="icon" class="form-control" id="groupIcon" placeholder="https://example.com/icon.png" required>
+      <div class="form-text">Inserta la URL de un ícono válido para el grupo.</div>
+    </div>
+
+    <div class="mb-3 text-center">
+      <img id="iconPreview" src="" alt="Previsualización del ícono" class="img-fluid" style="max-height: 80px; display: none; margin: auto;">
+    </div>
+
+    <div class="d-flex justify-content-between flex-column flex-sm-row gap-2">
+      <button type="button" class="btn btn-danger w-100 w-sm-auto" (click)="borrar()">Borrar</button>
+      <button type="button" class="btn btn-secondary w-100 w-sm-auto" (click)="cancelarEdicion()">Cancelar</button>
+      <button type="submit" class="btn btn-primary w-100 w-sm-auto" (click)="guardar()">Guardar Cambios</button>
+    </div>
+  </form>
+</ng-container>
+ 

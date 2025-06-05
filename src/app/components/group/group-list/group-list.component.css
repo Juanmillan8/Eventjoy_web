@@ -1,0 +1,14 @@
+    .group-card {
+      transition: transform 0.2s ease-in-out;
+    }
+    .group-card:hover {
+      transform: scale(1.02);
+    }
+    .card-img-top {
+      height: 120px;
+      object-fit: cover;
+    }
+
+    .row-card{
+      margin-top: 1%;
+    }

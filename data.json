@@ -1,0 +1,125 @@
+{
+  "groups": {
+    "group1": {
+      "id": "group1",
+      "title": "Desarrolladores Web",
+      "description": "Grupo para compartir recursos y dudas sobre desarrollo web.",
+      "visibility": "public",
+      "icon": "https://img.icons8.com/color/96/code.png"
+    },
+    "group2": {
+      "id": "group2",
+      "title": "Diseñadores UX/UI",
+      "description": "Comunidad de diseñadores centrados en experiencia de usuario e interfaces.",
+      "visibility": "private",
+      "icon": "https://img.icons8.com/color/96/design.png"
+    },
+    "group3": {
+      "id": "group3",
+      "title": "Machine Learning",
+      "description": "Debates, noticias y proyectos sobre inteligencia artificial y aprendizaje automático.",
+      "visibility": "public",
+      "icon": "https://img.icons8.com/color/96/artificial-intelligence.png"
+    },
+    "group4": {
+      "id": "group4",
+      "title": "Startups Tech",
+      "description": "Emprendedores compartiendo ideas y feedback sobre startups tecnológicas.",
+      "visibility": "public",
+      "icon": "https://img.icons8.com/color/96/startup.png"
+    },
+    "group5": {
+      "id": "group5",
+      "title": "Gamers Unidos",
+      "description": "Un lugar para compartir experiencias, noticias y jugar en comunidad.",
+      "visibility": "private",
+      "icon": "https://img.icons8.com/color/96/controller.png"
+    }
+  },
+  "members": {
+    "TTcwj1CeLrRM5gl1POlXhePjOLd2": {
+      "userAccountId": "TTcwj1CeLrRM5gl1POlXhePjOLd2",
+      "name": "Juan",
+      "surname": "Millan",
+      "email": "juanmillan@gmail.com",
+      "role": "MEMBER",
+      "photo": "https://randomuser.me/api/portraits/women/65.jpg",
+      "dni": "12345678A",
+      "phone": "+34123456789",
+      "birthdate": "1995-03-12",
+      "username": "juanmillan",
+      "level": "intermediate",
+      "provider": "EMAIL"
+    },
+    "OuRJBqXUVGZoAzvFuqNJgMoupyf1": {
+      "userAccountId": "OuRJBqXUVGZoAzvFuqNJgMoupyf1",
+      "name": "Jose Antonio",
+      "surname": "Rodriguez",
+      "email": "jose@gmail.com",
+      "role": "ADMIN",
+      "photo": "https://randomuser.me/api/portraits/men/45.jpg",
+      "dni": "87654321B",
+      "phone": "+34987654321",
+      "birthdate": "1988-07-22",
+      "username": "jose",
+      "level": "advanced",
+      "provider": "EMAIL"
+    },
+    "NA0JDJCEO6PzhwAtxKiXdmi3ttK2": {
+      "userAccountId": "NA0JDJCEO6PzhwAtxKiXdmi3ttK2",
+      "name": "Ana",
+      "surname": "López",
+      "email": "ana@gmail.com",
+      "role": "MEMBER",
+      "photo": "https://randomuser.me/api/portraits/women/72.jpg",
+      "dni": "45678901C",
+      "phone": "+34678901234",
+      "birthdate": "2000-01-05",
+      "username": "ana2000",
+      "level": "beginner",
+      "provider": "EMAIL"
+    }
+  },
+ "userGroups": {
+    "ug1": {
+      "id": "ug1",
+      "userId": "TTcwj1CeLrRM5gl1POlXhePjOLd2",
+      "groupId": "group1",
+      "isAdmin": true,
+      "joinedAt": "2024-01-15T10:30:00Z",
+      "notificationsEnabled": true
+    },
+    "ug2": {
+      "id": "ug2",
+      "userId": "OuRJBqXUVGZoAzvFuqNJgMoupyf1",
+      "groupId": "group1",
+      "isAdmin": false,
+      "joinedAt": "2024-02-01T08:00:00Z",
+      "notificationsEnabled": false
+    },
+    "ug3": {
+      "id": "ug3",
+      "userId": "NA0JDJCEO6PzhwAtxKiXdmi3ttK2",
+      "groupId": "group2",
+      "isAdmin": false,
+      "joinedAt": "2024-03-10T12:15:00Z",
+      "notificationsEnabled": true
+    },
+    "ug4": {
+      "id": "ug4",
+      "userId": "OuRJBqXUVGZoAzvFuqNJgMoupyf1",
+      "groupId": "group3",
+      "isAdmin": true,
+      "joinedAt": "2024-04-05T09:45:00Z",
+      "notificationsEnabled": true
+    },
+    "ug5": {
+      "id": "ug5",
+      "userId": "TTcwj1CeLrRM5gl1POlXhePjOLd2",
+      "groupId": "group2",
+      "isAdmin": false,
+      "joinedAt": "2024-05-20T14:20:00Z",
+      "notificationsEnabled": false
+    }
+  }
+}
