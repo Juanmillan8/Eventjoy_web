@@ -18,10 +18,20 @@ export class UserGroupService {
 
   saveUserGroup(usergroup: UserGroup) {
     //Creamos la referencia de la persona que deseamos guardar en firebase database
-    let usergroupsRef = ref(this.database, `/${this.COLLECTION_NAME}/${usergroup.id}`);
+    let usergroupRef = ref(this.database, `/${this.COLLECTION_NAME}/${usergroup.id}`);
 
+    if(usergroup.id == "-1"){
+        let newUserGroupRef = ref(this.database,this.COLLECTION_NAME);
+        let idRandom = push(newUserGroupRef);
+      
+        //Modificamos el id, que es 0, a un id random
+        usergroupRef = idRandom;
+        if(usergroupRef.key !=null){
+          usergroup.id = usergroupRef.key;
+        }
+    }
     //Crear nueva reserva
-    return set(usergroupsRef, usergroup) as Promise<void>
+    return set(usergroupRef, usergroup) as Promise<void>
   }
 
   getGroupById(ugid: string): Observable<Group> {
