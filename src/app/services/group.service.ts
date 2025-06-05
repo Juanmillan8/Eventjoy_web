@@ -69,6 +69,28 @@ export class GroupService {
       });
   }
 
+  getAllPublicGroups(): Observable<Group[]> {
+    const groupsRef = ref(this.database, this.COLLECTION_NAME);
+    const groupQuery = query(groupsRef, orderByChild('visibility'), equalTo("public"));
+
+    return listVal(groupQuery) as Observable<Group[]>
+  }
+
+  getPublicGroupsNoBelogTo(uid: string): Observable<Group[]> {
+
+    const publicGroups = this.getAllPublicGroups();
+    const groupsBelogTo = this.userGroupService.getByUser(uid);
+
+    return combineLatest([publicGroups, groupsBelogTo]).pipe(
+      map(([publicGroups, groupsBelogTo]) => {
+        const joinedGroupIds = new Set(groupsBelogTo.map(ug => ug.groupId));
+
+        return publicGroups.filter(group =>
+          group.visibility === 'public' && !joinedGroupIds.has(group.id)
+        );
+      })
+    );
+  }
 
   getGroupByUser(uid: string): Observable<Group[]> {
     return this.userGroupService.getByUser(uid).pipe(
@@ -116,21 +138,6 @@ export class GroupService {
     );
   }
 
-  getGroupsNoAdminFromUserId(uid: string): Observable<Group[]> {
-    return this.userGroupService.getByUser(uid).pipe(
-      map((userGroups: UserGroup[]) =>
-        userGroups.filter(ug => !ug.isAdmin)
-      ),
-      switchMap((adminGroups: UserGroup[]) => {
-        if (adminGroups.length === 0) {
-          return of([]); // el usuario no es admin de ningún grupo
-        }
 
-        const groupObservables = adminGroups.map(ug =>
-          this.getGroupById(ug.groupId)
-        );
-        return combineLatest(groupObservables);
-      })
-    );
-  }
+
 }

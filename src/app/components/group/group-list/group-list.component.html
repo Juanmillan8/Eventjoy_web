@@ -2,10 +2,10 @@
   <div class="row">
     <div class="row text-center">
       <div class="col-6">
-        <span class="badge bg-success fs-6">Mis grupos</span>
+        <span class="badge bg-success fs-6" (click)="showMyGroups()">Mis grupos</span>
       </div>
       <div class="col-6">
-        <span class="badge bg-info fs-6">Otros grupos</span>
+        <span class="badge bg-info fs-6" (click)="showOthersPublicGroups()">Explorar otros grupos públicos</span>
       </div>
     </div>
   </div>
@@ -41,6 +41,21 @@
             <h5 class="card-title">{{group.title}}</h5>
             <p class="card-text">{{group.description}}</p>
             <span class="badge bg-success">Activo</span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngFor="let group of groupNoBelgonTo">
+      <div class="col">
+        <div class="card group-card shadow-sm h-100">
+          <img [src]="group.icon" class="card-img-top" alt="Icono Grupo A">
+          <div class="card-body">
+            <h5 class="card-title">{{group.title}}</h5>
+            <p class="card-text">{{group.description}}</p>
+            <span class="badge bg-success">Activo</span>
+          </div>
+          <div class="card-footer">
+            <button type="button" class="btn btn-primary" (click)="joinGroup(group.id)">Unirse</button>
           </div>
         </div>
       </div>
