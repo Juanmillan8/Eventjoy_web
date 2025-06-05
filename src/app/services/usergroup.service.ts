@@ -34,13 +34,7 @@ export class UserGroupService {
     return set(usergroupRef, usergroup) as Promise<void>
   }
 
-  getGroupById(ugid: string): Observable<Group> {
 
-    const usersgroupsRef = ref(this.database, this.COLLECTION_NAME);
-    const usergroupRef = child(usersgroupsRef, ugid);
-
-    return objectVal(usergroupRef) as Observable<Group>
-  }
 
   deleteUserGroup(ugid: string): Promise<void> {
     //Creamos la referencia de la persona que deseamos guardar en firebase database
@@ -52,6 +46,14 @@ export class UserGroupService {
 
     const usersgroupsRef = ref(this.database, this.COLLECTION_NAME);
     const userGroupQuery = query(usersgroupsRef, orderByChild('userId'), equalTo(uid));
+
+    return listVal(userGroupQuery) as Observable<UserGroup[]>
+  }
+
+  getByGroup(gid: string): Observable<UserGroup[]> {
+
+    const usersgroupsRef = ref(this.database, this.COLLECTION_NAME);
+    const userGroupQuery = query(usersgroupsRef, orderByChild('groupId'), equalTo(gid));
 
     return listVal(userGroupQuery) as Observable<UserGroup[]>
   }

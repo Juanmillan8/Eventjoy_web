@@ -45,7 +45,7 @@ export class SinginComponent {
         if (member && member.length ==0) {
           this.authService.register({ email, password }).then((userCredential: UserCredential) => {
 
-            let member = new Member(userCredential.user.uid, name, surname, email, ROLE.MEMBER, "", "", "", "", "", "", "EMAIL");
+            let member = new Member(userCredential.user.uid,userCredential.user.uid, name, surname, email, ROLE.MEMBER, "", "", "", "", "",0, "EMAIL");
 
             if (admin == "true") {
               member.role = ROLE.ADMIN

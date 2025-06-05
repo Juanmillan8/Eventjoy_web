@@ -38,6 +38,7 @@
   },
   "members": {
     "TTcwj1CeLrRM5gl1POlXhePjOLd2": {
+      "id": "TTcwj1CeLrRM5gl1POlXhePjOLd2",
       "userAccountId": "TTcwj1CeLrRM5gl1POlXhePjOLd2",
       "name": "Juan",
       "surname": "Millan",
@@ -48,24 +49,26 @@
       "phone": "+34123456789",
       "birthdate": "1995-03-12",
       "username": "juanmillan",
-      "level": "intermediate",
+      "level": 0,
       "provider": "EMAIL"
     },
     "OuRJBqXUVGZoAzvFuqNJgMoupyf1": {
+      "id": "OuRJBqXUVGZoAzvFuqNJgMoupyf1",
       "userAccountId": "OuRJBqXUVGZoAzvFuqNJgMoupyf1",
       "name": "Jose Antonio",
       "surname": "Rodriguez",
       "email": "jose@gmail.com",
-      "role": "ADMIN",
+      "role": "MEMBER",
       "photo": "https://randomuser.me/api/portraits/men/45.jpg",
       "dni": "87654321B",
       "phone": "+34987654321",
       "birthdate": "1988-07-22",
       "username": "jose",
-      "level": "advanced",
+      "level": 0,
       "provider": "EMAIL"
     },
     "NA0JDJCEO6PzhwAtxKiXdmi3ttK2": {
+      "id": "NA0JDJCEO6PzhwAtxKiXdmi3ttK2",
       "userAccountId": "NA0JDJCEO6PzhwAtxKiXdmi3ttK2",
       "name": "Ana",
       "surname": "López",
@@ -76,7 +79,7 @@
       "phone": "+34678901234",
       "birthdate": "2000-01-05",
       "username": "ana2000",
-      "level": "beginner",
+      "level": 0,
       "provider": "EMAIL"
     }
   },
@@ -120,6 +123,74 @@
       "isAdmin": false,
       "joinedAt": "2024-05-20T14:20:00Z",
       "notificationsEnabled": false
+    }
+  },
+   "events": {
+    "ev1": {
+      "id": "ev1",
+      "title": "Taller de HTML y CSS",
+      "startDateAndTime": "2025-06-15T10:00:00Z",
+      "endDateAndTime": "2025-06-15T13:00:00Z",
+      "description": "Aprende a maquetar páginas web desde cero.",
+      "maxParticipants": "30",
+      "address": {
+        "street": "Calle Web",
+        "numberStreet": "25",
+        "floor": "1",
+        "door": "A",
+        "postalCode": "28001",
+        "city": "Madrid",
+        "province": "Madrid",
+        "municipality": "Centro"
+      },
+      "status": "active",
+      "groupId": "group1"
+    },
+    "ev2": {
+      "id": "ev2",
+      "title": "Workshop de UX Research",
+      "startDateAndTime": "2025-07-01T17:00:00Z",
+      "endDateAndTime": "2025-07-01T20:00:00Z",
+      "description": "Sesión práctica sobre investigación de usuarios.",
+      "maxParticipants": "20",
+      "address": {
+        "street": "Av. Diseño",
+        "numberStreet": "100",
+        "floor": "2",
+        "door": "B",
+        "postalCode": "08002",
+        "city": "Barcelona",
+        "province": "Barcelona",
+        "municipality": "Ciutat Vella"
+      },
+      "status": "active",
+      "groupId": "group2"
+    }
+  },
+  "userEvents": {
+    "ue1": {
+      "id": "ue1",
+      "userId": "TTcwj1CeLrRM5gl1POlXhePjOLd2",
+      "eventId": "ev1",
+      "isOrganizer": true,
+      "registeredAt": "2025-06-01T09:00:00Z",
+      "attending": true
+    },
+    "ue2": {
+      "id": "ue2",
+      "userId": "OuRJBqXUVGZoAzvFuqNJgMoupyf1",
+      "eventId": "ev1",
+      "isOrganizer": false,
+      "registeredAt": "2025-06-05T12:30:00Z",
+      "attending": true
+    },
+    "ue3": {
+      "id": "ue3",
+      "userId": "NA0JDJCEO6PzhwAtxKiXdmi3ttK2",
+      "eventId": "ev2",
+      "isOrganizer": false,
+      "registeredAt": "2025-06-10T11:45:00Z",
+      "attending": false
     }
   }
 }

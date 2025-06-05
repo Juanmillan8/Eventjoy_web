@@ -56,7 +56,7 @@ export class LoginComponent {
         this.memberService.getMemberByUidPromise(userCredential.user.uid).then((member)=>{
           if (member==null){
             let email = userCredential.user.email != null ? userCredential.user.email : "";
-            let member = new Member(userCredential.user.uid,"","",email,ROLE.MEMBER,"","","","","","","");
+            let member = new Member(userCredential.user.uid,userCredential.user.uid,"","",email,ROLE.MEMBER,"","","","","",0,"");
             this.memberService.saveMember(member).then(()=>{
               this.router.navigate(["/home"]);
             })
