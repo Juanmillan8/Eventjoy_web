@@ -56,6 +56,20 @@ export class UserGroupService {
     return listVal(userGroupQuery) as Observable<UserGroup[]>
   }
 
+  getByUserIdAndGroup(uid: string, gid:string): Promise<UserGroup | undefined> {
+
+    const usersgroupsRef = ref(this.database, this.COLLECTION_NAME);
+    const userGroupQuery = query(usersgroupsRef, orderByChild('userId'), equalTo(uid));
+    let listUserGroupSearch = listVal(userGroupQuery) as Observable<UserGroup[]>;
+    return firstValueFrom(
+      listUserGroupSearch.pipe(
+        map((userGroups: UserGroup[]) => 
+          userGroups.find(ug => ug.userId === uid && ug.groupId === gid)
+        )
+      )
+    );
+  }
+
   removeByGroup(gid: string): Promise<void> {
     const usersgroupsRef = ref(this.database, this.COLLECTION_NAME);
     const userGroupQuery = query(usersgroupsRef, orderByChild('groupId'), equalTo(gid));

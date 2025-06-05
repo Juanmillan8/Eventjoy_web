@@ -19,7 +19,7 @@ export class GroupListComponent implements OnInit {
   type: Number | null = null;
   groupAdminList: Group[] | null = null;
   groupNOAdminList: Group[] | null = null;
-  groupNoBelgonTo:Group[] | null = null;
+  groupNoBelgonTo: Group[] | null = null;
   authMember: null | Member = null;
   constructor(private router: Router, private groupService: GroupService, private userGroupService: UserGroupService, private authService: AuthService) { }
 
@@ -39,7 +39,7 @@ export class GroupListComponent implements OnInit {
   showOthersPublicGroups() {
     if (this.authMember) {
       this.groupService.getPublicGroupsNoBelogTo(this.authMember?.userAccountId).subscribe((groups: Group[]) => {
-         this.groupAdminList = [];
+        this.groupAdminList = [];
         this.groupNOAdminList = [];
         this.groupNoBelgonTo = groups;
       })
@@ -52,17 +52,28 @@ export class GroupListComponent implements OnInit {
       this.groupService.getGroupsByAdminStatus(this.authMember.userAccountId).subscribe(({ adminGroups, memberGroups }) => {
         this.groupAdminList = adminGroups;
         this.groupNOAdminList = memberGroups;
+        this.groupNoBelgonTo = [];
+
       });
     }
   }
 
-  joinGroup(gid:string){
-    if (this.authMember){
-    let userGroup = new UserGroup("-1",this.authMember?.userAccountId,gid,false,new Date().toLocaleDateString(),false)
-    this.userGroupService.saveUserGroup(userGroup).then(()=>{
-      this.router.navigate(["/groups"]);
-    })
+  joinGroup(gid: string) {
+    if (this.authMember) {
+      let userGroup = new UserGroup("-1", this.authMember?.userAccountId, gid, false, new Date().toLocaleDateString(), false)
+      this.userGroupService.saveUserGroup(userGroup).then(() => {
+        this.router.navigate(["/groups"]);
+      })
     }
-
+  }
+  leaveGroup(gid: string) {
+    if (this.authMember) {
+      this.userGroupService.getByUserIdAndGroup(this.authMember.userAccountId,gid).then((value: UserGroup| undefined) => {
+        if(value!=undefined && value){
+          this.userGroupService.deleteUserGroup(value.id);
+          this.showMyGroups();
+        }
+      })
+    }
   }
 }
