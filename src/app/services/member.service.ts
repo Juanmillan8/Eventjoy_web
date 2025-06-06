@@ -69,7 +69,7 @@ export class MemberService {
       map(([usersGroup, users]) => {
         // Filtrar los UserGroup que son administradores
         const adminUserIds = usersGroup
-          .filter(ug => ug.isAdmin)
+          .filter(ug => ug.admin)
           .map(ug => ug.userId);
 
         // Filtrar los usuarios que están en la lista de administradores

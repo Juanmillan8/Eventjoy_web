@@ -4,35 +4,35 @@
       "id": "group1",
       "title": "Desarrolladores Web",
       "description": "Grupo para compartir recursos y dudas sobre desarrollo web.",
-      "visibility": "public",
+      "visibility": "PUBLIC",
       "icon": "https://img.icons8.com/color/96/code.png"
     },
     "group2": {
       "id": "group2",
       "title": "Diseñadores UX/UI",
       "description": "Comunidad de diseñadores centrados en experiencia de usuario e interfaces.",
-      "visibility": "private",
+      "visibility": "PRIVATE",
       "icon": "https://img.icons8.com/color/96/design.png"
     },
     "group3": {
       "id": "group3",
       "title": "Machine Learning",
       "description": "Debates, noticias y proyectos sobre inteligencia artificial y aprendizaje automático.",
-      "visibility": "public",
+      "visibility": "PUBLIC",
       "icon": "https://img.icons8.com/color/96/artificial-intelligence.png"
     },
     "group4": {
       "id": "group4",
       "title": "Startups Tech",
       "description": "Emprendedores compartiendo ideas y feedback sobre startups tecnológicas.",
-      "visibility": "public",
+      "visibility": "PUBLIC",
       "icon": "https://img.icons8.com/color/96/startup.png"
     },
     "group5": {
       "id": "group5",
       "title": "Gamers Unidos",
       "description": "Un lugar para compartir experiencias, noticias y jugar en comunidad.",
-      "visibility": "private",
+      "visibility": "PRIVATE",
       "icon": "https://img.icons8.com/color/96/controller.png"
     }
   },
@@ -88,7 +88,7 @@
       "id": "ug1",
       "userId": "TTcwj1CeLrRM5gl1POlXhePjOLd2",
       "groupId": "group1",
-      "isAdmin": true,
+      "admin": true,
       "joinedAt": "2024-01-15T10:30:00Z",
       "notificationsEnabled": true
     },
@@ -96,7 +96,7 @@
       "id": "ug2",
       "userId": "OuRJBqXUVGZoAzvFuqNJgMoupyf1",
       "groupId": "group1",
-      "isAdmin": false,
+      "admin": false,
       "joinedAt": "2024-02-01T08:00:00Z",
       "notificationsEnabled": false
     },
@@ -104,7 +104,7 @@
       "id": "ug3",
       "userId": "NA0JDJCEO6PzhwAtxKiXdmi3ttK2",
       "groupId": "group2",
-      "isAdmin": false,
+      "admin": false,
       "joinedAt": "2024-03-10T12:15:00Z",
       "notificationsEnabled": true
     },
@@ -112,7 +112,7 @@
       "id": "ug4",
       "userId": "OuRJBqXUVGZoAzvFuqNJgMoupyf1",
       "groupId": "group3",
-      "isAdmin": true,
+      "admin": true,
       "joinedAt": "2024-04-05T09:45:00Z",
       "notificationsEnabled": true
     },
@@ -120,7 +120,7 @@
       "id": "ug5",
       "userId": "TTcwj1CeLrRM5gl1POlXhePjOLd2",
       "groupId": "group2",
-      "isAdmin": false,
+      "admin": false,
       "joinedAt": "2024-05-20T14:20:00Z",
       "notificationsEnabled": false
     }
@@ -132,7 +132,7 @@
       "startDateAndTime": "2025-06-15T10:00:00Z",
       "endDateAndTime": "2025-06-15T13:00:00Z",
       "description": "Aprende a maquetar páginas web desde cero.",
-      "maxParticipants": "30",
+      "maxParticipants": 30,
       "address": {
         "street": "Calle Web",
         "numberStreet": "25",
@@ -143,7 +143,7 @@
         "province": "Madrid",
         "municipality": "Centro"
       },
-      "status": "active",
+      "status": "ONGOING",
       "groupId": "group1"
     },
     "ev2": {
@@ -152,7 +152,7 @@
       "startDateAndTime": "2025-07-01T17:00:00Z",
       "endDateAndTime": "2025-07-01T20:00:00Z",
       "description": "Sesión práctica sobre investigación de usuarios.",
-      "maxParticipants": "20",
+      "maxParticipants": 20,
       "address": {
         "street": "Av. Diseño",
         "numberStreet": "100",
@@ -163,7 +163,7 @@
         "province": "Barcelona",
         "municipality": "Ciutat Vella"
       },
-      "status": "active",
+      "status": "ONGOING",
       "groupId": "group2"
     }
   },
@@ -172,25 +172,19 @@
       "id": "ue1",
       "userId": "TTcwj1CeLrRM5gl1POlXhePjOLd2",
       "eventId": "ev1",
-      "isOrganizer": true,
-      "registeredAt": "2025-06-01T09:00:00Z",
-      "attending": true
+      "notificationsEnabled": false
     },
     "ue2": {
       "id": "ue2",
       "userId": "OuRJBqXUVGZoAzvFuqNJgMoupyf1",
       "eventId": "ev1",
-      "isOrganizer": false,
-      "registeredAt": "2025-06-05T12:30:00Z",
-      "attending": true
+      "notificationsEnabled": false
     },
     "ue3": {
       "id": "ue3",
       "userId": "NA0JDJCEO6PzhwAtxKiXdmi3ttK2",
       "eventId": "ev2",
-      "isOrganizer": false,
-      "registeredAt": "2025-06-10T11:45:00Z",
-      "attending": false
+      "notificationsEnabled": false
     }
   }
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { child, Database, DataSnapshot, equalTo, get, listVal, objectVal, orderByChild, push, query, ref, remove, set } from '@angular/fire/database';
 import { combineLatest, firstValueFrom, forkJoin, map, Observable, of, switchMap } from 'rxjs';
 import { Member } from '../models/member.model';
-import { Group } from '../models/group.model';
+import { Group, Visibility } from '../models/group.model';
 import { UserGroupService } from './usergroup.service';
 import { UserGroup } from '../models/usergroup.model';
 import { user, User } from '@angular/fire/auth';
@@ -71,7 +71,7 @@ export class GroupService {
 
   getAllPublicGroups(): Observable<Group[]> {
     const groupsRef = ref(this.database, this.COLLECTION_NAME);
-    const groupQuery = query(groupsRef, orderByChild('visibility'), equalTo("public"));
+    const groupQuery = query(groupsRef, orderByChild('visibility'), equalTo(Visibility.PUBLIC));
 
     return listVal(groupQuery) as Observable<Group[]>
   }
@@ -86,7 +86,7 @@ export class GroupService {
         const joinedGroupIds = new Set(groupsBelogTo.map(ug => ug.groupId));
 
         return publicGroups.filter(group =>
-          group.visibility === 'public' && !joinedGroupIds.has(group.id)
+          group.visibility === Visibility.PUBLIC && !joinedGroupIds.has(group.id)
         );
       })
     );
@@ -117,8 +117,8 @@ export class GroupService {
           return of({ adminGroups: [], memberGroups: [] });
         }
 
-        const adminUGs = userGroups.filter(ug => ug.isAdmin);
-        const memberUGs = userGroups.filter(ug => !ug.isAdmin);
+        const adminUGs = userGroups.filter(ug => ug.admin);
+        const memberUGs = userGroups.filter(ug => !ug.admin);
 
         // Observable que devuelve todos los grupos donde es admin, o array vacío si no hay
         const adminGroups$ = adminUGs.length

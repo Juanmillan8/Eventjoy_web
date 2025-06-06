@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Group } from '../../../models/group.model';
+import { Group, Visibility } from '../../../models/group.model';
 import { AuthService } from '../../../services/auth.service';
 import { GroupService } from '../../../services/group.service';
 import { CommonModule } from '@angular/common';
@@ -111,8 +111,9 @@ export class GroupFormComponent implements OnInit {
         this.errores = "Error al actualizar la información del grupo"
       });
     } else if (this.groupId == "-1" && this.memberAuth) {
+      let visibilidad:Visibility = visibility == "PUBLIC" ?Visibility.PUBLIC:Visibility.PRIVATE;
 
-      let newGroup = new Group("-1", title, description, visibility, icon);
+      let newGroup = new Group("-1", title, description, visibilidad, icon);
       let newUserGroup = new UserGroup("-1", this.memberAuth.userAccountId, "-1", true, new Date().toLocaleDateString(), false);
 
       this.groupService.createGroup(newGroup).then((group) => {

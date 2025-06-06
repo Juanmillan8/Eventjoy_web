@@ -20,6 +20,7 @@ export class GroupListComponent implements OnInit {
   groupAdminList: Group[] | null = null;
   groupNOAdminList: Group[] | null = null;
   groupNoBelgonTo: Group[] | null = null;
+  allGroups: Group[] | null = null;
   authMember: null | Member = null;
   constructor(private router: Router, private groupService: GroupService, private userGroupService: UserGroupService, private authService: AuthService) { }
 
@@ -41,6 +42,7 @@ export class GroupListComponent implements OnInit {
       this.groupService.getPublicGroupsNoBelogTo(this.authMember?.userAccountId).subscribe((groups: Group[]) => {
         this.groupAdminList = [];
         this.groupNOAdminList = [];
+        this.allGroups = [];
         this.groupNoBelgonTo = groups;
       })
     }
@@ -52,12 +54,23 @@ export class GroupListComponent implements OnInit {
       this.groupService.getGroupsByAdminStatus(this.authMember.userAccountId).subscribe(({ adminGroups, memberGroups }) => {
         this.groupAdminList = adminGroups;
         this.groupNOAdminList = memberGroups;
+        this.allGroups = [];
         this.groupNoBelgonTo = [];
 
       });
     }
   }
 
+  showAllGroups(){
+    if (this.authMember) {
+      this.groupService.getAllPublicGroups().subscribe((groups:Group[]) => {
+        this.groupAdminList = [];
+        this.groupNOAdminList = [];
+        this.groupNoBelgonTo = [];
+        this.allGroups = groups;
+      });
+    }
+  }
   joinGroup(gid: string) {
     if (this.authMember) {
       let userGroup = new UserGroup("-1", this.authMember?.userAccountId, gid, false, new Date().toLocaleDateString(), false)
