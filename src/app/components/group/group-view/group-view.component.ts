@@ -6,11 +6,13 @@ import { Member } from '../../../models/member.model';
 import { UserGroupService } from '../../../services/usergroup.service';
 import { GroupService } from '../../../services/group.service';
 import { MemberService } from '../../../services/member.service';
+import { EventListComponent } from "../../event/event-list/event-list.component";
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-group-view',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, EventListComponent,EventListComponent],
   templateUrl: './group-view.component.html',
   styleUrl: './group-view.component.css'
 })
@@ -20,8 +22,9 @@ export class GroupViewComponent implements OnInit {
   group: Group | null = null;
   members: Member[] | null = null;
   admins: Member[] | null = null;
+  authMember: Member | null = null;
 
-  constructor(private route: ActivatedRoute, private memberService: MemberService, private groupService: GroupService) { }
+  constructor(private route: ActivatedRoute, private memberService: MemberService, private groupService: GroupService, private authService:AuthService) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -42,10 +45,22 @@ export class GroupViewComponent implements OnInit {
           this.admins = admins;
         });
       }
+          this.authService.getUserDataAuth().subscribe(({ user, member }) => {
+            this.authMember = member;
+          });
+
     });
   }
 
   isAdmin(userId: string): boolean {
   return this.admins?.some(admin => admin.id === userId) ?? false;
-}
+  }
+
+  isAuthUserAdmin(){
+    if(this.authMember){
+      return this.isAdmin(this.authMember.userAccountId);
+    }else{
+      return false;
+    }
+  }
 }

@@ -1,0 +1,28 @@
+<div class="row row-cols-1 row-cols-md-2 g-4">
+  <div *ngIf="events == null || events.length == 0" class="text-center text-muted my-4">
+    <p class="fs-5">There are no events.</p>
+  </div>
+  <div class="col" *ngFor="let event of events">
+    <div class="card h-100">
+      <div class="card-body">
+        <h5 class="card-title">{{event.title}}</h5>
+        <p class="card-text">{{event.description}}</p>
+        <ul class="list-unstyled">
+          <li><strong>Start date:</strong> {{event.startDateAndTime | date:'dd/MM/yyyy, HH:mm' }}</li>
+          <li><strong>End date:</strong> {{event.endDateAndTime | date:'dd/MM/yyyy, HH:mm' }}</li>
+          <li><strong>Maximum number of participants:</strong> {{event.maxParticipants}}</li>
+          <li><strong>Address:</strong> {{event.fullAddress }}</li>
+        </ul>
+        <span class="badge" [ngClass]="getStatusClass(event.computedStatus)">
+          {{ event.computedStatus | titlecase }}
+        </span>
+      </div>
+      <div class="card-footer">
+        <button type="button" class="btn btn-primary" *ngIf="isAuthUserAdmin()"
+          [routerLink]="['/editevent', groupId, event.id]">
+          Edit
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

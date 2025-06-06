@@ -1,0 +1,99 @@
+<div class="container py-4" style="max-width: 600px;">
+    <div *ngIf="mensajes" class="alert alert-success" role="alert">
+        {{ mensajes }}
+    </div>
+    <div *ngIf="errores" class="alert alert-danger" role="alert">
+        {{ errores }}
+    </div>
+
+    <form [formGroup]="eventForm" id="editEventForm" class="p-4 border rounded mx-auto">
+        <h3 class="mb-4 text-center" *ngIf="event && event.id">Edit Event</h3>
+        <h3 class="mb-4 text-center" *ngIf="!event || !event.id">Create Event</h3>
+
+        <div class="mb-3">
+            <label for="eventTitle" class="form-label">Title</label>
+            <input type="text" formControlName="title" id="eventTitle" class="form-control" placeholder="Event name"
+                required />
+        </div>
+
+        <div class="mb-3">
+            <label for="eventDescription" class="form-label">Description</label>
+            <textarea formControlName="description" id="eventDescription" class="form-control" rows="3"
+                placeholder="Event description" required></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="startDateTime" class="form-label">Start Date and Time</label>
+            <input type="datetime-local" formControlName="startDateAndTime" id="startDateTime" class="form-control"
+                required />
+        </div>
+
+        <div class="mb-3">
+            <label for="endDateTime" class="form-label">End Date and Time</label>
+            <input type="datetime-local" formControlName="endDateAndTime" id="endDateTime" class="form-control"
+                required />
+        </div>
+
+        <div class="mb-3">
+            <label for="maxParticipants" class="form-label">Maximum Number of Participants</label>
+            <input type="number" formControlName="maxParticipants" id="maxParticipants" class="form-control" min="1"
+                required />
+        </div>
+
+        <fieldset class="border p-3 mb-3 rounded">
+            <legend class="w-auto px-2">Address</legend>
+
+            <div class="mb-3">
+                <label for="street" class="form-label">Street</label>
+                <input type="text" formControlName="street" id="street" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+                <label for="numberStreet" class="form-label">Number</label>
+                <input type="text" formControlName="numberStreet" id="numberStreet" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+                <label for="floor" class="form-label">Floor</label>
+                <input type="text" formControlName="floor" id="floor" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+                <label for="door" class="form-label">Door</label>
+                <input type="text" formControlName="door" id="door" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+                <label for="postalCode" class="form-label">Postal Code</label>
+                <input type="text" formControlName="postalCode" id="postalCode" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+                <label for="city" class="form-label">City</label>
+                <input type="text" formControlName="city" id="city" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+                <label for="municipality" class="form-label">Municipality</label>
+                <input type="text" formControlName="municipality" id="municipality" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+                <label for="province" class="form-label">Province</label>
+                <input type="text" formControlName="province" id="province" class="form-control" required />
+            </div>
+        </fieldset>
+
+        <div class="d-flex justify-content-between flex-column flex-sm-row gap-2">
+            <button type="button" class="btn btn-danger w-100 w-sm-auto" *ngIf="event && event.id" (click)="delete()">
+                Delete
+            </button>
+            <button type="button" class="btn btn-secondary w-100 w-sm-auto" (click)="cancelEdit()">
+                Cancel
+            </button>
+            <button type="submit" class="btn btn-primary w-100 w-sm-auto" (click)="save()">
+                Save Changes
+            </button>
+        </div>
+    </form>
+</div>

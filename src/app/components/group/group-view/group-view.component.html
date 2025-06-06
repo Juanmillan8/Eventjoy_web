@@ -7,7 +7,8 @@
         <div>
           <h3 class="card-title mb-1">{{group.title}}</h3>
           <p class="card-text text-muted mb-1">{{group.description}}</p>
-          <span class="badge bg-success">{{group.visibility}}</span>
+              <span class="badge bg-success" *ngIf="group.visibility == 'PUBLIC'">Public</span>
+              <span class="badge bg-danger" *ngIf="group.visibility == 'PRIVATE'">Private</span>
         </div>
       </div>
     </div>
@@ -31,24 +32,7 @@
     <!-- Eventos del grupo -->
     <div>
       <h4>Eventos del grupo</h4>
-      <div class="row row-cols-1 row-cols-md-2 g-4">
-        <div class="col">
-          <div class="card h-100">
-            <div class="card-body">
-              <h5 class="card-title">Taller de HTML y CSS</h5>
-              <p class="card-text">Aprende a maquetar páginas web desde cero.</p>
-              <ul class="list-unstyled">
-                <li><strong>Inicio:</strong> 2025-06-15 10:00</li>
-                <li><strong>Fin:</strong> 2025-06-15 13:00</li>
-                <li><strong>Participantes máximos:</strong> 30</li>
-                <li><strong>Dirección:</strong> Calle Web 25, 1ºA, 28001 Madrid</li>
-              </ul>
-              <span class="badge bg-primary">Activo</span>
-            </div>
-          </div>
-        </div>
-        <!-- Puedes añadir más eventos aquí -->
-      </div>
+      <app-event-list [groupId]="groupId"></app-event-list>
     </div>
   </div>
  </ng-container>

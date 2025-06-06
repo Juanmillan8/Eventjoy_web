@@ -43,8 +43,6 @@ export class GroupFormComponent implements OnInit {
           this.groupId = params.get('id'); // o el nombre que uses en la ruta
           if (this.groupId && this.groupId != "-1") {
             this.groupService.getGroupsByAdminStatus(member.userAccountId).subscribe(({ adminGroups, memberGroups }) => {
-              console.log(adminGroups);
-              console.log(memberGroups);
               this.group = adminGroups.find((g: Group) => g.id === this.groupId) || null;
               this.group ? this.existGroup = true : this.existGroup = false;
 

@@ -1,5 +1,4 @@
 export class Address {
-    id:string;
     street:string;
     numberStreet:string;
     floor:string;
@@ -9,8 +8,7 @@ export class Address {
     province:string;
     municipality: string;
     
-constructor(id:string, street: string, numberStreet: string, floor: string, door: string, postalCode: string, city: string, province: string, municipality: string ) {
-    this.id = id;
+constructor(street: string, numberStreet: string, floor: string, door: string, postalCode: string, city: string, province: string, municipality: string ) {
     this.street = street;
     this.numberStreet = numberStreet;
     this.floor = floor;
@@ -20,4 +18,6 @@ constructor(id:string, street: string, numberStreet: string, floor: string, door
     this.province = province;
     this.municipality = municipality;
   }
+
+
 }

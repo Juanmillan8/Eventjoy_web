@@ -2,79 +2,109 @@
   <div class="row">
     <div class="row text-center">
       <div class="col-6">
-            <button type="button" class="btn btn-success btn-list-group" (click)="showMyGroups()">My groups</button>
-            <button type="button" class="btn btn-success btn-list-group" (click)="showOthersPublicGroups()">Other groups</button>
-            <button type="button" class="btn btn-success btn-list-group" (click)="showAllGroups()">All groups</button>
-            <button type="button" class="btn btn-info btn-list-group" routerLink="/editgroup/-1"><i class="bi bi-plus-circle" ></i> Crear grupo</button>
-          </div>
+        <button type="button" class="btn btn-success btn-list-group" (click)="showMyGroups()">My groups</button>
+        <button type="button" class="btn btn-success btn-list-group" (click)="showOthersPublicGroups()">Other
+          groups</button>
+        <button type="button" class="btn btn-success btn-list-group" (click)="showAllGroups()">All groups</button>
+        <button type="button" class="btn btn-info btn-list-group" routerLink="/editgroup/-1"><i
+            class="bi bi-plus-circle"></i> Crear grupo</button>
+      </div>
     </div>
   </div>
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 row-card">
 
     <!-- Tarjeta de grupo -->
-    <ng-container *ngFor="let group of groupAdminList">
-      <div class="col">
-        <div class="card group-card shadow-sm h-100">
-          <img [src]="group.icon" class="card-img-top" alt="Icono Grupo A">
-          <div class="card-body">
-            <h5 class="card-title" ><a routerLink="/viewgroup/{{group.id}}">{{group.title}}</a></h5>
-            <p class="card-text">{{group.description}}</p>
-            <span class="badge bg-success" *ngIf="group.visibility == 'PUBLIC'">Public</span>
-            <span class="badge bg-danger" *ngIf="group.visibility == 'PRIVATE'">Private</span>
-          </div>
-          <div class="card-footer">
-            <button type="button" class="btn btn-primary" routerLink="/editgroup/{{group.id}}">Editar</button>
+    <ng-container *ngIf="showType=='JOINED'">
+      <ng-container *ngFor="let group of groupAdminList">
+        <div class="col">
+          <div class="card group-card shadow-sm h-100">
+            <img [src]="group.icon" class="card-img-top" alt="Icono Grupo A">
+            <div class="card-body">
+              <h5 class="card-title"><a routerLink="/viewgroup/{{group.id}}">{{group.title}}</a></h5>
+              <p class="card-text">{{group.description}}</p>
+              <span class="badge bg-success" *ngIf="group.visibility == 'PUBLIC'">Public</span>
+              <span class="badge bg-danger" *ngIf="group.visibility == 'PRIVATE'">Private</span>
+            </div>
+            <div class="card-footer">
+              <button type="button" class="btn btn-primary" *ngIf="isAdmin(group.id)"
+                routerLink="/editgroup/{{group.id}}">Edit</button>
+            </div>
           </div>
         </div>
-      </div>
+      </ng-container>
+      <ng-container *ngFor="let group of groupNOAdminList">
+        <div class="col">
+          <div class="card group-card shadow-sm h-100">
+            <img [src]="group.icon" class="card-img-top" alt="Icono Grupo A">
+            <div class="card-body">
+              <h5 class="card-title"><a routerLink="/viewgroup/{{group.id}}">{{group.title}}</a></h5>
+              <p class="card-text">{{group.description}}</p>
+              <span class="badge bg-success" *ngIf="group.visibility == 'PUBLIC'">Public</span>
+              <span class="badge bg-danger" *ngIf="group.visibility == 'PRIVATE'">Private</span>
+            </div>
+            <div class="card-footer">
+              <button type="button" class="btn btn-secondary" *ngIf="!isJoined(group.id) "
+                (click)="joinGroup(group.id)">Join</button>
+              <button type="button" class="btn btn-secondary" *ngIf="isJoined(group.id) && !isAdmin(group.id)"
+                (click)="leaveGroup(group.id)">Leave</button>
+              <button type="button" class="btn btn-primary" *ngIf="isAdmin(group.id)"
+                routerLink="/editgroup/{{group.id}}">Editar</button>
+              <button type="button" class="btn btn-primary" *ngIf="isAdmin(group.id)"
+                routerLink="/editgroup/{{group.id}}">Edit</button>
+
+            </div>
+          </div>
+        </div>
+      </ng-container>
     </ng-container>
-    <ng-container *ngFor="let group of groupNOAdminList">
-      <div class="col">
-        <div class="card group-card shadow-sm h-100">
-          <img [src]="group.icon" class="card-img-top" alt="Icono Grupo A">
-          <div class="card-body">
-            <h5 class="card-title" ><a routerLink="/viewgroup/{{group.id}}">{{group.title}}</a></h5>
-            <p class="card-text">{{group.description}}</p>
-            <span class="badge bg-success" *ngIf="group.visibility == 'PUBLIC'">Public</span>
-            <span class="badge bg-danger" *ngIf="group.visibility == 'PRIVATE'">Private</span>
-          </div>
-          <div class="card-footer">
-            <button type="button" class="btn btn-secondary" (click)="leaveGroup(group.id)">Dejar grupo</button>
+
+    <ng-container *ngIf="showType=='OTHERS'">
+      <ng-container *ngFor="let group of groupNoBelgonTo">
+        <div class="col">
+          <div class="card group-card shadow-sm h-100">
+            <img [src]="group.icon" class="card-img-top" alt="Icono Grupo A">
+            <div class="card-body">
+              <h5 class="card-title"><a routerLink="/viewgroup/{{group.id}}">{{group.title}}</a></h5>
+              <p class="card-text">{{group.description}}</p>
+              <span class="badge bg-success" *ngIf="group.visibility == 'PUBLIC'">Public</span>
+              <span class="badge bg-danger" *ngIf="group.visibility == 'PRIVATE'">Private</span>
+            </div>
+            <div class="card-footer">
+              <button type="button" class="btn btn-secondary" *ngIf="!isJoined(group.id) "
+                (click)="joinGroup(group.id)">Join</button>
+              <button type="button" class="btn btn-secondary" *ngIf="isJoined(group.id) && !isAdmin(group.id)"
+                (click)="leaveGroup(group.id)">Leave</button>
+              <button type="button" class="btn btn-primary" *ngIf="isAdmin(group.id)"
+                routerLink="/editgroup/{{group.id}}">Edit</button>
+
+            </div>
           </div>
         </div>
-      </div>
+      </ng-container>
     </ng-container>
-        <ng-container *ngFor="let group of allGroups">
-      <div class="col">
-        <div class="card group-card shadow-sm h-100">
-          <img [src]="group.icon" class="card-img-top" alt="Icono Grupo A">
-          <div class="card-body">
-            <h5 class="card-title" ><a routerLink="/viewgroup/{{group.id}}">{{group.title}}</a></h5>
-            <p class="card-text">{{group.description}}</p>
-            <span class="badge bg-success" *ngIf="group.visibility == 'PUBLIC'">Public</span>
-            <span class="badge bg-danger" *ngIf="group.visibility == 'PRIVATE'">Private</span>
-          </div>
-          <div class="card-footer">
-            <button type="button" class="btn btn-secondary" (click)="leaveGroup(group.id)">Dejar grupo</button>
-          </div>
-        </div>
-      </div>
-    </ng-container>
-    <ng-container *ngFor="let group of groupNoBelgonTo">
-      <div class="col">
-        <div class="card group-card shadow-sm h-100">
-          <img [src]="group.icon" class="card-img-top" alt="Icono Grupo A">
-          <div class="card-body">
-            <h5 class="card-title" ><a routerLink="/viewgroup/{{group.id}}">{{group.title}}</a></h5>
-            <p class="card-text">{{group.description}}</p>
-            <span class="badge bg-success" *ngIf="group.visibility == 'PUBLIC'">Public</span>
-            <span class="badge bg-danger" *ngIf="group.visibility == 'PRIVATE'">Private</span>
-          </div>
-          <div class="card-footer">
-            <button type="button" class="btn btn-primary" (click)="joinGroup(group.id)">Unirse</button>
+    <ng-container *ngIf="showType=='ALL'">
+      <ng-container *ngFor="let group of allGroups">
+        <div class="col">
+          <div class="card group-card shadow-sm h-100">
+            <img [src]="group.icon" class="card-img-top" alt="Icono Grupo A">
+            <div class="card-body">
+              <h5 class="card-title"><a routerLink="/viewgroup/{{group.id}}">{{group.title}}</a></h5>
+              <p class="card-text">{{group.description}}</p>
+              <span class="badge bg-success" *ngIf="group.visibility == 'PUBLIC'">Public</span>
+              <span class="badge bg-danger" *ngIf="group.visibility == 'PRIVATE'">Private</span>
+            </div>
+            <div class="card-footer">
+              <button type="button" class="btn btn-secondary" *ngIf="!isJoined(group.id) "
+                (click)="joinGroup(group.id)">Join</button>
+              <button type="button" class="btn btn-secondary" *ngIf="isJoined(group.id) && !isAdmin(group.id)"
+                (click)="leaveGroup(group.id)">Leave</button>
+              <button type="button" class="btn btn-primary" *ngIf="isAdmin(group.id)"
+                routerLink="/editgroup/{{group.id}}">Edit</button>
+
+            </div>
           </div>
         </div>
-      </div>
+      </ng-container>
     </ng-container>
   </div>
 </div>

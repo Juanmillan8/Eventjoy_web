@@ -7,9 +7,9 @@ import { redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 import { authGuard } from './guards/auth.guard';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { GroupsComponent } from './pages/groups/groups.component';
-import { GroupListComponent } from './components/group/group-list/group-list.component';
 import { GroupFormComponent } from './components/group/group-form/group-form.component';
 import { GroupViewComponent } from './components/group/group-view/group-view.component';
+import { EventFormComponent } from './components/event/event-form/event-form.component';
 
 
 export const routes: Routes = [
@@ -17,6 +17,7 @@ export const routes: Routes = [
     {path:"groups",component:GroupsComponent,canActivate: [authGuard],data: { role: '*' }},
     {path:"editgroup/:id",component:GroupFormComponent,canActivate: [authGuard],data: { role: '*' }},
     {path:"viewgroup/:id",component:GroupViewComponent,canActivate: [authGuard],data: { role: '*' }},
+    {path:"editevent/:groupid/:eventid",component:EventFormComponent,canActivate: [authGuard],data: { role: '*' }},
     {path:"profile",component:ProfileComponent,...canActivate(() => redirectUnauthorizedTo(["login"]))},
     {path:"login",component:LoginComponent},
     {path:"singin",component:SinginComponent},

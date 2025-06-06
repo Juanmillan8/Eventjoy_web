@@ -20,6 +20,8 @@ export class GroupListComponent implements OnInit {
   groupAdminList: Group[] | null = null;
   groupNOAdminList: Group[] | null = null;
   groupNoBelgonTo: Group[] | null = null;
+  showType:string = "JOINED";
+
   allGroups: Group[] | null = null;
   authMember: null | Member = null;
   constructor(private router: Router, private groupService: GroupService, private userGroupService: UserGroupService, private authService: AuthService) { }
@@ -38,35 +40,31 @@ export class GroupListComponent implements OnInit {
   }
 
   showOthersPublicGroups() {
+    this.showType="OTHERS";
     if (this.authMember) {
       this.groupService.getPublicGroupsNoBelogTo(this.authMember?.userAccountId).subscribe((groups: Group[]) => {
-        this.groupAdminList = [];
-        this.groupNOAdminList = [];
-        this.allGroups = [];
         this.groupNoBelgonTo = groups;
       })
     }
 
   }
   showMyGroups() {
+    this.showType="JOINED";
     if (this.authMember) {
 
       this.groupService.getGroupsByAdminStatus(this.authMember.userAccountId).subscribe(({ adminGroups, memberGroups }) => {
         this.groupAdminList = adminGroups;
         this.groupNOAdminList = memberGroups;
-        this.allGroups = [];
-        this.groupNoBelgonTo = [];
-
       });
     }
   }
 
-  showAllGroups(){
+  showAllGroups() {
+    this.showType="ALL";
+
     if (this.authMember) {
-      this.groupService.getAllPublicGroups().subscribe((groups:Group[]) => {
-        this.groupAdminList = [];
-        this.groupNOAdminList = [];
-        this.groupNoBelgonTo = [];
+      
+      this.groupService.getAllPublicGroups().subscribe((groups: Group[]) => {
         this.allGroups = groups;
       });
     }
@@ -79,14 +77,25 @@ export class GroupListComponent implements OnInit {
       })
     }
   }
+
+  isJoined(groupId: string):boolean | undefined{
+    return this.groupAdminList?.some(group => group.id === groupId) || this.groupNOAdminList?.some(group => group.id === groupId);
+  }
+  isAdmin(groupId: string):boolean| undefined{
+    return this.groupAdminList?.some(group => group.id === groupId);
+  }
+
   leaveGroup(gid: string) {
-    if (this.authMember) {
-      this.userGroupService.getByUserIdAndGroup(this.authMember.userAccountId,gid).then((value: UserGroup| undefined) => {
-        if(value!=undefined && value){
+    if (this.authMember && this.isAdmin(gid)!=undefined && !this.isAdmin(gid)) {
+
+      this.userGroupService.getByUserIdAndGroup(this.authMember.userAccountId, gid).then((value: UserGroup | undefined) => {
+        if (value != undefined && value) {
           this.userGroupService.deleteUserGroup(value.id);
           this.showMyGroups();
         }
       })
     }
   }
+
+ 
 }
