@@ -9,11 +9,12 @@ import { AuthService } from '../../../services/auth.service';
 import { RouterLink } from '@angular/router';
 import { UserEventService } from '../../../services/userevent.service';
 import { UserEvent } from '../../../models/userevent.model';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-event-list',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink,FormsModule ],
   templateUrl: './event-list.component.html',
   styleUrl: './event-list.component.css'
 })
@@ -25,6 +26,7 @@ export class EventListComponent implements OnInit {
   userEventsMemberAuth: UserEvent[] | null = null;
   eventsWithUserEvents: { event: Event; users: UserEvent[] }[] | null = null;
   allUserEvents: UserEvent[] = [];
+  filterTerm: string = '';
 
 
 
@@ -114,4 +116,29 @@ export class EventListComponent implements OnInit {
   isComplete(event:Event){
     return !(this.numberOfParticipants(event.id) < event.maxParticipants);
   }
+
+    /** Devuelve solo los eventos cuyo título incluya el texto de filtro */
+get filteredEvents(): Event[] {
+  const term = this.filterTerm.trim().toLowerCase();
+  if (!this.events) {
+    return [];
+  }
+
+  return this.events.filter(e => {
+    // Construimos un string con todas las propiedades relevantes
+    const haystack = [
+      e.title,
+      e.description,
+      e.startDateAndTime,
+      e.endDateAndTime,
+      e.maxParticipants.toString(),
+      e.fullAddress,
+      e.computedStatus
+    ]
+      .join(' ')
+      .toLowerCase();
+
+    return haystack.includes(term);
+  });
+}
 }

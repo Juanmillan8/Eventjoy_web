@@ -10,11 +10,12 @@ import { EventListComponent } from "../../event/event-list/event-list.component"
 import { AuthService } from '../../../services/auth.service';
 import { UserEvent } from '../../../models/userevent.model';
 import { UserEventService } from '../../../services/userevent.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-group-view',
   standalone: true,
-  imports: [CommonModule, EventListComponent],
+  imports: [CommonModule, EventListComponent,FormsModule],
   templateUrl: './group-view.component.html',
   styleUrl: './group-view.component.css'
 })
@@ -25,6 +26,7 @@ export class GroupViewComponent implements OnInit {
   members: Member[] | null = null;
   admins: Member[] | null = null;
   authMember: Member | null = null;
+  filterTermMembers: string = '';
 
   constructor(private route: ActivatedRoute, private memberService: MemberService, private groupService: GroupService, private authService:AuthService) { }
 
@@ -66,5 +68,23 @@ export class GroupViewComponent implements OnInit {
       return false;
     }
   }
+get filteredMembers(): Member[] {
+  const term = this.filterTermMembers.trim().toLowerCase();
+  if (!this.members) {
+    return [];
+  }
 
+  return this.members.filter(m => {
+    // concatenamos los campos que queremos buscar
+    const haystack = [
+      m.name,
+      m.surname,
+      m.username
+    ]
+      .join(' ')
+      .toLowerCase();
+
+    return haystack.includes(term);
+  });
+}
 }

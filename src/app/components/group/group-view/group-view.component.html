@@ -16,8 +16,15 @@
     <!-- Usuarios del grupo -->
     <div class="mb-5">
       <h4>Miembros del grupo</h4>
+      <div class="row text-center">
+        <div class="col-12">
+          <div class="mb-3" *ngIf="members != null && members.length > 0">
+            <input type="text" class="form-control" placeholder="Search members..." [(ngModel)]="filterTermMembers" />
+          </div>
+        </div>
+      </div>
       <div class="row row-cols-1 row-cols-md-3 g-3">
-        <div class="col" *ngFor="let user of members">
+        <div class="col" *ngFor="let user of filteredMembers">
           <div class="card h-100 p-3 d-flex flex-row align-items-center">
             <img src="{{user.photo}}" alt="{{user.name}}" class="user-photo me-3" />
             <div>

@@ -1,13 +1,24 @@
 <div class="row text-center" id="eventsButtons">
-  <div class="col-6">
-    <button type="button" class="btn btn-info btn-list-group" *ngIf="isAuthUserAdmin()" routerLink="/editevent/{{groupId}}//-1"><i class="bi bi-plus-circle"></i> New event</button>
+  <div class="col-12">
+    <button type="button" class="btn btn-info btn-list-group" *ngIf="isAuthUserAdmin()"
+      routerLink="/editevent/{{groupId}}//-1"><i class="bi bi-plus-circle"></i> New event</button>
+  </div>
+</div>
+<div class="row text-center">
+  <div class="col-12">
+    <div class="mb-3" *ngIf="events != null && events.length > 0">
+      <input type="text" class="form-control" placeholder="Search events..." [(ngModel)]="filterTerm" />
+    </div>
   </div>
 </div>
 <div class="row row-cols-1 row-cols-md-2 g-4">
-  <div *ngIf="events == null || events.length == 0" class="text-center text-muted my-4">
+  <div *ngIf="filteredEvents == null || filteredEvents.length == 0" class="text-center text-muted my-4">
     <p class="fs-5">There are no events.</p>
   </div>
-  <div class="col" *ngFor="let event of events">
+
+
+
+  <div class="col" *ngFor="let event of filteredEvents">
     <div class="card h-100">
       <div class="card-body">
         <h5 class="card-title">{{event.title}}</h5>
@@ -16,7 +27,8 @@
           <li><strong>Start date:</strong> {{event.startDateAndTime | date:'dd/MM/yyyy, HH:mm' }}</li>
           <li><strong>End date:</strong> {{event.endDateAndTime | date:'dd/MM/yyyy, HH:mm' }}</li>
           <li><strong>Maximum number of participants:</strong> {{event.maxParticipants}}</li>
-          <li [ngClass]="{ 'maxParticipants': numberOfParticipants(event.id) === event.maxParticipants }"><strong >Participants:</strong> {{numberOfParticipants(event.id)}}/{{event.maxParticipants}}</li>
+          <li [ngClass]="{ 'maxParticipants': numberOfParticipants(event.id) === event.maxParticipants }">
+            <strong>Participants:</strong> {{numberOfParticipants(event.id)}}/{{event.maxParticipants}}</li>
 
           <li><strong>Address:</strong> {{event.fullAddress }}</li>
         </ul>
@@ -29,10 +41,12 @@
           [routerLink]="['/editevent', groupId, event.id]">
           Edit
         </button>
-        <button type="button" class="btn btn-primary btns-footer" *ngIf="!isJoined(event.id) && !isComplete(event) && event.status != 'FINISHED'" (click)="joinEvent(event.id)">
+        <button type="button" class="btn btn-primary btns-footer"
+          *ngIf="!isJoined(event.id) && !isComplete(event) && event.status != 'FINISHED'" (click)="joinEvent(event.id)">
           Join
         </button>
-        <button type="button" class="btn btn-danger btns-footer" *ngIf="isJoined(event.id) && event.status == 'SCHEDULED'" (click)="leaveEvent(event.id)">
+        <button type="button" class="btn btn-danger btns-footer"
+          *ngIf="isJoined(event.id) && event.status == 'SCHEDULED'" (click)="leaveEvent(event.id)">
           Leave
         </button>
       </div>
