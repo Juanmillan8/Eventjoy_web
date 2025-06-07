@@ -32,7 +32,7 @@
         <button type="button" class="btn btn-primary btns-footer" *ngIf="!isJoined(event.id) && !isComplete(event) && event.status != 'FINISHED'" (click)="joinEvent(event.id)">
           Join
         </button>
-        <button type="button" class="btn btn-danger btns-footer" *ngIf="isJoined(event.id)" (click)="leaveEvent(event.id)">
+        <button type="button" class="btn btn-danger btns-footer" *ngIf="isJoined(event.id) && event.status == 'SCHEDULED'" (click)="leaveEvent(event.id)">
           Leave
         </button>
       </div>
