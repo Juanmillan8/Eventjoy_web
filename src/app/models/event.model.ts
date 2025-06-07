@@ -27,7 +27,7 @@ export class Event {
         this.status = status;
         this.groupId = groupId;
     }
-    get computedStatus(): string {
+    get computedStatus(): StatusEvent {
         const now = new Date();
         const start = new Date(this.startDateAndTime);
         const end = new Date(this.endDateAndTime);

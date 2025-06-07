@@ -7,6 +7,8 @@ import { UserGroupService } from './usergroup.service';
 import { UserGroup } from '../models/usergroup.model';
 import { user, User } from '@angular/fire/auth';
 import { Event } from '../models/event.model';
+import { UserEventService } from './userevent.service';
+import { UserEvent } from '../models/userevent.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,7 @@ export class EventService {
   private COLLECTION_NAME = "events"
 
 
-  constructor(private database: Database) { }
+  constructor(private database: Database, private userEventService: UserEventService) { }
 
 
   getEventsByGroup(gid: string): Observable<Event[]> {
@@ -46,4 +48,52 @@ export class EventService {
     );
   }
 
+  deleteEvent(event: Event): Promise<void> {
+    const eventRef = ref(this.database, `/${this.COLLECTION_NAME}/${event.id}`);
+
+    return remove(eventRef);
+  }
+
+  editEvent(event: Event) {
+
+    let eventRef = ref(this.database, `/${this.COLLECTION_NAME}/${event.id}`);
+    return set(eventRef, event) as Promise<void>
+  }
+
+
+  createEvent(event: Event): Promise<Event> {
+
+    let eventRef = ref(this.database, `/${this.COLLECTION_NAME}/${event.id}`);
+
+    if (event.id == "-1") {
+      let newEventRef = ref(this.database, this.COLLECTION_NAME);
+
+      let idRandom = push(newEventRef);
+
+      eventRef = idRandom;
+      if (eventRef.key != null) {
+        event.id = eventRef.key;
+      }
+
+    }
+    //Crear un nuevo grupo
+    return set(eventRef, event).then(() => event).catch((error) => { return Promise.reject(error); });
+  }
+
+
+loadEventsWithUsersByGroup(groupId: string): Observable<{ event: Event; users: UserEvent[] }[]> {
+  return this.getEventsByGroup(groupId).pipe(
+    switchMap((events: Event[]) => {
+      const observables = events.map(event =>
+        this.userEventService.getByEvent(event.id).pipe(
+          map((userEvents: UserEvent[]) => ({
+            event: event,
+            users: userEvents
+          }))
+        )
+      );
+      return combineLatest(observables);
+    })
+  );
+}
 }

@@ -1,5 +1,5 @@
- <ng-container *ngIf="group">
-<div class="container my-4">
+<ng-container *ngIf="group">
+  <div class="container my-4">
     <!-- Información del grupo -->
     <div class="card mb-4">
       <div class="card-body d-flex align-items-center">
@@ -7,8 +7,8 @@
         <div>
           <h3 class="card-title mb-1">{{group.title}}</h3>
           <p class="card-text text-muted mb-1">{{group.description}}</p>
-              <span class="badge bg-success" *ngIf="group.visibility == 'PUBLIC'">Public</span>
-              <span class="badge bg-danger" *ngIf="group.visibility == 'PRIVATE'">Private</span>
+          <span class="badge bg-success" *ngIf="group.visibility == 'PUBLIC'">Public</span>
+          <span class="badge bg-danger" *ngIf="group.visibility == 'PRIVATE'">Private</span>
         </div>
       </div>
     </div>
@@ -22,7 +22,7 @@
             <img src="{{user.photo}}" alt="{{user.name}}" class="user-photo me-3" />
             <div>
               <h6 class="mb-0">{{user.name}}</h6>
-              <small class="text-muted" > {{ isAdmin(user.id) ? 'Admin' : 'Miembro' }}</small>
+              <small class="text-muted"> {{ isAdmin(user.id) ? 'Admin' : 'Miembro' }}</small>
             </div>
           </div>
         </div>
@@ -32,8 +32,8 @@
     <!-- Eventos del grupo -->
     <div>
       <h4>Eventos del grupo</h4>
+
       <app-event-list [groupId]="groupId"></app-event-list>
     </div>
   </div>
- </ng-container>
- 
+</ng-container>

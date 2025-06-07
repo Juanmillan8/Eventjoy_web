@@ -8,11 +8,13 @@ import { GroupService } from '../../../services/group.service';
 import { MemberService } from '../../../services/member.service';
 import { EventListComponent } from "../../event/event-list/event-list.component";
 import { AuthService } from '../../../services/auth.service';
+import { UserEvent } from '../../../models/userevent.model';
+import { UserEventService } from '../../../services/userevent.service';
 
 @Component({
   selector: 'app-group-view',
   standalone: true,
-  imports: [CommonModule, EventListComponent,EventListComponent],
+  imports: [CommonModule, EventListComponent],
   templateUrl: './group-view.component.html',
   styleUrl: './group-view.component.css'
 })
@@ -47,6 +49,7 @@ export class GroupViewComponent implements OnInit {
       }
           this.authService.getUserDataAuth().subscribe(({ user, member }) => {
             this.authMember = member;
+           
           });
 
     });
@@ -63,4 +66,5 @@ export class GroupViewComponent implements OnInit {
       return false;
     }
   }
+
 }
