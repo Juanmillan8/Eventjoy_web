@@ -1,4 +1,20 @@
 <ng-container *ngIf="group">
+<!-- Toast container en la esquina superior derecha -->
+<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1055;">
+  <div
+    class="toast align-items-center text-white bg-{{ toastType }} border-0 show"
+    role="alert"
+    *ngIf="toastMessage"
+    (click)="closeToast()"
+  >
+    <div class="d-flex">
+      <div class="toast-body">
+        {{ toastMessage }}
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" (click)="closeToast()" aria-label="Close"></button>
+    </div>
+  </div>
+</div>
   <div class="container my-4">
     <!-- Información del grupo -->
     <div class="card mb-4">
@@ -30,6 +46,20 @@
             <div>
               <h6 class="mb-0">{{user.name}}</h6>
               <small class="text-muted"> {{ isAdmin(user.id) ? 'Admin' : 'Miembro' }}</small>
+            </div>
+            <div class="d-flex flex-column align-items-end ms-3" *ngIf="isAuthUserAdmin()">
+              <button *ngIf="!isAdmin(user.id)" class="btn btn-outline-primary btn-sm mb-2 rounded-pill px-3"
+                (click)="makeAdmin(user)">
+                <i class="bi bi-shield-fill-plus me-1"></i> Add admin
+              </button>
+              <button *ngIf="isAdmin(user.id)" class="btn btn-outline-primary btn-sm mb-2 rounded-pill px-3"
+                (click)="removeAdmin(user)">
+                <i class="bi bi-shield-fill-minus me-1"></i> Remove admin
+              </button>
+              <button *ngIf="user.id != authMember?.id" class="btn btn-outline-danger btn-sm rounded-pill px-3"
+                (click)="removeUser(user)">
+                <i class="bi bi-person-dash-fill me-1"></i> Kick out 
+              </button>
             </div>
           </div>
         </div>
