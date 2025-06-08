@@ -10,11 +10,14 @@ import { RouterLink } from '@angular/router';
 import { UserEventService } from '../../../services/userevent.service';
 import { UserEvent } from '../../../models/userevent.model';
 import { FormsModule } from '@angular/forms';
+import { environment } from '../../../../environments/environment.development';
+import { GroupService } from '../../../services/group.service';
+import { Group } from '../../../models/group.model';
 
 @Component({
   selector: 'app-event-list',
   standalone: true,
-  imports: [CommonModule, RouterLink,FormsModule ],
+  imports: [CommonModule, RouterLink, FormsModule],
   templateUrl: './event-list.component.html',
   styleUrl: './event-list.component.css'
 })
@@ -23,36 +26,48 @@ export class EventListComponent implements OnInit {
   events: Event[] | null = null;
   admins: Member[] | null = null;
   authMember: Member | null = null;
-  userEventsMemberAuth: UserEvent[] | null = null;
+  userEventsMemberAuth: UserEvent[] = [];
   eventsWithUserEvents: { event: Event; users: UserEvent[] }[] | null = null;
   allUserEvents: UserEvent[] = [];
   filterTerm: string = '';
+  myAdminGroups: Group[] = [];
 
 
 
-  constructor(private eventService: EventService, private memberService: MemberService, private authService: AuthService, private userEventService: UserEventService) { }
+  constructor(private eventService: EventService, private memberService: MemberService, private authService: AuthService, private userEventService: UserEventService, private groupService: GroupService) { }
   ngOnInit(): void {
+    this.authService.getUserDataAuth().subscribe(({ user, member }) => {
+      this.authMember = member;
 
-    if (this.groupId) {
-      this.eventService.loadEventsWithUsersByGroup(this.groupId).subscribe(data => {
-        this.eventsWithUserEvents = data;
-        // Opcionalmente, extraer solo los eventos para un uso más simple
-        this.events = data.map(item => item.event);
-        this.allUserEvents = data.flatMap(item => item.users);
+      if (this.authMember != null && this.authMember != undefined) {
+        this.groupService.getGroupsByAdminStatus(this.authMember.id).subscribe(({ adminGroups, memberGroups }) => {
+          this.myAdminGroups = adminGroups;
+        });
 
-      });
-      this.memberService.getAdminByGroup(this.groupId).subscribe((admins: Member[]) => {
-        this.admins = admins;
-      });
-      this.authService.getUserDataAuth().subscribe(({ user, member }) => {
-        this.authMember = member;
-        if (this.authMember) {
-          this.userEventService.getByUser(this.authMember.id).subscribe((userEvent: UserEvent[]) => {
-            this.userEventsMemberAuth = userEvent;
-          })
+        this.userEventService.getByUser(this.authMember.id).subscribe((userEvent: UserEvent[]) => {
+          this.userEventsMemberAuth = userEvent;
+        });
+
+        if (this.groupId) {
+          this.eventService.loadEventsWithUsersByGroup(this.groupId).subscribe(data => {
+            this.eventsWithUserEvents = data;
+            // Opcionalmente, extraer solo los eventos para un uso más simple
+            this.events = data.map(item => item.event);
+            this.allUserEvents = data.flatMap(item => item.users);
+          });
+        } else {
+          if (this.authMember) {
+            this.eventService.getEventsByUser(this.authMember.id).subscribe((events: Event[]) => {
+              this.events = events;
+            });
+            this.userEventService.getAll().subscribe((events: UserEvent[]) => {
+              this.allUserEvents = events;
+            });
+          }
+
         }
-      });
-    }
+      }
+    });
   }
 
   getStatusClass(status: string): string {
@@ -68,77 +83,73 @@ export class EventListComponent implements OnInit {
     }
   }
 
-  isAdmin(userId: string): boolean {
-    return this.admins?.some(admin => admin.id === userId) ?? false;
+  isAuthMemberAdmin(event:Event) {
+
+    return this.myAdminGroups.some((ag)=>{return ag.id == event.groupId});
   }
 
-  isAuthUserAdmin() {
-    if (this.authMember) {
-      return this.isAdmin(this.authMember.userAccountId);
-    } else {
-      return false;
+  isAuthMemberAdminOfGroup(){
+    if(this.groupId){
+      return this.myAdminGroups.some((ag)=>{return ag.id == this.groupId});
     }
+    return false;
   }
 
   isJoined(eventId: string) {
     if (this.allUserEvents && this.authMember) {
       return this.allUserEvents.some(ue => ue.eventId == eventId && ue.userId == this.authMember?.id);
-    }else{
+    } else {
       return false;
     }
   }
 
   leaveEvent(eventId: string) {
-    if(this.isJoined(eventId)){
+    if (this.isJoined(eventId)) {
       let userEvent = this.allUserEvents.find(ue => ue.eventId == eventId && ue.userId == this.authMember?.id);
-      if(userEvent){
+      if (userEvent) {
         this.userEventService.deleteUserEvent(userEvent);
       }
 
     }
   }
   joinEvent(eventId: string) {
-    if(this.authMember){
-      let userEvent = new UserEvent("-1",this.authMember.id,eventId,false,false);
+    if (this.authMember) {
+      let userEvent = new UserEvent("-1", this.authMember.id, eventId, false, false);
       this.userEventService.createUserEvent(userEvent);
     }
   }
 
   numberOfParticipants(eventId: string): Number {
-    if (!this.eventsWithUserEvents) return 0;
 
-    const eventEntry = this.eventsWithUserEvents.find(e => e.event.id === eventId);
-    if (!eventEntry) return 0;
-
-    return eventEntry.users.length;
+    return this.allUserEvents.filter(ue => ue.eventId === eventId).length;
   }
 
-  isComplete(event:Event){
+  isComplete(event: Event) {
     return !(this.numberOfParticipants(event.id) < event.maxParticipants);
   }
 
-    /** Devuelve solo los eventos cuyo título incluya el texto de filtro */
-get filteredEvents(): Event[] {
-  const term = this.filterTerm.trim().toLowerCase();
-  if (!this.events) {
-    return [];
+  /** Devuelve solo los eventos cuyo título incluya el texto de filtro */
+  get filteredEvents(): Event[] {
+    const term = this.filterTerm.trim().toLowerCase();
+    if (!this.events) {
+      return [];
+    }
+
+    return this.events.filter(e => {
+      // Construimos un string con todas las propiedades relevantes
+      const haystack = [
+        e.title,
+        e.description,
+        e.startDateAndTime,
+        e.endDateAndTime,
+        e.maxParticipants.toString(),
+        e.fullAddress,
+        e.computedStatus
+      ]
+        .join(' ')
+        .toLowerCase();
+
+      return haystack.includes(term);
+    });
   }
-
-  return this.events.filter(e => {
-    // Construimos un string con todas las propiedades relevantes
-    const haystack = [
-      e.title,
-      e.description,
-      e.startDateAndTime,
-      e.endDateAndTime,
-      e.maxParticipants.toString(),
-      e.fullAddress,
-      e.computedStatus
-    ]
-      .join(' ')
-      .toLowerCase();
-
-    return haystack.includes(term);
-  });
-}
 }

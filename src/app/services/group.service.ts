@@ -102,13 +102,13 @@ export class GroupService {
               return group;
             })
           ) // devuelve Observable<Group>
-
         }
         );
         return forkJoin(groupRequests); // combina todos en un solo Observable<Group[]>
       })
     );
   }
+  
 
   getGroupsByAdminStatus(uid: string): Observable<{ adminGroups: Group[]; memberGroups: Group[] }> {
     return this.userGroupService.getByUser(uid).pipe(

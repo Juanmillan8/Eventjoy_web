@@ -32,22 +32,34 @@ export class EventService {
     );
   }
 
-  getEventsById(eid: string): Observable<Event> {
+getEventsByUser(uid: string): Observable<Event[]> {
+  return this.userEventService.getByUser(uid).pipe(
+    switchMap((userEvents: UserEvent[]) => {
+      const observables = userEvents.map((userEvent: UserEvent) =>
+        this.getEventsById(userEvent.eventId)
+      );
+      return combineLatest(observables);
+    }),
+    map((events: (Event | null)[]) => {
+      // Filtra los que son null
+      return events.filter((event): event is Event => event !== null);
+    })
+  );
+}
 
-    //Creamos la referencia de la persona que deseamos guardar en firebase database
-    const eventsRef = ref(this.database, this.COLLECTION_NAME);
-    const eventsQuery = query(eventsRef, orderByChild('id'), equalTo(eid));
+getEventsById(eid: string): Observable<Event | null> {
+  const eventsRef = ref(this.database, this.COLLECTION_NAME);
+  const eventsQuery = query(eventsRef, orderByChild('id'), equalTo(eid));
 
-    return listVal(eventsQuery).pipe(
-      map(rawEvents => {
-        if (!rawEvents || rawEvents.length === 0) {
-          throw new Error(`Event with id ${eid} not found`);
-        }
-        return Event.fromJson(rawEvents[0]);
-      })
-    );
-  }
-
+  return listVal(eventsQuery).pipe(
+    map(rawEvents => {
+      if (!rawEvents || rawEvents.length === 0) {
+        return null;
+      }
+      return Event.fromJson(rawEvents[0]);
+    })
+  );
+}
   deleteEvent(event: Event): Promise<void> {
     const eventRef = ref(this.database, `/${this.COLLECTION_NAME}/${event.id}`);
 

@@ -1,6 +1,6 @@
 <div class="row text-center" id="eventsButtons">
   <div class="col-12">
-    <button type="button" class="btn btn-info btn-list-group" *ngIf="isAuthUserAdmin()"
+    <button type="button" class="btn btn-info btn-list-group" *ngIf="isAuthMemberAdminOfGroup()"
       routerLink="/editevent/{{groupId}}//-1"><i class="bi bi-plus-circle"></i> New event</button>
   </div>
 </div>
@@ -29,6 +29,7 @@
           <li><strong>Maximum number of participants:</strong> {{event.maxParticipants}}</li>
           <li [ngClass]="{ 'maxParticipants': numberOfParticipants(event.id) === event.maxParticipants }">
             <strong>Participants:</strong> {{numberOfParticipants(event.id)}}/{{event.maxParticipants}}</li>
+         
 
           <li><strong>Address:</strong> {{event.fullAddress }}</li>
         </ul>
@@ -36,17 +37,26 @@
           {{ event.computedStatus | titlecase }}
         </span>
       </div>
-      <div class="card-footer">
-        <button type="button" class="btn btn-secondary btns-footer" *ngIf="isAuthUserAdmin()"
+      <div class="card-footer" >
+        <button type="button" class="btn btn-success btns-footer" *ngIf="groupId==null"
+          [routerLink]="['/viewgroup', event.groupId]">
+          Show group
+        </button>
+        <button type="button" class="btn btn-secondary btns-footer" *ngIf="isAuthMemberAdminOfGroup()"
           [routerLink]="['/editevent', groupId, event.id]">
           Edit
         </button>
+
+        <button type="button" class="btn btn-secondary btns-footer" *ngIf="groupId==null && isAuthMemberAdmin(event)"
+          [routerLink]="['/editevent', event.groupId, event.id]">
+          Edit
+        </button>
         <button type="button" class="btn btn-primary btns-footer"
-          *ngIf="!isJoined(event.id) && !isComplete(event) && event.status != 'FINISHED'" (click)="joinEvent(event.id)">
+          *ngIf="!isJoined(event.id) && !isComplete(event) && event.computedStatus != 'FINISHED'" (click)="joinEvent(event.id)">
           Join
         </button>
         <button type="button" class="btn btn-danger btns-footer"
-          *ngIf="isJoined(event.id) && event.status == 'SCHEDULED'" (click)="leaveEvent(event.id)">
+          *ngIf="isJoined(event.id) && event.computedStatus == 'SCHEDULED'" (click)="leaveEvent(event.id)">
           Leave
         </button>
       </div>

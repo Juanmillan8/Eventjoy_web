@@ -80,6 +80,7 @@ export class MemberService {
 
 
 
+
   getMemberByUidPromise(uid: string): Promise<Member> {
     return firstValueFrom(this.getMemberByUid(uid))
   }

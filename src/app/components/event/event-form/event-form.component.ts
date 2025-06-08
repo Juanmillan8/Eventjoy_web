@@ -72,7 +72,7 @@ export class EventFormComponent implements OnInit {
             if (this.isAuthUserAdmin()) {
               if (this.eventId) {
                 if (this.eventId != "-1") {
-                  this.eventService.getEventsById(this.eventId).subscribe((event: Event) => {
+                  this.eventService.getEventsById(this.eventId).subscribe((event: Event|null) => {
                     if (event) {
                       this.event = event;
                       this.eventForm.setValue({
