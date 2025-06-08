@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Group } from '../../../models/group.model';
 import { Member } from '../../../models/member.model';
 import { UserGroupService } from '../../../services/usergroup.service';
@@ -16,7 +16,7 @@ import { UserGroup } from '../../../models/usergroup.model';
 @Component({
   selector: 'app-group-view',
   standalone: true,
-  imports: [CommonModule, EventListComponent, FormsModule],
+  imports: [CommonModule, EventListComponent, FormsModule, RouterLink],
   templateUrl: './group-view.component.html',
   styleUrl: './group-view.component.css'
 })

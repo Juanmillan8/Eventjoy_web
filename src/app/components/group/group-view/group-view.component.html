@@ -44,7 +44,7 @@
           <div class="card h-100 p-3 d-flex flex-row align-items-center">
             <img src="{{user.photo}}" alt="{{user.name}}" class="user-photo me-3" />
             <div>
-              <h6 class="mb-0">{{user.name}}</h6>
+              <h6 class="mb-0"> <a  [routerLink]="['/showprofile', user.id]" >{{user.name}}</a></h6>
               <small class="text-muted"> {{ isAdmin(user.id) ? 'Admin' : 'Miembro' }}</small>
             </div>
             <div class="d-flex flex-column align-items-end ms-3" *ngIf="isAuthUserAdmin()">
@@ -68,8 +68,8 @@
 
     <!-- Eventos del grupo -->
     <div>
-      <h4>Eventos del grupo</h4>
-      <app-event-list [groupId]="groupId"></app-event-list>
+      <h4>Events</h4>
+      <app-event-list *ngIf="authMember" [groupId]="groupId" [userId]="authMember.id" view="GROUP"></app-event-list>
     </div>
   </div>
 </ng-container>

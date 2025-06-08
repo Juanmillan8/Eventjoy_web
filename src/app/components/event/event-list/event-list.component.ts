@@ -23,9 +23,11 @@ import { Group } from '../../../models/group.model';
 })
 export class EventListComponent implements OnInit {
   @Input() groupId: string | null = null;
+  @Input() userId: string | null = null;
+  @Input() view: string | null = null;
+
   events: Event[] | null = null;
   admins: Member[] | null = null;
-  authMember: Member | null = null;
   userEventsMemberAuth: UserEvent[] = [];
   eventsWithUserEvents: { event: Event; users: UserEvent[] }[] | null = null;
   allUserEvents: UserEvent[] = [];
@@ -36,15 +38,15 @@ export class EventListComponent implements OnInit {
 
   constructor(private eventService: EventService, private memberService: MemberService, private authService: AuthService, private userEventService: UserEventService, private groupService: GroupService) { }
   ngOnInit(): void {
-    this.authService.getUserDataAuth().subscribe(({ user, member }) => {
-      this.authMember = member;
 
-      if (this.authMember != null && this.authMember != undefined) {
-        this.groupService.getGroupsByAdminStatus(this.authMember.id).subscribe(({ adminGroups, memberGroups }) => {
+
+    
+    if(this.userId){
+        this.groupService.getGroupsByAdminStatus(this.userId).subscribe(({ adminGroups, memberGroups }) => {
           this.myAdminGroups = adminGroups;
         });
 
-        this.userEventService.getByUser(this.authMember.id).subscribe((userEvent: UserEvent[]) => {
+        this.userEventService.getByUser(this.userId).subscribe((userEvent: UserEvent[]) => {
           this.userEventsMemberAuth = userEvent;
         });
 
@@ -56,18 +58,15 @@ export class EventListComponent implements OnInit {
             this.allUserEvents = data.flatMap(item => item.users);
           });
         } else {
-          if (this.authMember) {
-            this.eventService.getEventsByUser(this.authMember.id).subscribe((events: Event[]) => {
+            this.eventService.getEventsByUser(this.userId).subscribe((events: Event[]) => {
               this.events = events;
             });
             this.userEventService.getAll().subscribe((events: UserEvent[]) => {
               this.allUserEvents = events;
             });
-          }
-
+          
         }
-      }
-    });
+    }
   }
 
   getStatusClass(status: string): string {
@@ -96,8 +95,8 @@ export class EventListComponent implements OnInit {
   }
 
   isJoined(eventId: string) {
-    if (this.allUserEvents && this.authMember) {
-      return this.allUserEvents.some(ue => ue.eventId == eventId && ue.userId == this.authMember?.id);
+    if (this.allUserEvents && this.userId) {
+      return this.allUserEvents.some(ue => ue.eventId == eventId && ue.userId == this.userId);
     } else {
       return false;
     }
@@ -105,7 +104,7 @@ export class EventListComponent implements OnInit {
 
   leaveEvent(eventId: string) {
     if (this.isJoined(eventId)) {
-      let userEvent = this.allUserEvents.find(ue => ue.eventId == eventId && ue.userId == this.authMember?.id);
+      let userEvent = this.allUserEvents.find(ue => ue.eventId == eventId && ue.userId == this.userId);
       if (userEvent) {
         this.userEventService.deleteUserEvent(userEvent);
       }
@@ -113,8 +112,8 @@ export class EventListComponent implements OnInit {
     }
   }
   joinEvent(eventId: string) {
-    if (this.authMember) {
-      let userEvent = new UserEvent("-1", this.authMember.id, eventId, false, false);
+    if (this.userId) {
+      let userEvent = new UserEvent("-1", this.userId, eventId, false, false);
       this.userEventService.createUserEvent(userEvent);
     }
   }

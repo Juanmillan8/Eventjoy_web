@@ -2,6 +2,6 @@
     <!-- Eventos del grupo -->
     <div>
       <h4>My events</h4>
-      <app-event-list></app-event-list>
+            <app-event-list *ngIf="authMember" [userId]="authMember.id" view="MYEVENTS"></app-event-list>
     </div>
   </div>
