@@ -1,0 +1,21 @@
+.custom-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1040;
+}
+.modal {
+  z-index: 1050;
+}
+
+.modal-content {
+  border-radius: 1rem;
+}
+
+.bi-star,
+.bi-star-fill {
+  font-size: 1.5rem;
+}

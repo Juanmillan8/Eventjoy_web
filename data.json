@@ -81,9 +81,69 @@
       "username": "ana2000",
       "level": 0,
       "provider": "EMAIL"
+    },
+    "zX1pQr9YtNf84H3KlVwG": {
+      "id": "zX1pQr9YtNf84H3KlVwG",
+      "userAccountId": "zX1pQr9YtNf84H3KlVwG",
+      "name": "Laura",
+      "surname": "Martínez",
+      "email": "laura.martinez@gmail.com",
+      "role": "MEMBER",
+      "photo": "https://randomuser.me/api/portraits/women/50.jpg",
+      "dni": "23456789D",
+      "phone": "+34678912345",
+      "birthdate": "1992-09-17",
+      "username": "lauramartinez",
+      "level": 0,
+      "provider": "EMAIL"
+    },
+    "bV7LcXr8TaYpZm9NQkWe": {
+      "id": "bV7LcXr8TaYpZm9NQkWe",
+      "userAccountId": "bV7LcXr8TaYpZm9NQkWe",
+      "name": "Carlos",
+      "surname": "Fernández",
+      "email": "carlos.fernandez@gmail.com",
+      "role": "MEMBER",
+      "photo": "https://randomuser.me/api/portraits/men/55.jpg",
+      "dni": "34567890E",
+      "phone": "+34912345678",
+      "birthdate": "1985-12-03",
+      "username": "carlosfernandez",
+      "level": 0,
+      "provider": "EMAIL"
+    },
+    "WJ5Exy8FRTNpQsL1DcVg": {
+      "id": "WJ5Exy8FRTNpQsL1DcVg",
+      "userAccountId": "WJ5Exy8FRTNpQsL1DcVg",
+      "name": "Sofía",
+      "surname": "García",
+      "email": "sofia.garcia@example.com",
+      "role": "MEMBER",
+      "photo": "https://randomuser.me/api/portraits/women/68.jpg",
+      "dni": "98765432F",
+      "phone": "+34111222333",
+      "birthdate": "1998-11-20",
+      "username": "sofiagarcia",
+      "level": 0,
+      "provider": "EMAIL"
+    },
+    "KLMnOpQrStUvWxYz1234": {
+      "id": "KLMnOpQrStUvWxYz1234",
+      "userAccountId": "KLMnOpQrStUvWxYz1234",
+      "name": "Miguel",
+      "surname": "Hernández",
+      "email": "miguel.hernandez@example.com",
+      "role": "MEMBER",
+      "photo": "https://randomuser.me/api/portraits/men/65.jpg",
+      "dni": "11223344G",
+      "phone": "+34999887766",
+      "birthdate": "1990-05-10",
+      "username": "miguelhernandez",
+      "level": 0,
+      "provider": "EMAIL"
     }
   },
- "userGroups": {
+  "userGroups": {
     "ug1": {
       "id": "ug1",
       "userId": "TTcwj1CeLrRM5gl1POlXhePjOLd2",
@@ -123,88 +183,287 @@
       "admin": false,
       "joinedAt": "2024-05-20T14:20:00Z",
       "notificationsEnabled": false
+    },
+    "ug6": {
+      "id": "ug6",
+      "userId": "zX1pQr9YtNf84H3KlVwG",
+      "groupId": "group1",
+      "admin": false,
+      "joinedAt": "2025-06-01T10:00:00Z",
+      "notificationsEnabled": true
+    },
+    "ug7": {
+      "id": "ug7",
+      "userId": "bV7LcXr8TaYpZm9NQkWe",
+      "groupId": "group3",
+      "admin": false,
+      "joinedAt": "2025-06-05T11:00:00Z",
+      "notificationsEnabled": true
+    },
+    "ug8": {
+      "id": "ug8",
+      "userId": "WJ5Exy8FRTNpQsL1DcVg",
+      "groupId": "group4",
+      "admin": false,
+      "joinedAt": "2025-06-06T09:00:00Z",
+      "notificationsEnabled": true
+    },
+    "ug9": {
+      "id": "ug9",
+      "userId": "KLMnOpQrStUvWxYz1234",
+      "groupId": "group3",
+      "admin": false,
+      "joinedAt": "2025-06-07T09:00:00Z",
+      "notificationsEnabled": true
     }
   },
-   "events": {
-    "ev1": {
-      "id": "ev1",
-      "title": "Taller de HTML y CSS",
-      "startDateAndTime": "2025-06-15T10:00:00Z",
-      "endDateAndTime": "2025-06-15T13:00:00Z",
-      "description": "Aprende a maquetar páginas web desde cero.",
-      "maxParticipants": 30,
-      "address": {
-        "street": "Calle Web",
-        "numberStreet": "25",
-        "floor": "1",
-        "door": "A",
-        "postalCode": "28001",
-        "city": "Madrid",
-        "province": "Madrid",
-        "municipality": "Centro"
-      },
-      "status": "ONGOING",
-      "groupId": "group1"
+ "events": {
+  "ev1": {
+    "id": "ev1",
+    "title": "Taller de HTML y CSS",
+    "startDateAndTime": "2025-06-15T10:00:00Z",
+    "endDateAndTime":   "2025-06-15T14:00:00Z",
+    "description": "Aprende los fundamentos de HTML y CSS en este taller práctico.",
+    "maxParticipants": 30,
+    "address": {
+      "street": "Calle Web",
+      "numberStreet": "25",
+      "floor": "1",
+      "door": "A",
+      "postalCode": "28001",
+      "city": "Madrid",
+      "province": "Madrid",
+      "municipality": "Centro"
     },
-    "ev2": {
-      "id": "ev2",
-      "title": "Workshop de UX Research",
-      "startDateAndTime": "2025-07-01T17:00:00Z",
-      "endDateAndTime": "2025-07-01T20:00:00Z",
-      "description": "Sesión práctica sobre investigación de usuarios.",
-      "maxParticipants": 20,
-      "address": {
-        "street": "Av. Diseño",
-        "numberStreet": "100",
-        "floor": "2",
-        "door": "B",
-        "postalCode": "08002",
-        "city": "Barcelona",
-        "province": "Barcelona",
-        "municipality": "Ciutat Vella"
-      },
-      "status": "ONGOING",
-      "groupId": "group2"
-    },
-    "ev3": {
-      "id": "ev3",
-      "title": "AI & Deep Learning Meetup",
-      "startDateAndTime": "2025-08-10T18:00:00Z",
-      "endDateAndTime": "2025-08-10T21:00:00Z",
-      "description": "Discussion on latest trends in AI and Deep Learning.",
-      "maxParticipants": 50,
-      "address": {
-        "street": "Innovation Street",
-        "numberStreet": "42",
-        "floor": "3",
-        "door": "C",
-        "postalCode": "28002",
-        "city": "Madrid",
-        "province": "Madrid",
-        "municipality": "Centro"
-      },
-      "status": "SCHEDULED",
-      "groupId": "group3"
-    }
+    "status": "ONGOING",
+    "groupId": "group1"
   },
+  "ev2": {
+    "id": "ev2",
+    "title": "Workshop de UX Research",
+    "startDateAndTime": "2025-07-01T17:00:00Z",
+    "endDateAndTime":   "2025-07-01T20:00:00Z",
+    "description": "Sesión práctica sobre investigación de usuarios.",
+    "maxParticipants": 20,
+    "address": {
+      "street": "Av. Diseño",
+      "numberStreet": "100",
+      "floor": "2",
+      "door": "B",
+      "postalCode": "08002",
+      "city": "Barcelona",
+      "province": "Barcelona",
+      "municipality": "Ciutat Vella"
+    },
+    "status": "ONGOING",
+    "groupId": "group2"
+  },
+  "ev3": {
+    "id": "ev3",
+    "title": "AI & Deep Learning Meetup",
+    "startDateAndTime": "2025-08-10T18:00:00Z",
+    "endDateAndTime":   "2025-08-10T21:00:00Z",
+    "description": "Discussion on latest trends in AI and Deep Learning.",
+    "maxParticipants": 50,
+    "address": {
+      "street": "Innovation Street",
+      "numberStreet": "42",
+      "floor": "3",
+      "door": "C",
+      "postalCode": "28002",
+      "city": "Madrid",
+      "province": "Madrid",
+      "municipality": "Centro"
+    },
+    "status": "SCHEDULED",
+    "groupId": "group3"
+  },
+  "ev4": {
+    "id": "ev4",
+    "title": "Introducción a TypeScript",
+    "startDateAndTime": "2025-07-09T10:00:00Z",
+    "endDateAndTime":   "2025-07-09T13:00:00Z",
+    "description": "Sesión sobre introducción a TypeScript con expertos del sector.",
+    "maxParticipants": 20,
+    "address": {
+      "street": "Av. Creativa",
+      "numberStreet": "200",
+      "floor": "5",
+      "door": "E",
+      "postalCode": "08003",
+      "city": "Barcelona",
+      "province": "Barcelona",
+      "municipality": "Eixample"
+    },
+    "status": "SCHEDULED",
+    "groupId": "group1"
+  },
+  "ev5": {
+    "id": "ev5",
+    "title": "Prototipado con Figma",
+    "startDateAndTime": "2025-07-31T10:00:00Z",
+    "endDateAndTime":   "2025-07-31T13:00:00Z",
+    "description": "Sesión sobre prototipado con Figma con expertos del sector.",
+    "maxParticipants": 50,
+    "address": {
+      "street": "Calle Gamer",
+      "numberStreet": "88",
+      "floor": "0",
+      "door": "G",
+      "postalCode": "41001",
+      "city": "Sevilla",
+      "province": "Sevilla",
+      "municipality": "Nervión"
+    },
+    "status": "SCHEDULED",
+    "groupId": "group2"
+  }
+},
   "userEvents": {
-    "ue1": {
-      "id": "ue1",
+    "eu1": {
+      "id": "eu1",
       "userId": "TTcwj1CeLrRM5gl1POlXhePjOLd2",
       "eventId": "ev1",
-      "notificationsEnabled": false
+      "payment": 0,
+      "attended": false
     },
-    "ue2": {
-      "id": "ue2",
+    "eu2": {
+      "id": "eu2",
       "userId": "OuRJBqXUVGZoAzvFuqNJgMoupyf1",
       "eventId": "ev1",
-      "notificationsEnabled": false
+      "payment": 0,
+      "attended": false
     },
-    "ue3": {
-      "id": "ue3",
+    "eu3": {
+      "id": "eu3",
       "userId": "NA0JDJCEO6PzhwAtxKiXdmi3ttK2",
       "eventId": "ev2",
-      "notificationsEnabled": false
+      "payment": 10,
+      "attended": false
+    },
+    "eu4": {
+      "id": "eu4",
+      "userId": "bV7LcXr8TaYpZm9NQkWe",
+      "eventId": "ev3",
+      "payment": 5,
+      "attended": false
+    },
+    "eu5": {
+      "id": "eu5",
+      "userId": "WJ5Exy8FRTNpQsL1DcVg",
+      "eventId": "ev3",
+      "payment": 5,
+      "attended": false
+    },
+    "eu6": {
+      "id": "eu6",
+      "userId": "KLMnOpQrStUvWxYz1234",
+      "eventId": "ev3",
+      "payment": 5,
+      "attended": false
+    }
+  },
+  "valorations": {
+    "val1": {
+      "id": "val1",
+      "title": "Gran colaborador",
+      "description": "Siempre dispuesto a ayudar y con mucho conocimiento técnico.",
+      "rating": 5,
+      "ratedUserId": "TTcwj1CeLrRM5gl1POlXhePjOLd2",
+      "raterUserId": "OuRJBqXUVGZoAzvFuqNJgMoupyf1"
+    },
+    "val2": {
+      "id": "val2",
+      "title": "Muy buen diseñador",
+      "description": "Su enfoque en UX es claro y aporta ideas muy valiosas.",
+      "rating": 4,
+      "ratedUserId": "OuRJBqXUVGZoAzvFuqNJgMoupyf1",
+      "raterUserId": "TTcwj1CeLrRM5gl1POlXhePjOLd2"
+    },
+    "val3": {
+      "id": "val3",
+      "title": "Conocimientos de ML sólidos",
+      "description": "Participa activamente en debates y resuelve dudas con claridad.",
+      "rating": 5,
+      "ratedUserId": "bV7LcXr8TaYpZm9NQkWe",
+      "raterUserId": "OuRJBqXUVGZoAzvFuqNJgMoupyf1"
+    },
+    "val4": {
+      "id": "val4",
+      "title": "Comunicación mejorable",
+      "description": "Buen profesional, pero podría mejorar la comunicación con el equipo.",
+      "rating": 3,
+      "ratedUserId": "OuRJBqXUVGZoAzvFuqNJgMoupyf1",
+      "raterUserId": "NA0JDJCEO6PzhwAtxKiXdmi3ttK2"
+    }
+  },
+  "reports": {
+    "rep1": {
+      "id": "rep1",
+      "reportReason": "OFFENSIVE_LANGUAGE",
+      "reportDescription": "El usuario utilizó lenguaje inapropiado en el chat.",
+      "reportedUserId": "TTcwj1CeLrRM5gl1POlXhePjOLd2",
+      "reporterUserId": "OuRJBqXUVGZoAzvFuqNJgMoupyf1",
+      "groupId": "g1",
+      "reportedAt": "2025-06-08T14:20:00Z",
+      "reportStatus": "PENDING"
+    },
+    "rep2": {
+      "id": "rep2",
+      "reportReason": "SPAM",
+      "reportDescription": "Envío repetido de mensajes no solicitados.",
+      "reportedUserId": "NA0JDJCEO6PzhwAtxKiXdmi3ttK2",
+      "reporterUserId": "bV7LcXr8TaYpZm9NQkWe",
+      "groupId": "g2",
+      "reportedAt": "2025-06-07T09:10:00Z",
+      "reportStatus": "APPROVED"
+    },
+    "rep3": {
+      "id": "rep3",
+      "reportReason": "HARASSMENT",
+      "reportDescription": "Acoso repetido hacia otro usuario en la conversación.",
+      "reportedUserId": "zX1pQr9YtNf84H3KlVwG",
+      "reporterUserId": "OuRJBqXUVGZoAzvFuqNJgMoupyf1",
+      "groupId": "g3",
+      "reportedAt": "2025-06-05T18:45:00Z",
+      "reportStatus": "REJECTED"
+    }
+  },
+  "invitations": {
+    "inv1": {
+      "id": "inv1",
+      "userId": "WJ5Exy8FRTNpQsL1DcVg",
+      "groupId": "group1",
+      "invitedAt": "2025-06-01T12:00:00Z",
+      "status": "PENDING"
+    },
+    "inv2": {
+      "id": "inv2",
+      "userId": "KLMnOpQrStUvWxYz1234",
+      "groupId": "group2",
+      "invitedAt": "2025-06-02T09:30:00Z",
+      "status": "ACCEPTED"
+    },
+    "inv3": {
+      "id": "inv3",
+      "userId": "zX1pQr9YtNf84H3KlVwG",
+      "groupId": "group4",
+      "invitedAt": "2025-06-04T15:45:00Z",
+      "status": "PENDING"
+    },
+    "inv4": {
+      "id": "inv4",
+      "userId": "NA0JDJCEO6PzhwAtxKiXdmi3ttK2",
+      "groupId": "group5",
+      "invitedAt": "2025-06-06T11:20:00Z",
+      "status": "ACCEPTED"
+    },
+    "inv5": {
+      "id": "inv5",
+      "userId": "OuRJBqXUVGZoAzvFuqNJgMoupyf1",
+      "groupId": "group4",
+      "invitedAt": "2025-06-07T08:10:00Z",
+      "status": "PENDING"
     }
   }
 }

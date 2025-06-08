@@ -12,11 +12,14 @@ import { UserEvent } from '../../../models/userevent.model';
 import { UserEventService } from '../../../services/userevent.service';
 import { FormsModule } from '@angular/forms';
 import { UserGroup } from '../../../models/usergroup.model';
+import { ValorationFormModalComponent } from '../../valoration/valoration-form-modal/valoration-form-modal.component';
+import { ValorationService } from '../../../services/valoration.service';
+import { Valoration } from '../../../models/valoration.model';
 
 @Component({
   selector: 'app-group-view',
   standalone: true,
-  imports: [CommonModule, EventListComponent, FormsModule, RouterLink],
+  imports: [CommonModule, EventListComponent, FormsModule, RouterLink, ValorationFormModalComponent],
   templateUrl: './group-view.component.html',
   styleUrl: './group-view.component.css'
 })
@@ -32,8 +35,10 @@ export class GroupViewComponent implements OnInit {
   toastMessage: string | null = null;
   toastType: 'success' | 'danger' | 'warning' | 'info' = 'success';
   toastTimeout: any = null;
+  selectedUserId: string | null = null;
+  showValorationModal = false;
 
-  constructor(private route: ActivatedRoute, private memberService: MemberService, private groupService: GroupService, private authService: AuthService, private userGroupService: UserGroupService) { }
+  constructor(private route: ActivatedRoute, private memberService: MemberService, private groupService: GroupService, private authService: AuthService, private userGroupService: UserGroupService, private valorationService: ValorationService) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -79,8 +84,8 @@ export class GroupViewComponent implements OnInit {
     let findUg = this.usersGroup.find((ug: UserGroup) => { return ug.groupId == this.groupId && ug.userId == user.id });
     if (findUg) {
       findUg.admin = true;
-      this.userGroupService.saveUserGroup(findUg).then(()=>{
-          this.showToast(`${user.name} is now an admin.`, 'success');
+      this.userGroupService.saveUserGroup(findUg).then(() => {
+        this.showToast(`${user.name} is now an admin.`, 'success');
       });
     }
   }
@@ -91,11 +96,11 @@ export class GroupViewComponent implements OnInit {
 
     if (findUg && numberOfAdmins.length > 1) {
       findUg.admin = false;
-      this.userGroupService.saveUserGroup(findUg).then(()=>{
-          this.showToast(`${user.name}  has been removed as an administrator.`, 'success');
+      this.userGroupService.saveUserGroup(findUg).then(() => {
+        this.showToast(`${user.name}  has been removed as an administrator.`, 'success');
       });;
     } else if (numberOfAdmins.length == 1) {
-        this.showToast(`There must be at least one administrator in the group.`, 'danger');
+      this.showToast(`There must be at least one administrator in the group.`, 'danger');
     }
   }
 
@@ -104,7 +109,7 @@ export class GroupViewComponent implements OnInit {
     if (findUg) {
       findUg.admin = true;
       this.userGroupService.deleteUserGroup(findUg.id);
-      this.showToast(`There must be at least one administrator in the group.`, 'danger');
+      this.showToast(`The user ` + user.name + ` has been successfully removed.`, 'success');
 
     }
   }
@@ -128,26 +133,55 @@ export class GroupViewComponent implements OnInit {
       return haystack.includes(term);
     });
   }
-  
-showToast(message: string, type: 'success' | 'danger' | 'warning' | 'info' = 'info', duration: number = 3000): void {
-  this.toastMessage = message;
-  this.toastType = type;
 
-  // Limpiar timeout anterior si existe
-  if (this.toastTimeout) {
-    clearTimeout(this.toastTimeout);
+  showToast(message: string, type: 'success' | 'danger' | 'warning' | 'info' = 'info', duration: number = 3000): void {
+    this.toastMessage = message;
+    this.toastType = type;
+
+    // Limpiar timeout anterior si existe
+    if (this.toastTimeout) {
+      clearTimeout(this.toastTimeout);
+    }
+
+    // Autocierre tras x milisegundos
+    this.toastTimeout = setTimeout(() => {
+      this.toastMessage = null;
+    }, duration);
   }
 
-  // Autocierre tras x milisegundos
-  this.toastTimeout = setTimeout(() => {
+  closeToast(): void {
     this.toastMessage = null;
-  }, duration);
-}
-
-closeToast(): void {
-  this.toastMessage = null;
-  if (this.toastTimeout) {
-    clearTimeout(this.toastTimeout);
+    if (this.toastTimeout) {
+      clearTimeout(this.toastTimeout);
+    }
   }
-}
+
+  openValorationModal(user: any) {
+    this.selectedUserId = user.id;
+    if (this.authMember && this.selectedUserId) {
+      this.valorationService.hasBeenUserRated(this.authMember.id, this.selectedUserId).then((res: boolean) => {
+        if (res) {
+          this.showToast("The user has already been assessed.", "danger")
+        } else {
+          this.showValorationModal = true;
+        }
+      })
+    }
+  }
+
+  onSubmitValoration(data: Valoration ) {
+    if (this.selectedUserId && this.authMember) {
+      let valoration = new Valoration("-1", data.title, data.description, data.rating, this.selectedUserId, this.authMember.id)
+      this.valorationService.save(valoration).then(() => {
+        this.showToast("Valuation created successfully.", "success")
+      }).catch(() => {
+        this.showToast("Error creating the valuation.", "danger")
+      })
+    }
+  }
+
+  closeValorationModal() {
+    this.showValorationModal = false;
+  }
+  reportUser(user: Member) { }
 }

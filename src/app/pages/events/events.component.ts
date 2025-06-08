@@ -20,7 +20,6 @@ export class EventsComponent implements OnInit{
 
       this.authService.getUserDataAuth().subscribe(({ user, member }) => {
         this.authMember = member;
-
       });
   }
 

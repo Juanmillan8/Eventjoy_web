@@ -20,42 +20,16 @@
   </div>
 
   <!-- Eventos -->
-  <div class="mb-4">
+  <div class="mt-4 mb-4">
     <h4>Events in which he has participated</h4>
     <app-event-list *ngIf="member" [userId]="member.id" view="SHOWPROFILE"></app-event-list>
 
   </div>
 
   <!-- Valoraciones -->
-  <div>
-    <h4>Valoraciones recibidas</h4>
-    <div class="row row-cols-1 row-cols-md-2 g-3">
-      <div class="col">
-        <div class="card">
-          <div class="card-body">
-            <h6 class="card-title">Muy buena participación</h6>
-            <p class="card-text">Jane fue muy colaboradora durante todo el evento.</p>
-            <div class="rating mb-1">
-              ⭐⭐⭐⭐☆
-            </div>
-            <p class="text-muted mb-0">Por: Usuario123</p>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card">
-          <div class="card-body">
-            <h6 class="card-title">Gran actitud</h6>
-            <p class="card-text">Mostró liderazgo y compañerismo.</p>
-            <div class="rating mb-1">
-              ⭐⭐⭐⭐⭐
-            </div>
-            <p class="text-muted mb-0">Por: Usuario456</p>
-          </div>
-        </div>
-      </div>
-      <!-- Puedes añadir más valoraciones aquí -->
-    </div>
+  <div class="mt-4 mb-4">
+    <h4>Reviews received</h4>
+    <app-valoration-list [userId]="userId" view="RECEIVED"></app-valoration-list>
   </div>
 
 </div>

@@ -12,6 +12,7 @@ import { GroupViewComponent } from './components/group/group-view/group-view.com
 import { EventFormComponent } from './components/event/event-form/event-form.component';
 import { EventsComponent } from './pages/events/events.component';
 import { ShowprofileComponent } from './pages/showprofile/showprofile.component';
+import { ValorationsComponent } from './pages/valorations/valorations.component';
 
 
 export const routes: Routes = [
@@ -21,6 +22,7 @@ export const routes: Routes = [
     {path:"viewgroup/:id",component:GroupViewComponent,canActivate: [authGuard],data: { role: '*' }},
     {path:"events",component:EventsComponent,canActivate: [authGuard],data: { role: '*' }},
     {path:"editevent/:groupid/:eventid",component:EventFormComponent,canActivate: [authGuard],data: { role: '*' }},
+    {path:"valorations",component:ValorationsComponent,...canActivate(() => redirectUnauthorizedTo(["login"]))},
     {path:"profile",component:ProfileComponent,...canActivate(() => redirectUnauthorizedTo(["login"]))},
     {path:"showprofile/:userId",component:ShowprofileComponent,...canActivate(() => redirectUnauthorizedTo(["login"]))},
     {path:"login",component:LoginComponent},

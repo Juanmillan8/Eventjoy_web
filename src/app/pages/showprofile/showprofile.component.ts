@@ -4,11 +4,12 @@ import { EventListComponent } from '../../components/event/event-list/event-list
 import { ActivatedRoute } from '@angular/router';
 import { MemberService } from '../../services/member.service';
 import { Member } from '../../models/member.model';
+import { ValorationListComponent } from "../../components/valoration/valoration-list/valoration-list.component";
 
 @Component({
   selector: 'app-showprofile',
   standalone: true,
-  imports: [CommonModule, EventListComponent],
+  imports: [CommonModule, EventListComponent, ValorationListComponent],
   templateUrl: './showprofile.component.html',
   styleUrl: './showprofile.component.css'
 })

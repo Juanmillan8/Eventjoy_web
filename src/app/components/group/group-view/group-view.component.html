@@ -1,3 +1,12 @@
+
+
+<app-valoration-modal
+  [show]="showValorationModal"
+  [ratedUserId]="selectedUserId!"
+  (submitValoration)="onSubmitValoration($event)"
+  (close)="closeValorationModal()"
+></app-valoration-modal>
+
 <ng-container *ngIf="group">
 <!-- Toast container en la esquina superior derecha -->
 <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1055;">
@@ -39,31 +48,78 @@
           </div>
         </div>
       </div>
-      <div class="row row-cols-1 row-cols-md-3 g-3">
-        <div class="col" *ngFor="let user of filteredMembers">
-          <div class="card h-100 p-3 d-flex flex-row align-items-center">
-            <img src="{{user.photo}}" alt="{{user.name}}" class="user-photo me-3" />
-            <div>
-              <h6 class="mb-0"> <a  [routerLink]="['/showprofile', user.id]" >{{user.name}}</a></h6>
-              <small class="text-muted"> {{ isAdmin(user.id) ? 'Admin' : 'Miembro' }}</small>
-            </div>
-            <div class="d-flex flex-column align-items-end ms-3" *ngIf="isAuthUserAdmin()">
-              <button *ngIf="!isAdmin(user.id)" class="btn btn-outline-primary btn-sm mb-2 rounded-pill px-3"
-                (click)="makeAdmin(user)">
-                <i class="bi bi-shield-fill-plus me-1"></i> Add admin
-              </button>
-              <button *ngIf="isAdmin(user.id)" class="btn btn-outline-primary btn-sm mb-2 rounded-pill px-3"
-                (click)="removeAdmin(user)">
-                <i class="bi bi-shield-fill-minus me-1"></i> Remove admin
-              </button>
-              <button *ngIf="user.id != authMember?.id" class="btn btn-outline-danger btn-sm rounded-pill px-3"
-                (click)="removeUser(user)">
-                <i class="bi bi-person-dash-fill me-1"></i> Kick out 
-              </button>
-            </div>
-          </div>
+<div class="row row-cols-1 row-cols-md-3 g-3">
+  <div class="col" *ngFor="let user of filteredMembers">
+    <div class="card h-100 p-3 d-flex flex-column">
+      
+      <!-- Parte superior: foto y nombre -->
+      <div class="d-flex align-items-center mb-3">
+        <img
+          [src]="user.photo"
+          [alt]="user.name"
+          class="user-photo me-3 rounded-circle"
+          style="width: 50px; height: 50px; object-fit: cover;"
+        />
+        <div>
+          <h6 class="mb-0">
+            <a [routerLink]="['/showprofile', user.id]">{{ user.name }}</a>
+          </h6>
+          <small class="text-muted">
+            {{ isAdmin(user.id) ? 'Admin' : 'Miembro' }}
+          </small>
         </div>
       </div>
+
+      <!-- Botones agrupados en dos filas, al fondo -->
+      <div class="mt-auto" *ngIf="isAuthUserAdmin()">
+        <!-- Primera fila: administración y expulsar -->
+        <div class="d-flex gap-2 mb-2">
+          <button
+            *ngIf="!isAdmin(user.id)"
+            class="btn btn-outline-primary btn-sm rounded-pill"
+            (click)="makeAdmin(user)"
+          >
+            <i class="bi bi-shield-fill-plus me-1"></i> Add admin
+          </button>
+          <button
+            *ngIf="isAdmin(user.id)"
+            class="btn btn-outline-primary btn-sm rounded-pill"
+            (click)="removeAdmin(user)"
+          >
+            <i class="bi bi-shield-fill-minus me-1"></i> Remove admin
+          </button>
+          <button
+            *ngIf="user.id !== authMember?.id"
+            class="btn btn-outline-danger btn-sm rounded-pill"
+            (click)="removeUser(user)"
+          >
+            <i class="bi bi-person-dash-fill me-1"></i> Kick out
+          </button>
+        </div>
+        </div>
+        <div class="mt-auto" >
+
+        <!-- Segunda fila: valorar y reportar -->
+        <div class="d-flex gap-2">
+          <button
+            class="btn btn-outline-success btn-sm rounded-pill"
+            *ngIf="authMember && authMember.id != user.id"
+            (click)="openValorationModal(user)">
+            <i class="bi bi-star-fill me-1"></i> Rate
+          </button>
+          <button
+            class="btn btn-outline-warning btn-sm rounded-pill"
+            *ngIf="authMember && authMember.id != user.id"
+            (click)="reportUser(user)">
+            <i class="bi bi-flag-fill me-1"></i> Report
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
     </div>
 
     <!-- Eventos del grupo -->

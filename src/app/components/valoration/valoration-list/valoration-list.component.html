@@ -1,0 +1,62 @@
+<app-valoration-modal
+  [show]="showValorationModal"
+  [valoration]="selectedValoration"
+  [ratedUserId]="selectedUserId!"
+  (submitValoration)="onSubmitValoration($event)"
+  (close)="closeValorationModal()"
+></app-valoration-modal>
+
+
+<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1055;">
+  <div
+    class="toast align-items-center text-white bg-{{ toastType }} border-0 show"
+    role="alert"
+    *ngIf="toastMessage"
+    (click)="closeToast()"
+  >
+    <div class="d-flex">
+      <div class="toast-body">
+        {{ toastMessage }}
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" (click)="closeToast()" aria-label="Close"></button>
+    </div>
+  </div>
+</div>
+<div class="row row-cols-1 row-cols-md-2 g-3" *ngIf="ratedList && ratedList.length">
+  <div class="col" *ngFor="let item of ratedList">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">{{ item.valoration.title }}</h6>
+        <p class="card-text">{{ item.valoration.description }}</p>
+
+        <div class="rating mb-1">
+          <span *ngIf="item.valoration.rating==1">⭐☆☆☆☆</span>
+          <span *ngIf="item.valoration.rating==2">⭐⭐☆☆☆</span>
+          <span *ngIf="item.valoration.rating==3">⭐⭐⭐☆☆</span>
+          <span *ngIf="item.valoration.rating==4">⭐⭐⭐⭐☆</span>
+          <span *ngIf="item.valoration.rating==5">⭐⭐⭐⭐⭐</span>
+        </div>
+
+        <p class="card-text" *ngIf="view == 'MADED'">
+          To
+          <a [routerLink]="['/showprofile', item.rater.id]">{{ item.rater.username }}</a>
+        </p>
+        <p class="card-text" *ngIf="view == 'RECEIVED'">
+          By
+          <a [routerLink]="['/showprofile', item.rater.id]">{{ item.rater.username }}</a>
+        </p>
+
+        <!-- Botones de acción solo si es vista de valoraciones hechas -->
+        <div class="mt-2 d-flex gap-2">
+          <button *ngIf="item.valoration.raterUserId == authMember?.id" (click)="openValorationModal(item.valoration)" class="btn btn-sm btn-outline-primary px-3 rounded-pill" (click)="editValoration(item.valoration)">
+            <i class="bi bi-pencil-fill me-1"></i> Edit
+          </button>
+          <button *ngIf="item.valoration.raterUserId == authMember?.id" class="btn btn-sm btn-outline-danger px-3 rounded-pill" (click)="deleteValoration(item.valoration)">
+            <i class="bi bi-trash-fill me-1"></i> Delete
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

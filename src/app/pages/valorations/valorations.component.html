@@ -1,0 +1,13 @@
+<div class="container py-5">
+
+  <div class="mt-4 mb-4">
+    <h4 class="mt-4 mb-4">Maded valorations</h4>
+    <app-valoration-list *ngIf="memberAuth" [userId]="memberAuth.id" view="MADED"></app-valoration-list>
+  </div>
+  <!-- Valoraciones -->
+  <div class="mt-4 mb-4">
+    <h4 class="mt-4 mb-4">Received valorations</h4>
+    <app-valoration-list *ngIf="memberAuth" [userId]="memberAuth.id" view="RECEIVED"></app-valoration-list>
+  </div>
+
+</div>
