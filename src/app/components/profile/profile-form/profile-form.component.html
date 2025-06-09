@@ -1,0 +1,33 @@
+
+<div *ngIf="errores" class="alert alert-danger" role="alert">{{errores}}</div>
+
+<div class="profile-container">
+    <div class="profile-img">
+        <img *ngIf="currentMember && currentMember.photo != null && currentMember.photo != ''" [src]="currentMember.photo" alt="Foto de perfil" width="20px" height="20px">
+        <img *ngIf="currentMember && currentMember.photo != null && currentMember.photo == ''" src="profile.png" alt="Foto de perfil" width="20px" height="20px">
+
+    </div>
+
+    <form [formGroup]="profileForm" >
+        <label for="nombre">Nombre</label>
+        <input  formControlName="name" type="text" id="nombre" name="nombre" >
+
+        <label for="apellido">Apellido</label>
+        <input  type="text" formControlName="surname" id="apellido" name="apellido" >
+
+        <label for="telefono">Número de teléfono</label>
+        <input  type="tel" formControlName="phone" id="telefono" name="telefono">
+
+        <label for="fecha-nacimiento">Fecha de nacimiento</label>
+        <input  type="date" formControlName="birthdate"  id="fecha-nacimiento" name="fecha-nacimiento">
+
+        
+        <label for="dni">DNI</label>
+        <input  formControlName="dni" type="text" id="dni" name="dni">
+
+        
+        <button  class="btn btn-primary mt-4 mb-4" (click)="guardarCambios()">Guardar cambios</button>
+        <button class="btn btn-secondary mt-4 mb-4" routerLink="/showprofile/{{currentMember?.userAccountId}}" >Cancelar edición</button>
+
+    </form>
+</div>

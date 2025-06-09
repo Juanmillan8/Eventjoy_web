@@ -41,16 +41,4 @@ form textarea {
     height: 100px;
 }
 
-button {
-    margin-top: 20px;
-    padding: 12px 20px;
-    background-color: #4285F4;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
 
-button:hover {
-    background-color: #357ae8;
-}

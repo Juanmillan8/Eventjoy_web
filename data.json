@@ -323,44 +323,33 @@
     "eu1": {
       "id": "eu1",
       "userId": "TTcwj1CeLrRM5gl1POlXhePjOLd2",
-      "eventId": "ev1",
-      "payment": 0,
-      "attended": false
+      "eventId": "ev1"
     },
     "eu2": {
       "id": "eu2",
       "userId": "OuRJBqXUVGZoAzvFuqNJgMoupyf1",
-      "eventId": "ev1",
-      "payment": 0,
-      "attended": false
+      "eventId": "ev1"
     },
     "eu3": {
       "id": "eu3",
       "userId": "NA0JDJCEO6PzhwAtxKiXdmi3ttK2",
-      "eventId": "ev2",
-      "payment": 10,
-      "attended": false
+      "eventId": "ev2"
     },
     "eu4": {
       "id": "eu4",
       "userId": "bV7LcXr8TaYpZm9NQkWe",
-      "eventId": "ev3",
-      "payment": 5,
-      "attended": false
+      "eventId": "ev3"
     },
     "eu5": {
       "id": "eu5",
       "userId": "WJ5Exy8FRTNpQsL1DcVg",
-      "eventId": "ev3",
-      "payment": 5,
-      "attended": false
+      "eventId": "ev3"
     },
     "eu6": {
       "id": "eu6",
       "userId": "KLMnOpQrStUvWxYz1234",
       "eventId": "ev3",
-      "payment": 5,
-      "attended": false
+      "payment": 5
     }
   },
   "valorations": {

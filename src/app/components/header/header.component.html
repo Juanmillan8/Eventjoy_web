@@ -18,8 +18,8 @@
           <li class="nav-item" *ngIf="role=='MEMBER'">
             <a class="nav-link active" aria-current="page" routerLink="/valorations">My valorations</a>
           </li>
-          <li class="nav-item" *ngIf="role=='MEMBER'">
-             <a class="nav-link active" aria-current="page" routerLink="/profile">Perfil</a>
+          <li class="nav-item" *ngIf="role=='MEMBER' && member">
+             <a class="nav-link active" aria-current="page" routerLink="/showprofile/{{member.id}}">My Profile</a>
           </li>
           <li class="nav-item" *ngIf="isLoggedIn">
             <a class="nav-link" aria-current="page" href="#" (click)="logout()">Logout!</a>

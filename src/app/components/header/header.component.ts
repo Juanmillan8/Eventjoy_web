@@ -6,6 +6,7 @@ import { AuthService } from '../../services/auth.service';
 import { MemberService } from '../../services/member.service';
 import { Person } from '../../models/person.model';
 import { DataSnapshot } from '@angular/fire/database';
+import { Member } from '../../models/member.model';
 
 @Component({
   selector: 'app-header',
@@ -20,7 +21,8 @@ export class HeaderComponent implements OnInit {
 
   isLoggedIn: boolean = false;
   role:string|null=null;
-
+  member:Member|null = null;
+  
   ngOnInit(): void {
     
     this.authService.getUserDataAuth().subscribe(({user,member})=>{
@@ -28,6 +30,7 @@ export class HeaderComponent implements OnInit {
         this.isLoggedIn = true;
         if(member && member.role){
           this.role = member.role;
+          this.member = member;
         }
       }else{
         this.isLoggedIn = false;

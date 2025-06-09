@@ -173,7 +173,7 @@ export class EventFormComponent implements OnInit {
 
       this.eventService.createEvent(newEvent).then((event) => {
         if (event && this.memberAuth) {
-          let userEvent = new UserEvent("-1", this.memberAuth.id, event.id, false, false);
+          let userEvent = new UserEvent("-1", this.memberAuth.id, event.id, false);
           this.userEventService.createUserEvent(userEvent).then(() => {
             this.router.navigate([`/viewgroup/` + this.groupId]);
           }).catch(error => {

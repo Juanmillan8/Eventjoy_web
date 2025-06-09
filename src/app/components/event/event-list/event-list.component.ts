@@ -113,7 +113,7 @@ export class EventListComponent implements OnInit {
   }
   joinEvent(eventId: string) {
     if (this.userId) {
-      let userEvent = new UserEvent("-1", this.userId, eventId, false, false);
+      let userEvent = new UserEvent("-1", this.userId, eventId, false);
       this.userEventService.createUserEvent(userEvent);
     }
   }

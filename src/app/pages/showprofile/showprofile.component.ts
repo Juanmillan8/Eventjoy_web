@@ -1,15 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { EventListComponent } from '../../components/event/event-list/event-list.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MemberService } from '../../services/member.service';
 import { Member } from '../../models/member.model';
 import { ValorationListComponent } from "../../components/valoration/valoration-list/valoration-list.component";
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-showprofile',
   standalone: true,
-  imports: [CommonModule, EventListComponent, ValorationListComponent],
+  imports: [CommonModule, EventListComponent, ValorationListComponent,RouterLink],
   templateUrl: './showprofile.component.html',
   styleUrl: './showprofile.component.css'
 })
@@ -17,8 +18,9 @@ export class ShowprofileComponent implements OnInit{
 
   userId:string|null=null;
   member:Member|null=null;
-  
-  constructor(private route: ActivatedRoute, private memberService:MemberService){}
+  authMember:Member|null = null;
+
+  constructor(private route: ActivatedRoute, private memberService:MemberService, private authService:AuthService){}
   
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -27,6 +29,9 @@ export class ShowprofileComponent implements OnInit{
         this.memberService.getMemberByUid(this.userId).subscribe((member:Member)=>{
           this.member = member;
         });
+        this.authService.getUserDataAuth().subscribe(({user,member})=>{
+          this.authMember = member;
+        })
       }
     });
   }

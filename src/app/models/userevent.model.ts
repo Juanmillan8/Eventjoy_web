@@ -3,20 +3,17 @@ export class UserEvent {
   userId: string;
   eventId: string;
   isCreator: boolean;
-  notificationsEnabled: boolean;
 
   constructor(
     id: string,
     userId: string,
     eventId: string,
-    isCreator: boolean,
-    notificationsEnabled: boolean
+    isCreator: boolean
   ) {
     this.id = id;
     this.userId = userId;
     this.eventId = eventId;
     this.isCreator = isCreator;
-    this.notificationsEnabled = notificationsEnabled;
   }
 
   static fromJson(raw: any): UserEvent {
@@ -25,7 +22,6 @@ export class UserEvent {
             raw.userId,
             raw.eventId,
             raw.isCreator,
-            raw.notificationsEnabled
         );
     }
 }
