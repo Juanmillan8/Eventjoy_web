@@ -18,11 +18,12 @@ import { Valoration } from '../../../models/valoration.model';
 import { ReportFormModalComponent } from "../../report/report-form-modal/report-form-modal.component";
 import { Report, ReportReason, ReportStatus } from '../../../models/report.model';
 import { ReportService } from '../../../services/report.service';
+import { InvitationFormModalComponent } from '../../invitation/invitation-form-modal/invitation-form-modal.component';
 
 @Component({
   selector: 'app-group-view',
   standalone: true,
-  imports: [CommonModule, EventListComponent, FormsModule, RouterLink, ValorationFormModalComponent, ReportFormModalComponent],
+  imports: [CommonModule, EventListComponent, FormsModule, RouterLink, ValorationFormModalComponent, ReportFormModalComponent,InvitationFormModalComponent],
   templateUrl: './group-view.component.html',
   styleUrl: './group-view.component.css'
 })
@@ -41,7 +42,7 @@ export class GroupViewComponent implements OnInit {
   selectedUserId: string | null = null;
   showValorationModal = false;
   showReportModal = false;
-
+  showInvitationModal = false;
   report: Report | null = null;  
 
   constructor(private route: ActivatedRoute, private memberService: MemberService, private groupService: GroupService, private authService: AuthService, private userGroupService: UserGroupService, private valorationService: ValorationService, private reportService:ReportService) { }
@@ -222,7 +223,14 @@ export class GroupViewComponent implements OnInit {
   closeReportModal() {
     this.showReportModal = false;
   }
-  inviteToGroup(){
-    
+
+ openInvitationModal() {
+    if (this.group && this.isAuthUserAdmin() ) {
+      this.showInvitationModal = true;
+      console.log("Show invitation moddal")
+    }
+  }
+  closeInvitationModal() {
+    this.showInvitationModal = false;
   }
 }

@@ -1,1 +1,70 @@
-<p>invitation-form-modal works!</p>
+  <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1055;">
+    <div class="toast align-items-center text-white bg-{{ toastType }} border-0 show" role="alert" *ngIf="toastMessage"
+      (click)="closeToast()">
+      <div class="d-flex">
+        <div class="toast-body">
+          {{ toastMessage }}
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" (click)="closeToast()"
+          aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+
+<!-- Fondo oscuro personalizado -->
+<div class="custom-modal-backdrop" *ngIf="show"></div>
+
+<!-- Modal principal -->
+<div class="modal show d-block" tabindex="-1" *ngIf="show" style="z-index: 1050;">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Send an invitation</h5>
+        <button type="button" class="btn-close" (click)="closeModal()"></button>
+      </div>
+
+      <div class="modal-body" style="max-height: 60vh; overflow-y: auto;">
+        <!-- Usuarios del grupo -->
+        <div class="mb-5">
+          <h5>Select a member</h5>
+          <div class="row text-center">
+            <div class="col-12">
+              <div class="mb-3" *ngIf="members != null && members.length > 0">
+                <input type="text" class="form-control" placeholder="Search members..."
+                  [(ngModel)]="filterTermMembers" />
+              </div>
+            </div>
+          </div>
+          <div class="row row-cols-1 row-cols-md-1 g-3">
+            <div class="col" *ngFor="let user of filteredMembers">
+              <div class="card h-100 p-3 d-flex flex-column position-relative">
+
+                <!-- Botón Invite centrado verticalmente a la derecha -->
+                <button class="btn btn-sm btn-outline-primary position-absolute top-50 translate-middle-y end-0 me-2"
+                  (click)="onInvite(user)">
+                  Invite
+                </button>
+
+                <!-- Parte superior: foto y nombre -->
+                <div class="d-flex align-items-center mb-3 mt-2">
+                  <img [src]="user.photo" [alt]="user.name" class="user-photo me-3 rounded-circle"
+                    style="width: 50px; height: 50px; object-fit: cover;" />
+                  <div>
+                    <h6 class="mb-0">{{ user.name }}</h6>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Botones -->
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

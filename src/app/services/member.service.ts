@@ -44,12 +44,25 @@ export class MemberService {
     return listVal(memberQuery) as Observable<Member[]>
   }
 
+
+
+  getMembersNotInGroup(groupId: string): Observable<Member[]> {
+    const usersGroup$ = this.userGroupService.getByGroup(groupId); // Observable<UserGroup[]>
+    const users$ = this.getAllMembers(); // Observable<Member[]>
+
+    return combineLatest([usersGroup$, users$]).pipe(
+      map(([userGroups, users]) => {
+        const userIdsInGroup = new Set(userGroups.map(ug => ug.userId));
+        return users.filter(user => !userIdsInGroup.has(user.id));
+      })
+    );
+  }
+
   getAllMembers(): Observable<Member[]> {
 
     const membersRef = ref(this.database, this.COLLECTION_NAME);
     return listVal(membersRef) as Observable<Member[]>
   }
-
   getMembersByGroup(gid: string): Observable<Member[]> {
     const usersGroup$ = this.userGroupService.getByGroup(gid); // Observable<UserGroup[]>
     const users$ = this.getAllMembers(); // Observable<Member[]>

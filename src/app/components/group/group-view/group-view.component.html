@@ -4,6 +4,8 @@
 <app-report-form-modal [show]="showReportModal" [reportInput]="report" (submitValoration)="onSubmitReport($event)"
   (close)="closeReportModal()"></app-report-form-modal>
 
+<app-invitation-form-modal [authMember]="authMember" [show]="showInvitationModal" [groupInput]="group"  (close)="closeInvitationModal()"></app-invitation-form-modal>
+
 <ng-container *ngIf="group">
   <!-- Toast container en la esquina superior derecha -->
   <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1055;">
@@ -28,7 +30,7 @@
           <p class="card-text text-muted mb-1">{{group.description}}</p>
           <span class="badge bg-success" *ngIf="group.visibility == 'PUBLIC'">Public</span>
           <span class="badge bg-danger" *ngIf="group.visibility == 'PRIVATE'">Private</span>
-          <button class="btn btn-outline-info btn-sm rounded-pill" id="bnt-invite" (click)="inviteToGroup()">
+          <button class="btn btn-outline-info btn-sm rounded-pill" id="bnt-invite" (click)="openInvitationModal()">
             <i class="bi bi-envelope-plus-fill me-1"></i> Invite to Group
           </button>
         </div>

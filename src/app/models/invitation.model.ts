@@ -19,5 +19,13 @@ export class Invitation {
     this.groupId = groupId;
     this.invitedAt = invitedAt;
   }
-
+  static fromJson(raw: any): Invitation {
+    return new Invitation(
+      raw.id ?? '',
+      raw.invitedUserId ?? '',
+      raw.inviterUserId ?? '',
+      raw.groupId ?? '',
+      raw.invitedAt ?? ''
+    );
+  }
 }
