@@ -15,11 +15,14 @@ import { UserGroup } from '../../../models/usergroup.model';
 import { ValorationFormModalComponent } from '../../valoration/valoration-form-modal/valoration-form-modal.component';
 import { ValorationService } from '../../../services/valoration.service';
 import { Valoration } from '../../../models/valoration.model';
+import { ReportFormModalComponent } from "../../report/report-form-modal/report-form-modal.component";
+import { Report, ReportReason, ReportStatus } from '../../../models/report.model';
+import { ReportService } from '../../../services/report.service';
 
 @Component({
   selector: 'app-group-view',
   standalone: true,
-  imports: [CommonModule, EventListComponent, FormsModule, RouterLink, ValorationFormModalComponent],
+  imports: [CommonModule, EventListComponent, FormsModule, RouterLink, ValorationFormModalComponent, ReportFormModalComponent],
   templateUrl: './group-view.component.html',
   styleUrl: './group-view.component.css'
 })
@@ -37,8 +40,11 @@ export class GroupViewComponent implements OnInit {
   toastTimeout: any = null;
   selectedUserId: string | null = null;
   showValorationModal = false;
+  showReportModal = false;
 
-  constructor(private route: ActivatedRoute, private memberService: MemberService, private groupService: GroupService, private authService: AuthService, private userGroupService: UserGroupService, private valorationService: ValorationService) { }
+  report: Report | null = null;  
+
+  constructor(private route: ActivatedRoute, private memberService: MemberService, private groupService: GroupService, private authService: AuthService, private userGroupService: UserGroupService, private valorationService: ValorationService, private reportService:ReportService) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -183,5 +189,37 @@ export class GroupViewComponent implements OnInit {
   closeValorationModal() {
     this.showValorationModal = false;
   }
-  reportUser(user: Member) { }
+
+  openReportModal(user: any) {
+    this.selectedUserId = user.id;
+    if (this.authMember && this.selectedUserId && this.groupId) {
+      let newReport = new Report("-1",ReportReason.OFFENSIVE_LANGUAGE,"",this.selectedUserId,this.authMember.id,this.groupId,new Date().toLocaleDateString(),ReportStatus.PENDING)
+      this.report = newReport;
+
+      this.reportService.existReportsToUserPending(this.selectedUserId,this.authMember.userAccountId,this.groupId).then((res: boolean) => {
+        if (res) {
+          this.showToast("There is already a pending report for this group.", "danger")
+        } else {
+          this.showReportModal = true;
+        }
+      })
+    }
+  }
+
+  onSubmitReport(data: Report ) {
+    if (this.selectedUserId && this.authMember) {
+      data.reportStatus = ReportStatus.PENDING;
+      data.reportedAt = new Date().toLocaleDateString();
+      
+      this.reportService.save(data).then(() => {
+        this.showToast("Report created successfully.", "success")
+      }).catch(() => {
+        this.showToast("Error creating the report.", "danger")
+      })
+    }
+  }
+
+  closeReportModal() {
+    this.showReportModal = false;
+  }
 }

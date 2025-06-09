@@ -1,0 +1,40 @@
+<!-- Fondo oscuro personalizado -->
+<div class="custom-modal-backdrop" *ngIf="show"></div>
+
+<!-- Modal principal -->
+<div class="modal show d-block" tabindex="-1" *ngIf="show" style="z-index: 1050;">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Report User</h5>
+        <button type="button" class="btn-close" (click)="closeModal()"></button>
+      </div>
+
+      <div class="modal-body">
+        <form [formGroup]="reportForm" class="p-4 border rounded mx-auto" style="max-width: 600px;">
+          <!-- Selección del motivo -->
+          <div class="mb-3">
+            <label for="reportReason" class="form-label">Reason</label>
+            <select class="form-select" formControlName="reason" id="reportReason" required>
+              <option value="">-- Select a reason --</option>
+              <option *ngFor="let reason of reportReasons" [value]="reason">{{ reason.replaceAll('_', ' ') }}</option>
+            </select>
+          </div>
+
+          <!-- Descripción -->
+          <div class="mb-3">
+            <label for="reportDescription" class="form-label">Description</label>
+            <textarea class="form-control" formControlName="description" id="reportDescription" rows="3"
+              placeholder="Describe the situation..." required></textarea>
+          </div>
+        </form>
+      </div>
+
+      <!-- Botones -->
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+        <button class="btn btn-danger" (click)="submit()" [disabled]="!reportForm.valid">Submit Report</button>
+      </div>
+    </div>
+  </div>
+</div>

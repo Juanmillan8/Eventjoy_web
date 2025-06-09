@@ -7,6 +7,13 @@
   (close)="closeValorationModal()"
 ></app-valoration-modal>
 
+<app-report-form-modal
+  [show]="showReportModal"
+  [reportInput]="report"
+  (submitValoration)="onSubmitReport($event)"
+  (close)="closeReportModal()"
+></app-report-form-modal>
+
 <ng-container *ngIf="group">
 <!-- Toast container en la esquina superior derecha -->
 <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1055;">
@@ -110,7 +117,7 @@
           <button
             class="btn btn-outline-warning btn-sm rounded-pill"
             *ngIf="authMember && authMember.id != user.id"
-            (click)="reportUser(user)">
+            (click)="openReportModal(user)">
             <i class="bi bi-flag-fill me-1"></i> Report
           </button>
         </div>
