@@ -6,11 +6,12 @@ import { MemberService } from '../../services/member.service';
 import { Member } from '../../models/member.model';
 import { ValorationListComponent } from "../../components/valoration/valoration-list/valoration-list.component";
 import { AuthService } from '../../services/auth.service';
+import { ReportListComponent } from '../../components/report/report-list/report-list.component';
 
 @Component({
   selector: 'app-showprofile',
   standalone: true,
-  imports: [CommonModule, EventListComponent, ValorationListComponent,RouterLink],
+  imports: [CommonModule, EventListComponent, ValorationListComponent,RouterLink,ReportListComponent],
   templateUrl: './showprofile.component.html',
   styleUrl: './showprofile.component.css'
 })

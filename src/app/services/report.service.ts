@@ -5,6 +5,7 @@ import { MemberService } from './member.service';
 
 import { Valoration } from '../models/valoration.model';
 import { Report, ReportStatus } from '../models/report.model';
+import { Member } from '../models/member.model';
 
 
 
@@ -62,4 +63,74 @@ export class ReportService {
     //Crear nueva reserva
     return set(reportRef, report) as Promise<void>
   }
+
+  getReceivedReportWithRaters(uid: string): Observable<{ report: Report; user: Member }[]> {
+      // 1) Primero recuperamos las valoraciones hechas por uid
+      const reportRef = ref(this.database, this.COLLECTION_NAME);
+      const reportQuery = query(
+        reportRef,
+        orderByChild('reportedUserId'),
+        equalTo(uid)
+      );
+  
+      return listVal(reportQuery).pipe(
+        switchMap(rawVals => {
+          const vals: Report[] = rawVals
+            ? rawVals.map(v => Report.fromJson(v))
+            : [];
+  
+          if (vals.length === 0) {
+            return of([]);
+          }
+  
+          const observables = vals.map(val =>
+            this.memberService.getMemberByUid(val.reporterUserId).pipe(
+              map((m: Member) => ({
+                report: val,
+                user: m
+              }))
+            )
+          );
+  
+          // 3) Combinamos todos con combineLatest para obtener un array con resultados
+          return combineLatest(observables);
+        })
+      );
+    }
+  
+     getMadedReportWithRaters(uid: string): Observable<{ report: Report; user: Member }[]> {
+      // 1) Primero recuperamos las valoraciones hechas por uid
+      const reportRef = ref(this.database, this.COLLECTION_NAME);
+      const reportQuery = query(
+        reportRef,
+        orderByChild('reporterUserId'),
+        equalTo(uid)
+      );
+  
+      return listVal(reportQuery).pipe(
+        switchMap(rawVals => {
+          const vals: Report[] = rawVals
+            ? rawVals.map(v => Report.fromJson(v))
+            : [];
+  
+          // Si no hay ninguna valoración, devolvemos array vacío
+          if (vals.length === 0) {
+            return of([]);
+          }
+  
+          // 2) Para cada valoracion, creamos un Observable que devuelve { valoration, rater }
+          const observables = vals.map(val =>
+            this.memberService.getMemberByUid(val.reportedUserId).pipe(
+              map((m: Member) => ({
+                report: val,
+                user: m
+              }))
+            )
+          );
+  
+          // 3) Combinamos todos con combineLatest para obtener un array con resultados
+          return combineLatest(observables);
+        })
+      );
+    }
 }

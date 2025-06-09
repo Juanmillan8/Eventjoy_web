@@ -44,4 +44,18 @@ export class Report {
     this.reportedAt = reportedAt;
     this.reportStatus = reportStatus;
   }
+
+  static fromJson(raw: any): Report {
+  return new Report(
+    raw.id ?? '',
+    raw.reportReason as ReportReason ?? ReportReason.OTHER,
+    raw.reportDescription ?? '',
+    raw.reportedUserId ?? '',
+    raw.reporterUserId ?? '',
+    raw.groupId ?? '',
+    raw.reportedAt ?? new Date().toISOString(),
+    raw.reportStatus as ReportStatus ?? ReportStatus.PENDING
+  );
+}
+
 }

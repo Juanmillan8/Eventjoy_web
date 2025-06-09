@@ -13,6 +13,7 @@ import { EventsComponent } from './pages/events/events.component';
 import { ShowprofileComponent } from './pages/showprofile/showprofile.component';
 import { ValorationsComponent } from './pages/valorations/valorations.component';
 import { ProfileFormComponent } from './components/profile/profile-form/profile-form.component';
+import { ReportsComponent } from './pages/reports/reports.component';
 
 
 export const routes: Routes = [
@@ -23,6 +24,7 @@ export const routes: Routes = [
     {path:"events",component:EventsComponent,canActivate: [authGuard],data: { role: '*' }},
     {path:"editevent/:groupid/:eventid",component:EventFormComponent,canActivate: [authGuard],data: { role: '*' }},
     {path:"valorations",component:ValorationsComponent,...canActivate(() => redirectUnauthorizedTo(["login"]))},
+    {path:"reports",component:ReportsComponent,...canActivate(() => redirectUnauthorizedTo(["login"]))},
     {path:"editprofile",component:ProfileFormComponent,...canActivate(() => redirectUnauthorizedTo(["login"]))},
     {path:"showprofile/:userId",component:ShowprofileComponent,...canActivate(() => redirectUnauthorizedTo(["login"]))},
     {path:"login",component:LoginComponent},
