@@ -222,4 +222,7 @@ export class GroupViewComponent implements OnInit {
   closeReportModal() {
     this.showReportModal = false;
   }
+  inviteToGroup(){
+    
+  }
 }

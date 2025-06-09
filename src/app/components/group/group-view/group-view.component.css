@@ -8,3 +8,8 @@
       object-fit: cover;
       border-radius: 50%;
     }
+
+    #bnt-invite{
+      margin-left: 4px;
+      margin-right: 4px;
+    }
