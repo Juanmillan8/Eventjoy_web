@@ -9,25 +9,25 @@
     </div>
 
     <form [formGroup]="profileForm" >
-        <label for="nombre">Nombre</label>
+        <label for="nombre">Name</label>
         <input  formControlName="name" type="text" id="nombre" name="nombre" >
 
-        <label for="apellido">Apellido</label>
+        <label for="apellido">Surname</label>
         <input  type="text" formControlName="surname" id="apellido" name="apellido" >
 
-        <label for="telefono">Número de teléfono</label>
+        <label for="telefono">Phone</label>
         <input  type="tel" formControlName="phone" id="telefono" name="telefono">
 
-        <label for="fecha-nacimiento">Fecha de nacimiento</label>
+        <label for="fecha-nacimiento">Birthdate</label>
         <input  type="date" formControlName="birthdate"  id="fecha-nacimiento" name="fecha-nacimiento">
 
         
         <label for="dni">DNI</label>
         <input  formControlName="dni" type="text" id="dni" name="dni">
 
-        
-        <button  class="btn btn-primary mt-4 mb-4" (click)="guardarCambios()">Guardar cambios</button>
-        <button class="btn btn-secondary mt-4 mb-4" routerLink="/showprofile/{{currentMember?.userAccountId}}" >Cancelar edición</button>
+        <button class="btn btn-secondary mt-4 mb-4 ml-4 mr-4" routerLink="/showprofile/{{currentMember?.userAccountId}}" >Cancel edition</button>
+
+        <button  class="btn btn-primary mt-4 mb-4 ml-4 mr-4" (click)="guardarCambios()">Save changes</button>
 
     </form>
 </div>

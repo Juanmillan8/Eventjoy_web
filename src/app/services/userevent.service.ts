@@ -19,7 +19,7 @@ export class UserEventService {
     //Creamos la referencia de la persona que deseamos guardar en firebase database
     const userEventRef = ref(this.database, this.COLLECTION_NAME);
     const userEventsQuery = query(userEventRef, orderByChild('userId'), equalTo(uid));
-
+    
     return listVal(userEventsQuery) as Observable<UserEvent[]>;
   }
 

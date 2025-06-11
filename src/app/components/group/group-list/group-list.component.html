@@ -48,8 +48,6 @@
               <button type="button" class="btn btn-secondary" *ngIf="isJoined(group.id) && !isAdmin(group.id)"
                 (click)="leaveGroup(group.id)">Leave</button>
               <button type="button" class="btn btn-primary" *ngIf="isAdmin(group.id)"
-                routerLink="/editgroup/{{group.id}}">Editar</button>
-              <button type="button" class="btn btn-primary" *ngIf="isAdmin(group.id)"
                 routerLink="/editgroup/{{group.id}}">Edit</button>
 
             </div>

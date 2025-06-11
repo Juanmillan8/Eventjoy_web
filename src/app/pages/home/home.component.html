@@ -1,56 +1,80 @@
-<div class="container py-4">
+<div class="container mt-4">
   <!-- Bienvenida -->
   <div class="text-center mb-5">
-    <h2>Welcome to EventJoy 🎉</h2>
-    <p class="lead">Manage your groups, events, and reviews in one place.</p>
+    <h2 class="fw-bold">Welcome back to <span class="text-primary">EventJoy</span>!</h2>
+    <p class="text-muted">Manage your events, groups, and community interactions all in one place.</p>
   </div>
 
-  <!-- Acciones principales -->
-  <div class="row g-4" *ngIf="authMember && authMember.role == 'MEMBER'">
-    <div class="col-12 col-md-6">
-      <div class="card shadow-sm h-100">
-        <div class="card-body d-flex flex-column justify-content-between">
-          <div>
-            <h5 class="card-title"><i class="bi bi-calendar-event me-2"></i>My Events</h5>
-            <p class="card-text">View and manage the events you're part of.</p>
-          </div>
-          <a [routerLink]="['/myevents']" class="btn btn-primary mt-3 w-100">Go to My Events</a>
+  <!-- Tarjetas -->
+  <div class="row row-cols-1 row-cols-md-3 g-4" *ngIf="authMember && authMember.role=='MEMBER'">
+    <!-- My Events -->
+    <div class="col">
+      <div class="card text-center h-100 shadow-sm border-primary">
+        <div class="card-body">
+          <i class="bi bi-calendar-event fs-1 text-primary mb-2"></i>
+          <h5 class="card-title">My Events</h5>
+          <p class="card-text">View and manage the events you're participating in.</p>
+          <a routerLink="/events" class="btn btn-outline-primary btn-sm">Go</a>
         </div>
       </div>
     </div>
 
-    <div class="col-12 col-md-6">
-      <div class="card shadow-sm h-100">
-        <div class="card-body d-flex flex-column justify-content-between">
-          <div>
-            <h5 class="card-title"><i class="bi bi-people-fill me-2"></i>My Groups</h5>
-            <p class="card-text">Explore the groups you're a member of or manage.</p>
-          </div>
-          <a [routerLink]="['/mygroups']" class="btn btn-primary mt-3 w-100">Go to My Groups</a>
+    <!-- My Groups -->
+    <div class="col">
+      <div class="card text-center h-100 shadow-sm border-success">
+        <div class="card-body">
+          <i class="bi bi-people fs-1 text-success mb-2"></i>
+          <h5 class="card-title">My Groups</h5>
+          <p class="card-text">Check the groups you're part of or explore new ones.</p>
+          <a routerLink="/groups" class="btn btn-outline-success btn-sm">View Groups</a>
         </div>
       </div>
     </div>
 
-    <div class="col-12 col-md-6">
-      <div class="card shadow-sm h-100">
-        <div class="card-body d-flex flex-column justify-content-between">
-          <div>
-            <h5 class="card-title"><i class="bi bi-star-fill me-2"></i>My Reviews</h5>
-            <p class="card-text">See the reviews you've written or received.</p>
-          </div>
-          <a [routerLink]="['/myreviews']" class="btn btn-primary mt-3 w-100">Check My Reviews</a>
+    <!-- My Profile -->
+    <div class="col">
+      <div class="card text-center h-100 shadow-sm border-warning">
+        <div class="card-body">
+          <i class="bi bi-person-lines-fill fs-1 text-warning mb-2"></i>
+          <h5 class="card-title">My Profile</h5>
+          <p class="card-text">See your profile, ratings and reports received.</p>
+          <a  routerLink="/showprofile/{{authMember.id}}" class="btn btn-outline-warning btn-sm">Show Profile</a>
         </div>
       </div>
     </div>
 
-    <div class="col-12 col-md-6">
-      <div class="card shadow-sm h-100">
-        <div class="card-body d-flex flex-column justify-content-between">
-          <div>
-            <h5 class="card-title"><i class="bi bi-person-fill-gear me-2"></i>Profile Settings</h5>
-            <p class="card-text">Update your personal info and preferences.</p>
-          </div>
-          <a [routerLink]="['/edit-profile']" class="btn btn-outline-secondary mt-3 w-100">Edit My Profile</a>
+    <!-- Valorations -->
+    <div class="col">
+      <div class="card text-center h-100 shadow-sm border-info">
+        <div class="card-body">
+          <i class="bi bi-star-fill fs-1 text-info mb-2"></i>
+          <h5 class="card-title">Valorations</h5>
+          <p class="card-text">See ratings you've made or received from other users.</p>
+          <a routerLink="/valorations" class="btn btn-outline-info btn-sm">View</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reports -->
+    <div class="col">
+      <div class="card text-center h-100 shadow-sm border-danger">
+        <div class="card-body">
+          <i class="bi bi-flag-fill fs-1 text-danger mb-2"></i>
+          <h5 class="card-title">Reports</h5>
+          <p class="card-text">Review user reports you've made or received.</p>
+          <a routerLink="/reports" class="btn btn-outline-danger btn-sm">Check Reports</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Invitations -->
+    <div class="col">
+      <div class="card text-center h-100 shadow-sm border-secondary">
+        <div class="card-body">
+          <i class="bi bi-envelope-fill fs-1 text-secondary mb-2"></i>
+          <h5 class="card-title">Invitations</h5>
+          <p class="card-text">Manage your invitations to private groups.</p>
+          <a routerLink="/invitations" class="btn btn-outline-secondary btn-sm">View Invitations</a>
         </div>
       </div>
     </div>

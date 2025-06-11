@@ -36,7 +36,6 @@ export class SinginComponent {
     if (this.registerForm.valid) {
       let name = this.registerForm.get("name")?.value;
       let surname = this.registerForm.get("surname")?.value;
-      let admin = this.registerForm.get("admin")?.value;
       let email = this.registerForm.get("email")?.value;
       let password = this.registerForm.get("password")?.value;
 
@@ -47,9 +46,7 @@ export class SinginComponent {
 
             let member = new Member(userCredential.user.uid,userCredential.user.uid, name, surname, email, ROLE.MEMBER, "", "", "", "", "",0, "EMAIL");
 
-            if (admin == "true") {
-              member.role = ROLE.ADMIN
-            }
+            
             this.memberService.saveMember(member).then(() => {
               this.router.navigate(["/home"]);
 
