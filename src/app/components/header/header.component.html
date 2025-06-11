@@ -21,6 +21,9 @@
           <li class="nav-item" *ngIf="role=='MEMBER'">
             <a class="nav-link active" aria-current="page" routerLink="/reports">Reports</a>
           </li>
+          <li class="nav-item" *ngIf="role=='MEMBER'">
+            <a class="nav-link active" aria-current="page" routerLink="/invitations">Invitations</a>
+          </li>
           <li class="nav-item" *ngIf="role=='MEMBER' && member">
              <a class="nav-link active" aria-current="page" routerLink="/showprofile/{{member.id}}">My Profile</a>
           </li>

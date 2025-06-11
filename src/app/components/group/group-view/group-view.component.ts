@@ -45,7 +45,7 @@ export class GroupViewComponent implements OnInit {
   showInvitationModal = false;
   report: Report | null = null;  
 
-  constructor(private route: ActivatedRoute, private memberService: MemberService, private groupService: GroupService, private authService: AuthService, private userGroupService: UserGroupService, private valorationService: ValorationService, private reportService:ReportService) { }
+  constructor(private router:Router,private route: ActivatedRoute, private memberService: MemberService, private groupService: GroupService, private authService: AuthService, private userGroupService: UserGroupService, private valorationService: ValorationService, private reportService:ReportService) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -232,5 +232,40 @@ export class GroupViewComponent implements OnInit {
   }
   closeInvitationModal() {
     this.showInvitationModal = false;
+  }
+  isAuthMemberJoined(){
+    if(this.members && this.authMember){
+      return this.members.some(m=>m.id==this.authMember?.id)
+    }else{
+      return false;
+    }
+  }
+    joinGroup(gid: string) {
+    if (this.authMember) {
+      let userGroup = new UserGroup("-1", this.authMember?.userAccountId, gid, false, new Date().toLocaleDateString(), false)
+      this.userGroupService.saveUserGroup(userGroup).then(() => {
+        this.showToast("You have successfully joined the group.","success")
+      }).catch(()=>{
+        this.showToast("An error occurred while joining the group.","danger")
+      })
+    }
+  }
+
+    leaveGroup(gid: string) {
+      if(this.authMember && this.group && this.isAdmin(gid)!=undefined && !this.isAdmin(gid)){
+      this.userGroupService.getByUserIdAndGroup(this.authMember.userAccountId, gid).then((value: UserGroup | undefined) => {
+        if (value != undefined && value) {
+          this.userGroupService.deleteUserGroup(value.id).then(()=>{
+              this.showToast("You have successfully left the group.","success")
+              this.router.navigate(["/groups"]);
+          }).catch(()=>{
+              this.showToast("An error occurred while attempting to leave the group.","danger")
+          });
+        }
+      }).catch(()=>{
+        this.showToast("An error occurred while attempting to leave the group.","danger")
+      });
+      }
+
   }
 }

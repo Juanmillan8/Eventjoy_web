@@ -4,7 +4,8 @@
 <app-report-form-modal [show]="showReportModal" [reportInput]="report" (submitValoration)="onSubmitReport($event)"
   (close)="closeReportModal()"></app-report-form-modal>
 
-<app-invitation-form-modal [authMember]="authMember" [show]="showInvitationModal" [groupInput]="group"  (close)="closeInvitationModal()"></app-invitation-form-modal>
+<app-invitation-form-modal [authMember]="authMember" [show]="showInvitationModal" [groupInput]="group"
+  (close)="closeInvitationModal()"></app-invitation-form-modal>
 
 <ng-container *ngIf="group">
   <!-- Toast container en la esquina superior derecha -->
@@ -30,8 +31,16 @@
           <p class="card-text text-muted mb-1">{{group.description}}</p>
           <span class="badge bg-success" *ngIf="group.visibility == 'PUBLIC'">Public</span>
           <span class="badge bg-danger" *ngIf="group.visibility == 'PRIVATE'">Private</span>
-          <button class="btn btn-outline-info btn-sm rounded-pill" id="bnt-invite" (click)="openInvitationModal()">
+          <button *ngIf="isAuthUserAdmin()" class="btn btn-outline-info btn-sm rounded-pill" id="bnt-invite"
+            (click)="openInvitationModal()">
             <i class="bi bi-envelope-plus-fill me-1"></i> Invite to Group
+          </button>
+          <button *ngIf="!isAuthMemberJoined()" (click)="joinGroup(group.id)"
+            class="btn btn-outline-primary btn-sm rounded-pill px-3" id="bnt-invite">
+            <i class="bi bi-person-plus-fill me-1"></i> Join Group
+          </button>
+          <button *ngIf="isAuthMemberJoined() && !isAuthUserAdmin()" (click)="leaveGroup(group.id)" id="bnt-invite" class="btn btn-outline-danger btn-sm rounded-pill px-3">
+            <i class="bi bi-box-arrow-right me-1"></i> Leave Group
           </button>
         </div>
       </div>
@@ -88,11 +97,11 @@
               <!-- Segunda fila: valorar y reportar -->
               <div class="d-flex gap-2">
                 <button class="btn btn-outline-success btn-sm rounded-pill"
-                  *ngIf="authMember && authMember.id != user.id" (click)="openValorationModal(user)">
+                  *ngIf="authMember && authMember.id != user.id && isAuthMemberJoined()" (click)="openValorationModal(user)">
                   <i class="bi bi-star-fill me-1"></i> Rate
                 </button>
                 <button class="btn btn-outline-warning btn-sm rounded-pill"
-                  *ngIf="authMember && authMember.id != user.id" (click)="openReportModal(user)">
+                  *ngIf="authMember && authMember.id != user.id && isAuthMemberJoined()" (click)="openReportModal(user)">
                   <i class="bi bi-flag-fill me-1"></i> Report
                 </button>
               </div>

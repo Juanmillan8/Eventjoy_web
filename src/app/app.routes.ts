@@ -14,6 +14,7 @@ import { ShowprofileComponent } from './pages/showprofile/showprofile.component'
 import { ValorationsComponent } from './pages/valorations/valorations.component';
 import { ProfileFormComponent } from './components/profile/profile-form/profile-form.component';
 import { ReportsComponent } from './pages/reports/reports.component';
+import { InvitationsComponent } from './pages/invitations/invitations.component';
 
 
 export const routes: Routes = [
@@ -25,6 +26,7 @@ export const routes: Routes = [
     {path:"editevent/:groupid/:eventid",component:EventFormComponent,canActivate: [authGuard],data: { role: '*' }},
     {path:"valorations",component:ValorationsComponent,...canActivate(() => redirectUnauthorizedTo(["login"]))},
     {path:"reports",component:ReportsComponent,...canActivate(() => redirectUnauthorizedTo(["login"]))},
+    {path:"invitations",component:InvitationsComponent,...canActivate(() => redirectUnauthorizedTo(["login"]))},
     {path:"editprofile",component:ProfileFormComponent,...canActivate(() => redirectUnauthorizedTo(["login"]))},
     {path:"showprofile/:userId",component:ShowprofileComponent,...canActivate(() => redirectUnauthorizedTo(["login"]))},
     {path:"login",component:LoginComponent},

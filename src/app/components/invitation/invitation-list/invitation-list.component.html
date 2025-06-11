@@ -1,1 +1,29 @@
-<p>invitation-list works!</p>
+<div class="container my-5">
+    <div class="table-responsive" *ngIf="receivedInvitations && receivedInvitations.length">
+      <table class="table table-bordered table-hover align-middle text-center">
+        <thead class="table-dark">
+          <tr>
+            <th *ngIf="view=='RECEIVED'">User invite</th>
+            <th>Date</th>
+            <th>Group title</th>
+            <th>Group description</th>
+            <th>Accions</th>
+          </tr>
+        </thead>
+        
+        <tbody>
+          <!-- Example static row -->
+          <tr *ngFor="let item of receivedInvitations">
+            <td *ngIf="view=='RECEIVED'"> <a [routerLink]="['/showprofile', item.user.id]">{{ item.user.username }}</a></td>
+            <td>{{item.invitation.invitedAt| date}}</td>
+            <td>{{item.group.title}}</td>
+            <td>{{item.group.description}}</td>
+            <td>
+              <button class="btn btn-success btn-sm me-1" routerLink="/viewgroup/{{item.invitation.groupId}}">Accept</button>
+            </td>
+          </tr>
+          <!-- Add dynamic rows here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
