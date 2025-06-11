@@ -73,7 +73,7 @@
       "name": "Ana",
       "surname": "López",
       "email": "ana@gmail.com",
-      "role": "MEMBER",
+      "role": "ADMIN",
       "photo": "https://randomuser.me/api/portraits/women/72.jpg",
       "dni": "45678901C",
       "phone": "+34678901234",
