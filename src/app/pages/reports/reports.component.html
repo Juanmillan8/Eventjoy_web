@@ -1,5 +1,5 @@
 <div class="container py-5">
-
+<ng-container *ngIf="memberAuth && memberAuth.role=='MEMBER'">
   <div class="mt-4 mb-4">
     <h4 class="mt-4 mb-4">Maded reports</h4>
     <app-report-list *ngIf="memberAuth" [userId]="memberAuth.id" view="MADED"></app-report-list>
@@ -9,5 +9,12 @@
     <h4 class="mt-4 mb-4">Received reports</h4>
     <app-report-list *ngIf="memberAuth" [userId]="memberAuth.id" view="RECEIVED"></app-report-list>
   </div>
+</ng-container>
+<ng-container *ngIf="memberAuth && memberAuth.role=='ADMIN'">
+  <div class="mt-4 mb-4">
+    <h4 class="mt-4 mb-4">All reports</h4>
+    <app-report-list *ngIf="memberAuth" view="ADMIN"></app-report-list>
+  </div>
+</ng-container>
 
 </div>

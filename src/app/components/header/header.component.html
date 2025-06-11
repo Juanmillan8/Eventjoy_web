@@ -9,7 +9,7 @@
           <li class="nav-item" *ngIf="role">
             <a class="nav-link active" aria-current="page" routerLink="/home">Home</a>
           </li>
-          <li class="nav-item" *ngIf="isLoggedIn">
+          <li class="nav-item" *ngIf="role=='MEMBER'">
             <a class="nav-link active" aria-current="page" routerLink="/groups">Grupos</a>
           </li>
           <li class="nav-item" *ngIf="role=='MEMBER'">
@@ -18,7 +18,7 @@
           <li class="nav-item" *ngIf="role=='MEMBER'">
             <a class="nav-link active" aria-current="page" routerLink="/valorations">My valorations</a>
           </li>
-          <li class="nav-item" *ngIf="role=='MEMBER'">
+          <li class="nav-item" *ngIf="role=='MEMBER' || role=='ADMIN'">
             <a class="nav-link active" aria-current="page" routerLink="/reports">Reports</a>
           </li>
           <li class="nav-item" *ngIf="role=='MEMBER'">

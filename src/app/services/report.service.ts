@@ -20,6 +20,40 @@ export class ReportService {
   constructor(private database: Database, private memberService: MemberService) { }
 
 
+getAllReports(): Observable<{ report: Report; user: Member }[]> {
+  const reportRef = ref(this.database, this.COLLECTION_NAME);
+  const reportQuery = query(reportRef, orderByChild('reportedAt'));
+
+  return listVal(reportQuery).pipe(
+    switchMap(rawVals => {
+      const vals: Report[] = rawVals
+        ? rawVals.map(v => Report.fromJson(v))
+        : [];
+
+      if (vals.length === 0) {
+        return of([]);
+      }
+
+      const observables = vals.map(val =>
+        this.memberService.getMemberByUid(val.reporterUserId).pipe(
+          map((m: Member) => ({
+            report: val,
+            user: m
+          }))
+        )
+      );
+
+      return combineLatest(observables).pipe(
+        map(results =>
+          results.sort((a, b) =>
+            new Date(b.report.reportedAt).getTime() - new Date(a.report.reportedAt).getTime()
+          )
+        )
+      );
+    })
+  );
+}
+
   existReportsToUserPending(userIdReported: string, userIdReporter: string, groupId: string) {
     const reportRef = ref(this.database, this.COLLECTION_NAME);
     const reportQuery = query(
@@ -46,7 +80,7 @@ export class ReportService {
     });
   }
 
-    save(report: Report) {
+  save(report: Report) {
     //Creamos la referencia de la persona que deseamos guardar en firebase database
     let reportRef = ref(this.database, `/${this.COLLECTION_NAME}/${report.id}`);
 
@@ -65,72 +99,72 @@ export class ReportService {
   }
 
   getReceivedReportWithRaters(uid: string): Observable<{ report: Report; user: Member }[]> {
-      // 1) Primero recuperamos las valoraciones hechas por uid
-      const reportRef = ref(this.database, this.COLLECTION_NAME);
-      const reportQuery = query(
-        reportRef,
-        orderByChild('reportedUserId'),
-        equalTo(uid)
-      );
-  
-      return listVal(reportQuery).pipe(
-        switchMap(rawVals => {
-          const vals: Report[] = rawVals
-            ? rawVals.map(v => Report.fromJson(v))
-            : [];
-  
-          if (vals.length === 0) {
-            return of([]);
-          }
-  
-          const observables = vals.map(val =>
-            this.memberService.getMemberByUid(val.reporterUserId).pipe(
-              map((m: Member) => ({
-                report: val,
-                user: m
-              }))
-            )
-          );
-  
-          // 3) Combinamos todos con combineLatest para obtener un array con resultados
-          return combineLatest(observables);
-        })
-      );
-    }
-  
-     getMadedReportWithRaters(uid: string): Observable<{ report: Report; user: Member }[]> {
-      // 1) Primero recuperamos las valoraciones hechas por uid
-      const reportRef = ref(this.database, this.COLLECTION_NAME);
-      const reportQuery = query(
-        reportRef,
-        orderByChild('reporterUserId'),
-        equalTo(uid)
-      );
-  
-      return listVal(reportQuery).pipe(
-        switchMap(rawVals => {
-          const vals: Report[] = rawVals
-            ? rawVals.map(v => Report.fromJson(v))
-            : [];
-  
-          // Si no hay ninguna valoración, devolvemos array vacío
-          if (vals.length === 0) {
-            return of([]);
-          }
-  
-          // 2) Para cada valoracion, creamos un Observable que devuelve { valoration, rater }
-          const observables = vals.map(val =>
-            this.memberService.getMemberByUid(val.reportedUserId).pipe(
-              map((m: Member) => ({
-                report: val,
-                user: m
-              }))
-            )
-          );
-  
-          // 3) Combinamos todos con combineLatest para obtener un array con resultados
-          return combineLatest(observables);
-        })
-      );
-    }
+    // 1) Primero recuperamos las valoraciones hechas por uid
+    const reportRef = ref(this.database, this.COLLECTION_NAME);
+    const reportQuery = query(
+      reportRef,
+      orderByChild('reportedUserId'),
+      equalTo(uid)
+    );
+
+    return listVal(reportQuery).pipe(
+      switchMap(rawVals => {
+        const vals: Report[] = rawVals
+          ? rawVals.map(v => Report.fromJson(v))
+          : [];
+
+        if (vals.length === 0) {
+          return of([]);
+        }
+
+        const observables = vals.map(val =>
+          this.memberService.getMemberByUid(val.reporterUserId).pipe(
+            map((m: Member) => ({
+              report: val,
+              user: m
+            }))
+          )
+        );
+
+        // 3) Combinamos todos con combineLatest para obtener un array con resultados
+        return combineLatest(observables);
+      })
+    );
+  }
+
+  getMadedReportWithRaters(uid: string): Observable<{ report: Report; user: Member }[]> {
+    // 1) Primero recuperamos las valoraciones hechas por uid
+    const reportRef = ref(this.database, this.COLLECTION_NAME);
+    const reportQuery = query(
+      reportRef,
+      orderByChild('reporterUserId'),
+      equalTo(uid)
+    );
+
+    return listVal(reportQuery).pipe(
+      switchMap(rawVals => {
+        const vals: Report[] = rawVals
+          ? rawVals.map(v => Report.fromJson(v))
+          : [];
+
+        // Si no hay ninguna valoración, devolvemos array vacío
+        if (vals.length === 0) {
+          return of([]);
+        }
+
+        // 2) Para cada valoracion, creamos un Observable que devuelve { valoration, rater }
+        const observables = vals.map(val =>
+          this.memberService.getMemberByUid(val.reportedUserId).pipe(
+            map((m: Member) => ({
+              report: val,
+              user: m
+            }))
+          )
+        );
+
+        // 3) Combinamos todos con combineLatest para obtener un array con resultados
+        return combineLatest(observables);
+      })
+    );
+  }
 }
