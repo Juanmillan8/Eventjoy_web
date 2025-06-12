@@ -5,6 +5,8 @@ import { AuthService } from '../../../services/auth.service';
 import { MemberService } from '../../../services/member.service';
 import { CommonModule } from '@angular/common';
 import { Route, Router, RouterLink } from '@angular/router';
+import { MemberValidation } from '../../validations/member.validation';
+import { EventValidation } from '../../validations/event.validation';
 
 @Component({
   selector: 'app-profile-form',
@@ -24,7 +26,7 @@ export class ProfileFormComponent implements OnInit{
       surname: ['', Validators.required],
       dni: ['', Validators.required],
       phone: ['', Validators.required],
-      birthdate: ['',Validators.required],
+      birthdate: ['',[Validators.required,MemberValidation.minimumAge(12),EventValidation.startDateNotInPast()]],
     });
   }
 
@@ -42,7 +44,8 @@ export class ProfileFormComponent implements OnInit{
   }
 
   guardarCambios(){
-    
+    this.errores = null;
+
     let name = this.profileForm.get("name")?.value;
     let surname = this.profileForm.get("surname")?.value;
     let dni = this.profileForm.get("dni")?.value;
@@ -65,8 +68,10 @@ export class ProfileFormComponent implements OnInit{
       this.memberService.saveMember(this.currentMember).then(()=>{
         this.router.navigate(["/showprofile",this.currentMember?.userAccountId])
       }).catch(()=>{
-        this.errores = "Error al actualizar la información del usuario"
+        this.errores = "Error updating member information."
       });
+    }else{
+      this.errores = "The form has validation errors."
     }
   }
 

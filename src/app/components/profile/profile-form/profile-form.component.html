@@ -1,33 +1,62 @@
-
 <div *ngIf="errores" class="alert alert-danger" role="alert">{{errores}}</div>
 
 <div class="profile-container">
     <div class="profile-img">
-        <img *ngIf="currentMember && currentMember.photo != null && currentMember.photo != ''" [src]="currentMember.photo" alt="Foto de perfil" width="20px" height="20px">
-        <img *ngIf="currentMember && currentMember.photo != null && currentMember.photo == ''" src="profile.png" alt="Foto de perfil" width="20px" height="20px">
-
+        <img *ngIf="currentMember && currentMember.photo != null && currentMember.photo != ''"
+            [src]="currentMember.photo" alt="Foto de perfil" width="20px" height="20px">
+        <img *ngIf="currentMember && currentMember.photo != null && currentMember.photo == ''" src="profile.png"
+            alt="Foto de perfil" width="20px" height="20px">
     </div>
 
-    <form [formGroup]="profileForm" >
-        <label for="nombre">Name</label>
-        <input  formControlName="name" type="text" id="nombre" name="nombre" >
+    <form [formGroup]="profileForm">
+        <div class="mb-3">
+            <label for="nombre">Name</label>
+            <input formControlName="name" type="text" id="nombre" name="nombre"
+                required [ngClass]="{'is-valid': this.profileForm.get('name')?.valid && this.profileForm.get('name')?.touched,'is-invalid':this.profileForm.get('name')?.invalid && this.profileForm.get('name')?.touched}">
+            <div class="invalid-feedback">
+                <small>You must provide a name.</small>
+            </div>
+        </div>
 
-        <label for="apellido">Surname</label>
-        <input  type="text" formControlName="surname" id="apellido" name="apellido" >
+        <div class="mb-3">
+            <label for="apellido">Surname</label>
+            <input type="text" formControlName="surname" id="apellido" name="apellido"
+                required [ngClass]="{'is-valid': this.profileForm.get('surname')?.valid && this.profileForm.get('surname')?.touched,'is-invalid':this.profileForm.get('surname')?.invalid && this.profileForm.get('surname')?.touched}">
+            <div class="invalid-feedback">
+                <small>You must provide a surname.</small>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="telefono">Phone</label>
+            <input type="tel" formControlName="phone" id="telefono" name="telefono"
+                required [ngClass]="{'is-valid': this.profileForm.get('phone')?.valid && this.profileForm.get('phone')?.touched,'is-invalid':this.profileForm.get('phone')?.invalid && this.profileForm.get('phone')?.touched}">
+            <div class="invalid-feedback">
+                <small>You must provide a phone.</small>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="fecha-nacimiento">Birthdate</label>
+            <input type="date" formControlName="birthdate" id="fecha-nacimiento" name="fecha-nacimiento"
+                required [ngClass]="{'is-valid': this.profileForm.get('birthdate')?.valid && this.profileForm.get('birthdate')?.touched,'is-invalid':this.profileForm.get('birthdate')?.invalid && this.profileForm.get('birthdate')?.touched}">
 
-        <label for="telefono">Phone</label>
-        <input  type="tel" formControlName="phone" id="telefono" name="telefono">
+            <div class="invalid-feedback">
+                <small>You must provide a birthdate.</small>
+                <small *ngIf="profileForm.get('birthdate')?.hasError('startDateInPast')">The birthday cannot be earlier than today's date.</small>
+                <small *ngIf="profileForm.get('birthdate')?.hasError('tooYoung')">  You must be at least 12 years old.</small>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="dni">DNI</label>
+            <input formControlName="dni" type="text" id="dni" name="dni"
+                required [ngClass]="{'is-valid': this.profileForm.get('dni')?.valid && this.profileForm.get('dni')?.touched,'is-invalid':this.profileForm.get('dni')?.invalid && this.profileForm.get('dni')?.touched}">
+            <div class="invalid-feedback">
+                <small>You must provide a dni.</small>
+            </div>
+        </div>
+        <button class="btn btn-secondary mt-4 mb-4 ml-4 mr-4"
+            routerLink="/showprofile/{{currentMember?.userAccountId}}">Cancel edition</button>
 
-        <label for="fecha-nacimiento">Birthdate</label>
-        <input  type="date" formControlName="birthdate"  id="fecha-nacimiento" name="fecha-nacimiento">
-
-        
-        <label for="dni">DNI</label>
-        <input  formControlName="dni" type="text" id="dni" name="dni">
-
-        <button class="btn btn-secondary mt-4 mb-4 ml-4 mr-4" routerLink="/showprofile/{{currentMember?.userAccountId}}" >Cancel edition</button>
-
-        <button  class="btn btn-primary mt-4 mb-4 ml-4 mr-4" (click)="guardarCambios()">Save changes</button>
-
+        <button class="btn btn-primary mt-4 mb-4 ml-4 mr-4" (click)="guardarCambios()">Save
+            changes</button>
     </form>
 </div>

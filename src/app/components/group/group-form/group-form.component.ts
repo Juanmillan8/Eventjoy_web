@@ -75,7 +75,7 @@ export class GroupFormComponent implements OnInit {
         this.router.navigate(["/groups"]);
       }).catch(error => {
         console.log(error)
-        this.errores = "Error al borrar el grupo."
+            this.errores = "Error deleting the group."
       });
 
     }
@@ -103,11 +103,11 @@ export class GroupFormComponent implements OnInit {
         this.group.visibility = visibility;
         this.group.icon = icon;
         this.groupService.editGroup(this.group).then(() => {
-          this.mensajes = "Información del grupo actualizada correctamente."
+          this.mensajes = "Group information updated correctly."
           this.router.navigate(["/groups"]);
 
         }).catch(() => {
-          this.errores = "Error al actualizar la información del grupo"
+            this.errores = "Error updating the group."
         });
       } else if (this.groupId == "-1" && this.memberAuth) {
         let visibilidad: Visibility = visibility == "PUBLIC" ? Visibility.PUBLIC : Visibility.PRIVATE;
@@ -122,10 +122,10 @@ export class GroupFormComponent implements OnInit {
             this.mensajes = "Group created correctly."
             this.router.navigate(["/groups"]);
           }).catch(error => {
-            this.errores = "Error creating group."
+            this.errores = "Error creating the group."
           });
         }).catch(error => {
-          this.errores = "Error creating group."
+          this.errores = "Error creating the group."
         });
       }
     } else {
