@@ -13,31 +13,56 @@
         <div class="mb-3">
             <label for="eventTitle" class="form-label">Title</label>
             <input type="text" formControlName="title" id="eventTitle" class="form-control" placeholder="Event name"
-                required />
+                required [ngClass]="{'is-valid': this.eventForm.get('title')?.valid && this.eventForm.get('title')?.touched,'is-invalid':this.eventForm.get('title')?.invalid && this.eventForm.get('title')?.touched}" />
+            <div class="invalid-feedback">
+                <small>You must provide a title.</small>
+            </div>
         </div>
 
         <div class="mb-3">
             <label for="eventDescription" class="form-label">Description</label>
             <textarea formControlName="description" id="eventDescription" class="form-control" rows="3"
-                placeholder="Event description" required></textarea>
+                placeholder="Event description" required 
+                required [ngClass]="{'is-valid': this.eventForm.get('description')?.valid && this.eventForm.get('description')?.touched,'is-invalid':this.eventForm.get('description')?.invalid && this.eventForm.get('description')?.touched}"></textarea>
+            <div class="invalid-feedback">
+                <small>You must provide a description.</small>
+            </div>
         </div>
 
         <div class="mb-3">
             <label for="startDateTime" class="form-label">Start Date and Time</label>
             <input type="datetime-local" formControlName="startDateAndTime" id="startDateTime" class="form-control"
-                required />
+                required [ngClass]="{'is-valid': this.eventForm.get('startDateAndTime')?.valid && this.eventForm.get('startDateAndTime')?.touched,'is-invalid':this.eventForm.get('startDateAndTime')?.invalid && this.eventForm.get('startDateAndTime')?.touched}">
+            
+            <div class="invalid-feedback">
+                <small>You must provide a start date and time.</small>
+                <small
+                    *ngIf="eventForm.get('startDateAndTime')?.hasError('startDateInPast') && eventForm.get('startDateAndTime')?.touched">The
+                    start date cannot be earlier than today's date.</small>
+            </div>
         </div>
 
         <div class="mb-3">
             <label for="endDateTime" class="form-label">End Date and Time</label>
             <input type="datetime-local" formControlName="endDateAndTime" id="endDateTime" class="form-control"
-                required />
+                required [ngClass]="{'is-valid': this.eventForm.get('endDateAndTime')?.valid && this.eventForm.get('endDateAndTime')?.touched,'is-invalid':this.eventForm.get('endDateAndTime')?.invalid && this.eventForm.get('endDateAndTime')?.touched}">
+
+            <div class="invalid-feedback">
+                <small>You must provide a end date and time.</small>
+                <small
+                    *ngIf="eventForm.get('startDateAndTime')?.hasError('startDateInPast') && eventForm.get('startDateAndTime')?.touched">The
+                    end date must be later than the start date.
+                </small>
+            </div>
         </div>
 
         <div class="mb-3">
             <label for="maxParticipants" class="form-label">Maximum Number of Participants</label>
             <input type="number" formControlName="maxParticipants" id="maxParticipants" class="form-control" min="1"
-                required />
+                required [ngClass]="{'is-valid': this.eventForm.get('maxParticipants')?.valid && this.eventForm.get('maxParticipants')?.touched,'is-invalid':this.eventForm.get('maxParticipants')?.invalid && this.eventForm.get('maxParticipants')?.touched}">
+            <div class="invalid-feedback">
+                <small>You must provide a max number of participants.</small>
+            </div>
         </div>
 
         <fieldset class="border p-3 mb-3 rounded">
@@ -45,42 +70,80 @@
 
             <div class="mb-3">
                 <label for="street" class="form-label">Street</label>
-                <input type="text" formControlName="street" id="street" class="form-control" required />
+                <input type="text" formControlName="street" id="street" class="form-control" 
+                required [ngClass]="{'is-valid': this.eventForm.get('street')?.valid && this.eventForm.get('street')?.touched,'is-invalid':this.eventForm.get('street')?.invalid && this.eventForm.get('street')?.touched}">
+                <div class="invalid-feedback">
+                    <small>You must provide a street.</small>
+                </div>
             </div>
 
             <div class="mb-3">
                 <label for="numberStreet" class="form-label">Number</label>
-                <input type="text" formControlName="numberStreet" id="numberStreet" class="form-control" required />
+                <input type="text" formControlName="numberStreet" id="numberStreet" class="form-control" 
+                required [ngClass]="{'is-valid': this.eventForm.get('numberStreet')?.valid && this.eventForm.get('numberStreet')?.touched,'is-invalid':this.eventForm.get('numberStreet')?.invalid && this.eventForm.get('numberStreet')?.touched}">
+                <div class="invalid-feedback">
+                    <small>You must provide a number.</small>
+                </div>
             </div>
 
             <div class="mb-3">
                 <label for="floor" class="form-label">Floor</label>
-                <input type="text" formControlName="floor" id="floor" class="form-control" />
+                <input type="text" formControlName="floor" id="floor" class="form-control" 
+                required [ngClass]="{'is-valid': this.eventForm.get('floor')?.valid && this.eventForm.get('floor')?.touched,'is-invalid':this.eventForm.get('floor')?.invalid && this.eventForm.get('floor')?.touched}">
+
+                <div class="invalid-feedback">
+                    <small>You must provide a floor.</small>
+                </div>
             </div>
 
             <div class="mb-3">
                 <label for="door" class="form-label">Door</label>
-                <input type="text" formControlName="door" id="door" class="form-control" />
+                <input type="text" formControlName="door" id="door" class="form-control" 
+                required [ngClass]="{'is-valid': this.eventForm.get('door')?.valid && this.eventForm.get('door')?.touched,'is-invalid':this.eventForm.get('door')?.invalid && this.eventForm.get('door')?.touched}">
+
+                <div class="invalid-feedback">
+                    <small>You must provide a door.</small>
+                </div>
             </div>
 
             <div class="mb-3">
                 <label for="postalCode" class="form-label">Postal Code</label>
-                <input type="text" formControlName="postalCode" id="postalCode" class="form-control" required />
+                <input type="text" formControlName="postalCode" id="postalCode" class="form-control" 
+                required [ngClass]="{'is-valid': this.eventForm.get('postalCode')?.valid && this.eventForm.get('postalCode')?.touched,'is-invalid':this.eventForm.get('postalCode')?.invalid && this.eventForm.get('postalCode')?.touched}">
+
+                <div class="invalid-feedback">
+                    <small>You must provide a postal code.</small>
+                </div>
             </div>
 
             <div class="mb-3">
                 <label for="city" class="form-label">City</label>
-                <input type="text" formControlName="city" id="city" class="form-control" required />
+                <input type="text" formControlName="city" id="city" class="form-control" 
+                required [ngClass]="{'is-valid': this.eventForm.get('city')?.valid && this.eventForm.get('city')?.touched,'is-invalid':this.eventForm.get('city')?.invalid && this.eventForm.get('city')?.touched}">
+
+                <div class="invalid-feedback">
+                    <small>You must provide a city.</small>
+                </div>
             </div>
 
             <div class="mb-3">
                 <label for="municipality" class="form-label">Municipality</label>
-                <input type="text" formControlName="municipality" id="municipality" class="form-control" required />
+                <input type="text" formControlName="municipality" id="municipality" class="form-control" 
+                required [ngClass]="{'is-valid': this.eventForm.get('municipality')?.valid && this.eventForm.get('municipality')?.touched,'is-invalid':this.eventForm.get('municipality')?.invalid && this.eventForm.get('municipality')?.touched}">
+
+                <div class="invalid-feedback">
+                    <small>You must provide a municipality.</small>
+                </div>
             </div>
 
             <div class="mb-3">
                 <label for="province" class="form-label">Province</label>
-                <input type="text" formControlName="province" id="province" class="form-control" required />
+                <input type="text" formControlName="province" id="province" class="form-control"
+                required [ngClass]="{'is-valid': this.eventForm.get('province')?.valid && this.eventForm.get('province')?.touched,'is-invalid':this.eventForm.get('province')?.invalid && this.eventForm.get('province')?.touched}">
+
+                <div class="invalid-feedback">
+                    <small>You must provide a province.</small>
+                </div>
             </div>
         </fieldset>
 

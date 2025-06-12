@@ -14,6 +14,7 @@ import { MemberService } from '../../../services/member.service';
 import { Address } from '../../../models/address.model';
 import { UserEvent } from '../../../models/userevent.model';
 import { UserEventService } from '../../../services/userevent.service';
+import { EventValidation } from '../../validations/Event.validation';
 
 @Component({
   selector: 'app-event-form',
@@ -50,14 +51,29 @@ export class EventFormComponent implements OnInit {
       city: ['', Validators.required],
       municipality: ['', Validators.required],
       province: ['', [Validators.required]],
-    });
+    },
+      {
+        validators: [
+          EventValidation.endDateAfterStartDate()
+        ]
+      }
+    );
   }
   ngOnInit(): void {
+
     this.route.paramMap.subscribe(params => {
       this.eventId = params.get('eventid'); // o el nombre que uses en la ruta
       this.groupId = params.get('groupid'); // o el nombre que uses en la ruta
       this.errores = null;
       this.mensajes = null;
+
+      let isEdit = this.eventId && this.eventId != "-1" ? true : false;
+      this.eventForm.setValidators([
+        EventValidation.startDateNotInPast(isEdit),
+        EventValidation.endDateAfterStartDate()
+      ]);
+      this.eventForm.updateValueAndValidity();
+
 
       this.authService.getUserDataAuth().subscribe(({ user, member }) => {
         if (user && member) {
@@ -69,10 +85,11 @@ export class EventFormComponent implements OnInit {
           this.memberService.getAdminByGroup(this.groupId).subscribe((admins: Member[]) => {
             this.admins = admins;
 
+
             if (this.isAuthUserAdmin()) {
               if (this.eventId) {
                 if (this.eventId != "-1") {
-                  this.eventService.getEventsById(this.eventId).subscribe((event: Event|null) => {
+                  this.eventService.getEventsById(this.eventId).subscribe((event: Event | null) => {
                     if (event) {
                       this.event = event;
                       this.eventForm.setValue({
@@ -129,61 +146,62 @@ export class EventFormComponent implements OnInit {
     let province = this.eventForm.get("province")?.value;
 
 
-
-
     let isValidForm = this.eventForm.valid;
 
     //Edición de un grupo existente
     if (this.isAuthUserAdmin()) {
-
-    } else {
-      this.errores = "The authenticated user does not have privileges to edit the event."
-    }
-    if (isValidForm && this.event) {
-
-      this.event.title = title;
-      this.event.description = description;
-      this.event.startDateAndTime = startDateAndTime;
-      this.event.endDateAndTime = endDateAndTime;
-      this.event.maxParticipants = maxParticipants;
-      this.event.address.street = street;
-      this.event.address.numberStreet = numberStreet;
-      this.event.address.floor = floor;
-      this.event.address.door = door;
-      this.event.address.postalCode = postalCode;
-      this.event.address.city = city;
-      this.event.address.municipality = municipality;
-      this.event.address.province = province;
+      if (isValidForm) {
+        if (this.event) {
+          this.event.title = title;
+          this.event.description = description;
+          this.event.startDateAndTime = startDateAndTime;
+          this.event.endDateAndTime = endDateAndTime;
+          this.event.maxParticipants = maxParticipants;
+          this.event.address.street = street;
+          this.event.address.numberStreet = numberStreet;
+          this.event.address.floor = floor;
+          this.event.address.door = door;
+          this.event.address.postalCode = postalCode;
+          this.event.address.city = city;
+          this.event.address.municipality = municipality;
+          this.event.address.province = province;
 
 
-      this.eventService.editEvent(this.event).then(() => {
-        this.mensajes = "Event information successfully updated."
-        this.router.navigate([`/viewgroup/` + this.groupId]);
-
-      }).catch(() => {
-        this.errores = "Error updating event information"
-      });
-    } else if (this.eventId == "-1" && this.memberAuth && this.groupId) {
-
-
-      let newAddress = new Address(street, numberStreet, floor, door, postalCode, city, province, municipality);
-      let newEvent = new Event("-1", title, startDateAndTime, endDateAndTime, description, maxParticipants, newAddress, StatusEvent.ONGOING, this.groupId);
-      newEvent.status = newEvent.computedStatus;
-
-
-      this.eventService.createEvent(newEvent).then((event) => {
-        if (event && this.memberAuth) {
-          let userEvent = new UserEvent("-1", this.memberAuth.id, event.id);
-          this.userEventService.createUserEvent(userEvent).then(() => {
+          this.eventService.editEvent(this.event).then(() => {
+            this.mensajes = "Event information successfully updated."
             this.router.navigate([`/viewgroup/` + this.groupId]);
+
+          }).catch(() => {
+            this.errores = "Error updating event information"
+          });
+        } else if (this.eventId == "-1" && this.memberAuth && this.groupId) {
+
+
+          let newAddress = new Address(street, numberStreet, floor, door, postalCode, city, province, municipality);
+          let newEvent = new Event("-1", title, startDateAndTime, endDateAndTime, description, maxParticipants, newAddress, StatusEvent.ONGOING, this.groupId);
+          newEvent.status = newEvent.computedStatus;
+
+
+          this.eventService.createEvent(newEvent).then((event) => {
+            if (event && this.memberAuth) {
+              let userEvent = new UserEvent("-1", this.memberAuth.id, event.id);
+              this.userEventService.createUserEvent(userEvent).then(() => {
+                this.router.navigate([`/viewgroup/` + this.groupId]);
+              }).catch(error => {
+                this.errores = "Error creating the event."
+              });
+            }
           }).catch(error => {
             this.errores = "Error creating the event."
           });
-        }
-      }).catch(error => {
-        this.errores = "Error creating the event."
-      });
 
+        }
+      } else {
+        this.errores = "The form has validation errors."
+      }
+
+    } else {
+      this.errores = "The authenticated user does not have privileges to edit the event."
     }
 
   }
