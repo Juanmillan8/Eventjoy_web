@@ -14,7 +14,7 @@ import { MemberService } from '../../../services/member.service';
 import { Address } from '../../../models/address.model';
 import { UserEvent } from '../../../models/userevent.model';
 import { UserEventService } from '../../../services/userevent.service';
-import { EventValidation } from '../../validations/event.validation';
+import { EventValidation } from '../../../validations/event.validation';
 
 @Component({
   selector: 'app-event-form',

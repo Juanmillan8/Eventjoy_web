@@ -5,8 +5,8 @@ import { AuthService } from '../../../services/auth.service';
 import { MemberService } from '../../../services/member.service';
 import { CommonModule } from '@angular/common';
 import { Route, Router, RouterLink } from '@angular/router';
-import { MemberValidation } from '../../validations/member.validation';
-import { EventValidation } from '../../validations/event.validation';
+import { MemberValidation } from '../../../validations/member.validation';
+import { EventValidation } from '../../../validations/event.validation';
 
 @Component({
   selector: 'app-profile-form',
