@@ -3,9 +3,13 @@
 
 <!-- Modal principal -->
 <div class="modal show d-block" tabindex="-1" *ngIf="show" style="z-index: 1050;">
+  <div *ngIf="errores" class="alert alert-danger" role="alert">
+    {{ errores }}
+  </div>
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
+
         <h5 class="modal-title">Report User</h5>
         <button type="button" class="btn-close" (click)="closeModal()"></button>
       </div>
@@ -15,17 +19,28 @@
           <!-- Selección del motivo -->
           <div class="mb-3">
             <label for="reportReason" class="form-label">Reason</label>
-            <select class="form-select" formControlName="reason" id="reportReason" required>
+            <select class="form-select" formControlName="reason" id="reportReason" required
+              [ngClass]="{'is-valid': this.reportForm.get('reason')?.valid && this.reportForm.get('reason')?.touched,'is-invalid':this.reportForm.get('reason')?.invalid && this.reportForm.get('reason')?.touched}">
+
               <option value="">-- Select a reason --</option>
               <option *ngFor="let reason of reportReasons" [value]="reason">{{ reason.replaceAll('_', ' ') }}</option>
             </select>
+            <div class="invalid-feedback">
+              <small>You must provide a reason.</small>
+            </div>
           </div>
 
           <!-- Descripción -->
           <div class="mb-3">
             <label for="reportDescription" class="form-label">Description</label>
             <textarea class="form-control" formControlName="description" id="reportDescription" rows="3"
-              placeholder="Describe the situation..." required></textarea>
+              placeholder="Describe the situation..." required
+              [ngClass]="{'is-valid': this.reportForm.get('description')?.valid && this.reportForm.get('description')?.touched,'is-invalid':this.reportForm.get('description')?.invalid && this.reportForm.get('description')?.touched}">
+
+            </textarea>
+            <div class="invalid-feedback">
+              <small>You must provide a description.</small>
+            </div>
           </div>
         </form>
       </div>

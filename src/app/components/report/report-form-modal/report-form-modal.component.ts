@@ -21,6 +21,7 @@ export class ReportFormModalComponent implements OnInit, OnChanges {
 
   rating: number = 0;
   reportForm: FormGroup;
+  errores:string|null=null;
 
   constructor(private fb: FormBuilder) {
     this.reportForm = this.fb.group({
@@ -53,6 +54,7 @@ export class ReportFormModalComponent implements OnInit, OnChanges {
   }
 
   submit() {
+    this.errores=null;
     if (this.reportForm.valid) {
       const { reason, description } = this.reportForm.value;
       if (this.reportInput) {
@@ -62,6 +64,10 @@ export class ReportFormModalComponent implements OnInit, OnChanges {
         this.close.emit();
         this.resetForm();
       }
+    }else{
+
+      this.errores = "The form has errors."
+            console.log(this.errores)
     }
   }
 
