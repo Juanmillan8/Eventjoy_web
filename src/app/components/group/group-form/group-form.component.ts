@@ -96,37 +96,41 @@ export class GroupFormComponent implements OnInit {
     let isValidForm = this.groupForm.valid;
 
     //Edición de un grupo existente
-    if (isValidForm && this.group) {
-      this.group.title = title;
-      this.group.description = description;
-      this.group.visibility = visibility;
-      this.group.icon = icon;
-      this.groupService.editGroup(this.group).then(() => {
-      this.mensajes = "Información del grupo actualizada correctamente."
-      this.router.navigate(["/groups"]);
-
-      }).catch(() => {
-        this.errores = "Error al actualizar la información del grupo"
-      });
-    } else if (this.groupId == "-1" && this.memberAuth) {
-      let visibilidad:Visibility = visibility == "PUBLIC" ?Visibility.PUBLIC:Visibility.PRIVATE;
-
-      let newGroup = new Group("-1", title, description, visibilidad, icon);
-      let newUserGroup = new UserGroup("-1", this.memberAuth.userAccountId, "-1", true, new Date().toLocaleDateString(), false);
-
-      this.groupService.createGroup(newGroup).then((group) => {
-        newUserGroup.groupId = group.id;
-
-        this.userGroupService.saveUserGroup(newUserGroup).then(() => {
-          this.mensajes = "Grupo creado correctamente"
+    if (isValidForm) {
+      if (this.group) {
+        this.group.title = title;
+        this.group.description = description;
+        this.group.visibility = visibility;
+        this.group.icon = icon;
+        this.groupService.editGroup(this.group).then(() => {
+          this.mensajes = "Información del grupo actualizada correctamente."
           this.router.navigate(["/groups"]);
-        }).catch(error => {
-          this.errores = "Error al asignar el grupo al usuario autenticado."
-        });
-      }).catch(error => {
-        this.errores = "Error al crear el grupo."
-      });
 
+        }).catch(() => {
+          this.errores = "Error al actualizar la información del grupo"
+        });
+      } else if (this.groupId == "-1" && this.memberAuth) {
+        let visibilidad: Visibility = visibility == "PUBLIC" ? Visibility.PUBLIC : Visibility.PRIVATE;
+
+        let newGroup = new Group("-1", title, description, visibilidad, icon);
+        let newUserGroup = new UserGroup("-1", this.memberAuth.userAccountId, "-1", true, new Date().toLocaleDateString(), false);
+
+        this.groupService.createGroup(newGroup).then((group) => {
+          newUserGroup.groupId = group.id;
+
+          this.userGroupService.saveUserGroup(newUserGroup).then(() => {
+            this.mensajes = "Group created correctly."
+            this.router.navigate(["/groups"]);
+          }).catch(error => {
+            this.errores = "Error creating group."
+          });
+        }).catch(error => {
+          this.errores = "Error creating group."
+        });
+      }
+    } else {
+      this.errores = "The form has validation errors."
     }
+
   }
 }
