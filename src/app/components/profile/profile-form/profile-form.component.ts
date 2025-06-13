@@ -26,7 +26,7 @@ export class ProfileFormComponent implements OnInit{
       surname: ['', Validators.required],
       dni: ['', Validators.required],
       phone: ['', Validators.required],
-      birthdate: ['',[Validators.required,MemberValidation.minimumAge(12),EventValidation.startDateNotInPast()]],
+      birthdate: ['',[Validators.required,MemberValidation.minimumAge(12)]],
     });
   }
 
