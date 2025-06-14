@@ -14,15 +14,15 @@ import { firstValueFrom } from 'rxjs';
 @Component({
   selector: 'app-singin',
   standalone: true,
-  imports: [CommonModule,FormsModule, ReactiveFormsModule,HeaderComponent,FooterComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, HeaderComponent, FooterComponent],
   templateUrl: './singin.component.html',
   styleUrl: './singin.component.css'
 })
 export class SinginComponent {
 
-  registerForm:FormGroup;
-  error:String|null = null;
-  constructor(formBuilder:FormBuilder,private authService:AuthService, private router:Router, private memberService:MemberService){
+  registerForm: FormGroup;
+  error: String | null = null;
+  constructor(formBuilder: FormBuilder, private authService: AuthService, private router: Router, private memberService: MemberService) {
     this.registerForm = formBuilder.group({
       'name': ['', [Validators.required]],
       'surname': ['', [Validators.required]],
@@ -32,7 +32,7 @@ export class SinginComponent {
     });
   }
   register() {
-    this.error=""
+    this.error = ""
     if (this.registerForm.valid) {
       let name = this.registerForm.get("name")?.value;
       let surname = this.registerForm.get("surname")?.value;
@@ -40,24 +40,21 @@ export class SinginComponent {
       let password = this.registerForm.get("password")?.value;
 
       //Comprobamos si existe un usuario con el mismo email
-      firstValueFrom(this.memberService.getMemberByEmail(email)).then((member) => {
-        if (member && member.length ==0) {
-          this.authService.register({ email, password }).then((userCredential: UserCredential) => {
 
-            let member = new Member(userCredential.user.uid,userCredential.user.uid, name, surname, email, ROLE.MEMBER, "", "", "", "", "",0, "EMAIL");
+      this.authService.register({ email, password }).then((userCredential: UserCredential) => {
+        let member = new Member(userCredential.user.uid, userCredential.user.uid, name, surname, email, ROLE.MEMBER, "", "", "", "", "", 0, "EMAIL");
+        this.memberService.saveMember(member).then(() => {
+          this.router.navigate(["/home"]);
+        })
+      }).catch(error => {
+        if (error.code === 'auth/email-already-in-use') {
+        this.error= 'Email already exist.';
+      } else {
+        this.error= 'Error register.';
+      }
+      });
 
-            
-            this.memberService.saveMember(member).then(() => {
-              this.router.navigate(["/home"]);
 
-            })
-          }).catch(error => {
-            console.log(error)
-          });
-        }else{
-          this.error ="Ya existe un usuario con el mismo email."
-        }
-      })
     }
   }
 

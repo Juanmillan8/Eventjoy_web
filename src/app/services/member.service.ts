@@ -36,13 +36,6 @@ export class MemberService {
     return objectVal(memberRef) as Observable<Member>
   }
 
-  getMemberByEmail(email: string): Observable<Member[]> {
-
-    const membersRef = ref(this.database, this.COLLECTION_NAME);
-    const memberQuery = query(membersRef, orderByChild('email'), equalTo(email));
-
-    return listVal(memberQuery) as Observable<Member[]>
-  }
 
 
 
