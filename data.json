@@ -37,9 +37,9 @@
     }
   },
   "members": {
-    "TTcwj1CeLrRM5gl1POlXhePjOLd2": {
-      "id": "TTcwj1CeLrRM5gl1POlXhePjOLd2",
-      "userAccountId": "TTcwj1CeLrRM5gl1POlXhePjOLd2",
+    "QM8AH3NSFSazjuMWF5sqQO7jgJg2": {
+      "id": "QM8AH3NSFSazjuMWF5sqQO7jgJg2",
+      "userAccountId": "QM8AH3NSFSazjuMWF5sqQO7jgJg2",
       "name": "Juan",
       "surname": "Millan",
       "email": "juanmillan@gmail.com",
@@ -82,9 +82,9 @@
       "level": 0,
       "provider": "EMAIL"
     },
-    "zX1pQr9YtNf84H3KlVwG": {
-      "id": "zX1pQr9YtNf84H3KlVwG",
-      "userAccountId": "zX1pQr9YtNf84H3KlVwG",
+    "kX29k3A8GpO8DWnCrREdiCNiamT2": {
+      "id": "kX29k3A8GpO8DWnCrREdiCNiamT2",
+      "userAccountId": "kX29k3A8GpO8DWnCrREdiCNiamT2",
       "name": "Laura",
       "surname": "Martínez",
       "email": "laura.martinez@gmail.com",
@@ -97,9 +97,9 @@
       "level": 0,
       "provider": "EMAIL"
     },
-    "bV7LcXr8TaYpZm9NQkWe": {
-      "id": "bV7LcXr8TaYpZm9NQkWe",
-      "userAccountId": "bV7LcXr8TaYpZm9NQkWe",
+    "NyWEmhCqCVMs7OzzmwnweqtTVHR2": {
+      "id": "NyWEmhCqCVMs7OzzmwnweqtTVHR2",
+      "userAccountId": "NyWEmhCqCVMs7OzzmwnweqtTVHR2",
       "name": "Carlos",
       "surname": "Fernández",
       "email": "carlos.fernandez@gmail.com",
@@ -112,9 +112,9 @@
       "level": 0,
       "provider": "EMAIL"
     },
-    "WJ5Exy8FRTNpQsL1DcVg": {
-      "id": "WJ5Exy8FRTNpQsL1DcVg",
-      "userAccountId": "WJ5Exy8FRTNpQsL1DcVg",
+    "m8I9gBqihoSNqZT6iGfwxEz5c0g2": {
+      "id": "m8I9gBqihoSNqZT6iGfwxEz5c0g2",
+      "userAccountId": "m8I9gBqihoSNqZT6iGfwxEz5c0g2",
       "name": "Sofía",
       "surname": "García",
       "email": "sofia.garcia@example.com",
@@ -127,9 +127,9 @@
       "level": 0,
       "provider": "EMAIL"
     },
-    "KLMnOpQrStUvWxYz1234": {
-      "id": "KLMnOpQrStUvWxYz1234",
-      "userAccountId": "KLMnOpQrStUvWxYz1234",
+    "etHK9RktjOTFSjbIC53d6sOuBRn2": {
+      "id": "etHK9RktjOTFSjbIC53d6sOuBRn2",
+      "userAccountId": "etHK9RktjOTFSjbIC53d6sOuBRn2",
       "name": "Miguel",
       "surname": "Hernández",
       "email": "miguel.hernandez@example.com",
@@ -146,7 +146,7 @@
   "userGroups": {
     "ug1": {
       "id": "ug1",
-      "userId": "TTcwj1CeLrRM5gl1POlXhePjOLd2",
+      "userId": "QM8AH3NSFSazjuMWF5sqQO7jgJg2",
       "groupId": "group1",
       "admin": true,
       "joinedAt": "2024-01-15T10:30:00Z",
@@ -178,7 +178,7 @@
     },
     "ug5": {
       "id": "ug5",
-      "userId": "TTcwj1CeLrRM5gl1POlXhePjOLd2",
+      "userId": "QM8AH3NSFSazjuMWF5sqQO7jgJg2",
       "groupId": "group2",
       "admin": false,
       "joinedAt": "2024-05-20T14:20:00Z",
@@ -186,7 +186,7 @@
     },
     "ug6": {
       "id": "ug6",
-      "userId": "zX1pQr9YtNf84H3KlVwG",
+      "userId": "kX29k3A8GpO8DWnCrREdiCNiamT2",
       "groupId": "group1",
       "admin": false,
       "joinedAt": "2025-06-01T10:00:00Z",
@@ -194,7 +194,7 @@
     },
     "ug7": {
       "id": "ug7",
-      "userId": "bV7LcXr8TaYpZm9NQkWe",
+      "userId": "NyWEmhCqCVMs7OzzmwnweqtTVHR2",
       "groupId": "group3",
       "admin": false,
       "joinedAt": "2025-06-05T11:00:00Z",
@@ -202,7 +202,7 @@
     },
     "ug8": {
       "id": "ug8",
-      "userId": "WJ5Exy8FRTNpQsL1DcVg",
+      "userId": "m8I9gBqihoSNqZT6iGfwxEz5c0g2",
       "groupId": "group4",
       "admin": false,
       "joinedAt": "2025-06-06T09:00:00Z",
@@ -210,7 +210,7 @@
     },
     "ug9": {
       "id": "ug9",
-      "userId": "KLMnOpQrStUvWxYz1234",
+      "userId": "etHK9RktjOTFSjbIC53d6sOuBRn2",
       "groupId": "group3",
       "admin": false,
       "joinedAt": "2025-06-07T09:00:00Z",
@@ -322,7 +322,7 @@
   "userEvents": {
     "eu1": {
       "id": "eu1",
-      "userId": "TTcwj1CeLrRM5gl1POlXhePjOLd2",
+      "userId": "QM8AH3NSFSazjuMWF5sqQO7jgJg2",
       "eventId": "ev1"
     },
     "eu2": {
@@ -337,17 +337,17 @@
     },
     "eu4": {
       "id": "eu4",
-      "userId": "bV7LcXr8TaYpZm9NQkWe",
+      "userId": "NyWEmhCqCVMs7OzzmwnweqtTVHR2",
       "eventId": "ev3"
     },
     "eu5": {
       "id": "eu5",
-      "userId": "WJ5Exy8FRTNpQsL1DcVg",
+      "userId": "m8I9gBqihoSNqZT6iGfwxEz5c0g2",
       "eventId": "ev3"
     },
     "eu6": {
       "id": "eu6",
-      "userId": "KLMnOpQrStUvWxYz1234",
+      "userId": "etHK9RktjOTFSjbIC53d6sOuBRn2",
       "eventId": "ev3",
       "payment": 5
     }
@@ -358,7 +358,7 @@
       "title": "Gran colaborador",
       "description": "Siempre dispuesto a ayudar y con mucho conocimiento técnico.",
       "rating": 5,
-      "ratedUserId": "TTcwj1CeLrRM5gl1POlXhePjOLd2",
+      "ratedUserId": "QM8AH3NSFSazjuMWF5sqQO7jgJg2",
       "raterUserId": "OuRJBqXUVGZoAzvFuqNJgMoupyf1"
     },
     "val2": {
@@ -367,14 +367,14 @@
       "description": "Su enfoque en UX es claro y aporta ideas muy valiosas.",
       "rating": 4,
       "ratedUserId": "OuRJBqXUVGZoAzvFuqNJgMoupyf1",
-      "raterUserId": "TTcwj1CeLrRM5gl1POlXhePjOLd2"
+      "raterUserId": "QM8AH3NSFSazjuMWF5sqQO7jgJg2"
     },
     "val3": {
       "id": "val3",
       "title": "Conocimientos de ML sólidos",
       "description": "Participa activamente en debates y resuelve dudas con claridad.",
       "rating": 5,
-      "ratedUserId": "bV7LcXr8TaYpZm9NQkWe",
+      "ratedUserId": "NyWEmhCqCVMs7OzzmwnweqtTVHR2",
       "raterUserId": "OuRJBqXUVGZoAzvFuqNJgMoupyf1"
     },
     "val4": {
@@ -391,7 +391,7 @@
       "id": "rep1",
       "reportReason": "OFFENSIVE_LANGUAGE",
       "reportDescription": "El usuario utilizó lenguaje inapropiado en el chat.",
-      "reportedUserId": "TTcwj1CeLrRM5gl1POlXhePjOLd2",
+      "reportedUserId": "QM8AH3NSFSazjuMWF5sqQO7jgJg2",
       "reporterUserId": "OuRJBqXUVGZoAzvFuqNJgMoupyf1",
       "groupId": "g1",
       "reportedAt": "2025-06-08T14:20:00Z",
@@ -402,7 +402,7 @@
       "reportReason": "SPAM",
       "reportDescription": "Envío repetido de mensajes no solicitados.",
       "reportedUserId": "NA0JDJCEO6PzhwAtxKiXdmi3ttK2",
-      "reporterUserId": "bV7LcXr8TaYpZm9NQkWe",
+      "reporterUserId": "NyWEmhCqCVMs7OzzmwnweqtTVHR2",
       "groupId": "g2",
       "reportedAt": "2025-06-07T09:10:00Z",
       "reportStatus": "APPROVED"
@@ -411,7 +411,7 @@
       "id": "rep3",
       "reportReason": "HARASSMENT",
       "reportDescription": "Acoso repetido hacia otro usuario en la conversación.",
-      "reportedUserId": "zX1pQr9YtNf84H3KlVwG",
+      "reportedUserId": "kX29k3A8GpO8DWnCrREdiCNiamT2",
       "reporterUserId": "OuRJBqXUVGZoAzvFuqNJgMoupyf1",
       "groupId": "g3",
       "reportedAt": "2025-06-05T18:45:00Z",
@@ -421,21 +421,21 @@
   "invitations": {
     "inv1": {
       "id": "inv1",
-      "userId": "WJ5Exy8FRTNpQsL1DcVg",
+      "userId": "m8I9gBqihoSNqZT6iGfwxEz5c0g2",
       "groupId": "group1",
       "invitedAt": "2025-06-01T12:00:00Z",
       "status": "PENDING"
     },
     "inv2": {
       "id": "inv2",
-      "userId": "KLMnOpQrStUvWxYz1234",
+      "userId": "etHK9RktjOTFSjbIC53d6sOuBRn2",
       "groupId": "group2",
       "invitedAt": "2025-06-02T09:30:00Z",
       "status": "ACCEPTED"
     },
     "inv3": {
       "id": "inv3",
-      "userId": "zX1pQr9YtNf84H3KlVwG",
+      "userId": "kX29k3A8GpO8DWnCrREdiCNiamT2",
       "groupId": "group4",
       "invitedAt": "2025-06-04T15:45:00Z",
       "status": "PENDING"
