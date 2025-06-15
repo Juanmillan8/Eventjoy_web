@@ -145,7 +145,9 @@ export class EventFormComponent implements OnInit {
     let municipality = this.eventForm.get("municipality")?.value;
     let province = this.eventForm.get("province")?.value;
 
-
+    let dateStartEvent = new Date(startDateAndTime).toISOString().replace('.000', '');;
+    let dateEndEvent = new Date(endDateAndTime).toISOString().replace('.000', '');;
+ 
     let isValidForm = this.eventForm.valid;
 
     //Edición de un grupo existente
@@ -154,8 +156,8 @@ export class EventFormComponent implements OnInit {
         if (this.event) {
           this.event.title = title;
           this.event.description = description;
-          this.event.startDateAndTime = startDateAndTime;
-          this.event.endDateAndTime = endDateAndTime;
+          this.event.startDateAndTime = dateStartEvent;
+          this.event.endDateAndTime = dateEndEvent;
           this.event.maxParticipants = maxParticipants;
           this.event.address.street = street;
           this.event.address.numberStreet = numberStreet;
@@ -178,7 +180,7 @@ export class EventFormComponent implements OnInit {
 
 
           let newAddress = new Address(street, numberStreet, floor, door, postalCode, city, province, municipality);
-          let newEvent = new Event("-1", title, startDateAndTime, endDateAndTime, description, maxParticipants, newAddress, StatusEvent.ONGOING, this.groupId);
+          let newEvent = new Event("-1", title, dateStartEvent, dateEndEvent, description, maxParticipants, newAddress, StatusEvent.ONGOING, this.groupId);
           newEvent.status = newEvent.computedStatus;
 
 
