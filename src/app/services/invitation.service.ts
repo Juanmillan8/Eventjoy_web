@@ -3,7 +3,7 @@ import { Auth, createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateCh
 import { catchError, combineLatest, from, map, Observable, of, switchMap } from 'rxjs';
 import { MemberService } from './member.service';
 import { Member } from '../models/member.model';
-import { Database, equalTo, get, listVal, orderByChild, push, query, ref, set } from '@angular/fire/database';
+import { Database, equalTo, get, listVal, orderByChild, push, query, ref, remove, set } from '@angular/fire/database';
 import { Invitation } from '../models/invitation.model';
 import { Group } from '../models/group.model';
 import { GroupService } from './group.service';
@@ -34,6 +34,12 @@ export class InvitationService {
     //Crear nueva reserva
     return set(invitationRef, invitation) as Promise<void>
   }
+
+  deleteInvitation(invitation: Invitation): Promise<void> {
+      const invitationRef = ref(this.database, `/${this.COLLECTION_NAME}/${invitation.id}`);
+  
+      return remove(invitationRef);
+    }
 
   existInvitationByUserAndGroupId(userId:string,groupId:string): Promise<boolean>{
      const invitationRef = ref(this.database, this.COLLECTION_NAME);

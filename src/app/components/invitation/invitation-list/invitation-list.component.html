@@ -1,5 +1,20 @@
 <div class="container my-5">
-    <div class="table-responsive" *ngIf="receivedInvitations && receivedInvitations.length">
+ <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1055;">
+  <div
+    class="toast align-items-center text-white bg-{{ toastType }} border-0 show"
+    role="alert"
+    *ngIf="toastMessage"
+    (click)="closeToast()"
+  >
+    <div class="d-flex">
+      <div class="toast-body">
+        {{ toastMessage }}
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" (click)="closeToast()" aria-label="Close"></button>
+    </div>
+  </div>
+</div>
+  <div class="table-responsive" *ngIf="receivedInvitations && receivedInvitations.length">
       <table class="table table-bordered table-hover align-middle text-center">
         <thead class="table-dark">
           <tr>
@@ -19,7 +34,9 @@
             <td>{{item.group.title}}</td>
             <td>{{item.group.description}}</td>
             <td>
-              <button class="btn btn-success btn-sm me-1" routerLink="/viewgroup/{{item.invitation.groupId}}">Accept</button>
+              <button class="btn btn-success btn-sm me-1" (click)="acceptInvitation(item.invitation)">Accept</button>
+              <button class="btn btn-danger btn-sm me-1" (click)="rejectInvitation(item.invitation)">Reject</button>
+
             </td>
           </tr>
           <!-- Add dynamic rows here -->
