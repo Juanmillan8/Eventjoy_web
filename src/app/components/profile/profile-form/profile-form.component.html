@@ -41,7 +41,7 @@
             <input type="text" formControlName="username" id="username" name="username"
                 required [ngClass]="{'is-valid': this.profileForm.get('username')?.valid && this.profileForm.get('username')?.touched,'is-invalid':this.profileForm.get('username')?.invalid && this.profileForm.get('username')?.touched}">
             <div class="invalid-feedback">
-                <small>You must provide a surname.</small>
+                <small>You must provide a username.</small>
             </div>
         </div>
         <div class="mb-3">
