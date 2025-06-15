@@ -14,11 +14,21 @@
               <form [formGroup]="loginForm" (submit)="login()">
                 <div class="mb-3">
                   <label for="exampleInputEmail1" class="form-label">Email:</label>
-                  <input formControlName="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  <input formControlName="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                    required [ngClass]="{'is-valid': this.loginForm.get('email')?.valid && this.loginForm.get('email')?.touched,'is-invalid':this.loginForm.get('email')?.invalid && this.loginForm.get('email')?.touched}">
+
+                  <div class="invalid-feedback">
+                    <small>You must provide a email.</small>
+                  </div>       
                 </div>
                 <div class="mb-3">
                   <label for="exampleInputPassword1" class="form-label">Password:</label>
-                  <input formControlName="password" type="password" class="form-control" id="exampleInputPassword1">
+                  <input formControlName="password" type="password" class="form-control" id="exampleInputPassword1"
+                    required [ngClass]="{'is-valid': this.loginForm.get('password')?.valid && this.loginForm.get('password')?.touched,'is-invalid':this.loginForm.get('password')?.invalid && this.loginForm.get('password')?.touched}">
+
+                  <div class="invalid-feedback">
+                    <small>You must provide a password.</small>
+                  </div> 
                 </div>
                 <button type="submit" class="btn btn-primary">Login!</button>
               </form>

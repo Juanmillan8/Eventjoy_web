@@ -28,7 +28,7 @@ export const routes: Routes = [
     {path:"reports",component:ReportsComponent,canActivate: [authGuard],data: { role: '*' }},
     {path:"invitations",component:InvitationsComponent,canActivate: [authGuard],data: { role: 'MEMBER' }},
     {path:"editprofile",component:ProfileFormComponent,...canActivate(() => redirectUnauthorizedTo(["login"]))},
-    {path:"showprofile/:userId",component:ShowprofileComponent,...canActivate(() => redirectUnauthorizedTo(["login"]))},
+    {path:"showprofile/:userId",component:ShowprofileComponent,canActivate: [authGuard],data: { role: 'MEMBER' }},
     {path:"login",component:LoginComponent},
     {path:"singin",component:SinginComponent},
     {path:"",redirectTo:"home",pathMatch:"full"},

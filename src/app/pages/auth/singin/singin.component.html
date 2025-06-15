@@ -11,19 +11,47 @@
               <form [formGroup]="registerForm" (ngSubmit)="register()">
                 <div class="mb-3">
                   <label for="inputName" class="form-label">Name:</label>
-                  <input formControlName="name" type="text" class="form-control" id="inputName" >
+                  <input formControlName="name" type="text" class="form-control" id="inputName" 
+                  required [ngClass]="{'is-valid': this.registerForm.get('name')?.valid && this.registerForm.get('name')?.touched,'is-invalid':this.registerForm.get('name')?.invalid && this.registerForm.get('name')?.touched}">
+                  <div class="invalid-feedback">
+                    <small>You must provide a name.</small>
+                  </div>
                 </div>
                 <div class="mb-3">
                   <label for="inputSurname" class="form-label">Surname:</label>
-                  <input formControlName="surname" type="text" class="form-control" id="inputSurname" >
+                  <input formControlName="surname" type="text" class="form-control" id="inputSurname"
+                    required [ngClass]="{'is-valid': this.registerForm.get('surname')?.valid && this.registerForm.get('surname')?.touched,'is-invalid':this.registerForm.get('surname')?.invalid && this.registerForm.get('surname')?.touched}">
+
+                  <div class="invalid-feedback">
+                    <small>You must provide a surname.</small>
+                  </div>
                 </div>
                 <div class="mb-3">
-                    <label for="inputUsername" class="form-label">Email:</label>
-                    <input formControlName="email" type="text" class="form-control" id="inputUsername" >
+                  <label for="inputSurname" class="form-label">Username:</label>
+                  <input formControlName="username" type="text" class="form-control" id="inputUsername"
+                    required [ngClass]="{'is-valid': this.registerForm.get('username')?.valid && this.registerForm.get('username')?.touched,'is-invalid':this.registerForm.get('username')?.invalid && this.registerForm.get('username')?.touched}">
+
+                  <div class="invalid-feedback">
+                    <small>You must provide a username.</small>
+                  </div>
+                </div>
+                <div class="mb-3">
+                    <label for="inputEmail" class="form-label">Email:</label>
+                    <input formControlName="email" type="text" class="form-control" id="inputEmail"
+                    required [ngClass]="{'is-valid': this.registerForm.get('email')?.valid && this.registerForm.get('email')?.touched,'is-invalid':this.registerForm.get('email')?.invalid && this.registerForm.get('email')?.touched}">
+
+                  <div class="invalid-feedback">
+                    <small>You must provide a email.</small>
+                  </div>                
                 </div>
                 <div class="mb-3">
                   <label for="inputPassword1" class="form-label">Password:</label>
-                  <input formControlName="password" type="password" class="form-control" id="inputPassword1">
+                  <input formControlName="password" type="password" class="form-control" id="inputPassword1"
+                    required [ngClass]="{'is-valid': this.registerForm.get('password')?.valid && this.registerForm.get('password')?.touched,'is-invalid':this.registerForm.get('password')?.invalid && this.registerForm.get('password')?.touched}">
+
+                  <div class="invalid-feedback">
+                    <small>You must provide a password.</small>
+                  </div>                   
                 </div>
                 <button type="submit" class="btn btn-primary">Singin!</button>
 

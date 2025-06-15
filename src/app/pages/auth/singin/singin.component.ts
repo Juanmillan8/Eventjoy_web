@@ -26,7 +26,7 @@ export class SinginComponent {
     this.registerForm = formBuilder.group({
       'name': ['', [Validators.required]],
       'surname': ['', [Validators.required]],
-      'admin': ['', []],
+      'username': ['', [Validators.required]],
       'email': ['', [Validators.email]],
       'password': ['', [Validators.required]]
     });
@@ -36,23 +36,30 @@ export class SinginComponent {
     if (this.registerForm.valid) {
       let name = this.registerForm.get("name")?.value;
       let surname = this.registerForm.get("surname")?.value;
+      let username = this.registerForm.get("username")?.value;
       let email = this.registerForm.get("email")?.value;
       let password = this.registerForm.get("password")?.value;
 
       //Comprobamos si existe un usuario con el mismo email
+      firstValueFrom(this.memberService.getMemberByUsername(username)).then((memberFind: Member[]) => {
+        if (memberFind && memberFind.length ==0) {
+          this.authService.register({ email, password }).then((userCredential: UserCredential) => {
+            let member = new Member(userCredential.user.uid, userCredential.user.uid, name, surname, email, ROLE.MEMBER, "", "", "", "", "", 0, "EMAIL");
+            this.memberService.saveMember(member).then(() => {
+              this.router.navigate(["/home"]);
+            })
+          }).catch(error => {
+            if (error.code === 'auth/email-already-in-use') {
+              this.error = 'Email already exist.';
+            } else {
+              this.error = 'Error register.';
+            }
+          });
+        } else {
+          this.error = 'Already exist a member with the same username.';
+        }
+      })
 
-      this.authService.register({ email, password }).then((userCredential: UserCredential) => {
-        let member = new Member(userCredential.user.uid, userCredential.user.uid, name, surname, email, ROLE.MEMBER, "", "", "", "", "", 0, "EMAIL");
-        this.memberService.saveMember(member).then(() => {
-          this.router.navigate(["/home"]);
-        })
-      }).catch(error => {
-        if (error.code === 'auth/email-already-in-use') {
-        this.error= 'Email already exist.';
-      } else {
-        this.error= 'Error register.';
-      }
-      });
 
 
     }
